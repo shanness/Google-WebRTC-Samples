@@ -101,7 +101,7 @@ function getMedia() {
 function gotStream(stream) {
   trace('Received local stream');
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(localVideo, stream);
+  localVideo = attachMediaStream(localVideo, stream);
   localStream = stream;
 }
 
@@ -230,7 +230,7 @@ function hangup() {
 
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(remoteVideo, e.stream);
+  remoteVideo = attachMediaStream(remoteVideo, e.stream);
   trace('Received remote stream');
 }
 
