@@ -70,14 +70,15 @@ function start() {
 }
 
 function gotDescription(desc) {
-  begin = window.performance.now();
+  // begin = window.performance.now();
   pc.setLocalDescription(desc);
 }
 
 function iceCallback(event) {
-  var elapsed = ((window.performance.now() - begin) / 1000).toFixed(3);
+  // var elapsed = ((window.performance.now() - begin) / 1000).toFixed(3);
+  var elapsed = "[pref mesurement removed from the demo]";
   if (event.candidate) {
-    output.value += (elapsed + ': ' + event.candidate.candidate);
+    output.value += (elapsed + ' : ' + event.candidate.candidate);
   } else {
     output.value += (elapsed + ': Done');
     pc.close();
