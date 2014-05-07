@@ -175,7 +175,7 @@ function createPeerConnection() {
 function maybeStart() {
   if (!started && signalingReady && channelReady && turnDone &&
       (localStream || !hasLocalStream)) {
-    startTime = performance.now();
+    // startTime = performance.now();
     setStatus('Connecting...');
     trace('Creating PeerConnection.');
     createPeerConnection();
@@ -252,12 +252,12 @@ function setRemote(message) {
     trace("Set remote session description success.");
     // By now all addstream events for the setRemoteDescription have fired.
     // So we can know if the peer is sending any stream or is only receiving.
-    if (remoteStream) {
+   /* if (remoteStream) {
       waitForRemoteVideo();
-    } else {
+    } else {*/
       trace("No remote video stream; not waiting for media to arrive.");
       transitionToActive();
-    }
+    // }
   }
 }
 
@@ -347,7 +347,7 @@ function messageError(msg) {
 function onUserMediaSuccess(stream) {
   trace('User has granted access to local media.');
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(localVideo, stream);
+  localVideo = attachMediaStream(localVideo, stream);
   localVideo.style.opacity = 1;
   localStream = stream;
   // Caller creates PeerConnection.
@@ -400,7 +400,7 @@ function onIceCandidate(event) {
 
 function onRemoteStreamAdded(event) {
   trace('Remote stream added.');
-  attachMediaStream(remoteVideo, event.stream);
+  remoteVideo = attachMediaStream(remoteVideo, event.stream);
   remoteStream = event.stream;
 }
 
@@ -454,13 +454,16 @@ function waitForRemoteVideo() {
 }
 
 function transitionToActive() {
-  var elapsedTime = performance.now() - startTime;
-  trace('Call setup time: ' + elapsedTime + ' ms.');
-  reattachMediaStream(miniVideo, localVideo);
+  // var elapsedTime = performance.now() - startTime;
+  // trace('Call setup time: ' + elapsedTime + ' ms.');
+  miniVideo = reattachMediaStream(miniVideo, localVideo);
   remoteVideo.style.opacity = 1;
-  card.style.webkitTransform = 'rotateY(180deg)';
-  setTimeout(function() { localVideo.src = ''; }, 500);
-  setTimeout(function() { miniVideo.style.opacity = 1; }, 1000);
+  localVideo.style.opacity = 0;
+  miniVideo.style.opacity = 1;
+  miniVideo.style.backgroundColor = "#000000";
+  // card.style.webkitTransform = 'rotateY(180deg)';
+  // setTimeout(function() { localVideo.src = ''; }, 500);
+  // setTimeout(function() { miniVideo.style.opacity = 1; }, 1000);
   // Reset window display according to the asperio of remote video.
   window.onresize();
   setStatus('<input type=\'button\' id=\'hangup\' value=\'Hang up\' \
@@ -468,18 +471,19 @@ function transitionToActive() {
 }
 
 function transitionToWaiting() {
-  card.style.webkitTransform = 'rotateY(0deg)';
+  // card.style.webkitTransform = 'rotateY(0deg)';
   setTimeout(function() {
                localVideo.src = miniVideo.src;
                miniVideo.src = '';
                remoteVideo.src = '' }, 500);
   miniVideo.style.opacity = 0;
   remoteVideo.style.opacity = 0;
+  localVideo.style.opacity = 1;
   resetStatus();
 }
 
 function transitionToDone() {
-  localVideo.style.opacity = 0;
+  localVideo.style.opacity = 1;
   remoteVideo.style.opacity = 0;
   miniVideo.style.opacity = 0;
   setStatus('You have left the call. <a href=' + roomLink + '>\

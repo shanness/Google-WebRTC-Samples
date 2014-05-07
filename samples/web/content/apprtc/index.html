@@ -12,6 +12,15 @@
 <script src="/js/main.js"></script>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 <script src="/js/adapter.js"></script>
+<object id="plugin0" type="application/x-temwebrtcplugin" width="0" height="0">
+    <param name="onload" value="TemInitPlugin0" />
+    <param name="pluginId" value="plugin0" />
+</object><br />
+<script type="text/javascript"> 
+  function TemPluginLoaded() {
+    initialize()
+  }
+</script>
 
 </head>
 <body>
@@ -34,7 +43,7 @@
   var videoRecvBitrate = '{{ vrbr }}';
   var audioSendCodec = '{{ audio_send_codec }}';
   var audioRecvCodec = '{{ audio_receive_codec }}';
-  setTimeout(initialize, 1);
+  // setTimeout(initialize, 1);
 </script>
 <div id="container" ondblclick="enterFullScreen()">
   <div id="card">
