@@ -391,6 +391,9 @@ if (navigator.mozGetUserMedia) {
             newElement.onclick(arg);
           }
           return newElement;
+        } else { // is audio element
+          // The sound was enabled, there is nothing to do here
+          return element;
         }
       };
 

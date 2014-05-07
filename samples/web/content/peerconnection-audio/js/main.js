@@ -86,7 +86,7 @@ function hangup() {
 
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(audio2, e.stream);
+  audio2 = attachMediaStream(audio2, e.stream);
   trace('Received remote stream');
 }
 
