@@ -18,4 +18,6 @@ function errorCallback(error){
   console.log("navigator.getUserMedia error: ", error);
 }
 
-navigator.getUserMedia(constraints, successCallback, errorCallback);
+  function TemPluginLoaded() {
+	navigator.getUserMedia(constraints, successCallback, errorCallback);
+  }
