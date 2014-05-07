@@ -36,8 +36,9 @@ var sdpConstraints = {
   }
 };
 
-
-getSources();
+function TemPluginLoaded() {
+  getSources();
+}
 
 function getSources() {
   if (typeof MediaStreamTrack === 'undefined'){
