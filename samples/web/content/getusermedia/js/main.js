@@ -12,5 +12,5 @@ function errorCallback(error){
 }
 
 function TemPluginLoaded() {
-navigator.getUserMedia(constraints, successCallback, errorCallback);
+	navigator.getUserMedia(constraints, successCallback, errorCallback);
 }
