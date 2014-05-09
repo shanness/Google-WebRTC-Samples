@@ -11,6 +11,8 @@
 <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 <script src="/js/main.js"></script>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
+</head>
+<body>
 <script src="/js/adapter.js"></script>
 <object id="plugin0" type="application/x-temwebrtcplugin" width="0" height="0">
     <param name="onload" value="TemInitPlugin0" />
@@ -21,9 +23,6 @@
     initialize();
   }
 </script>
-
-</head>
-<body>
 <script type="text/javascript">
   var errorMessages = {{ error_messages }};
   var channelToken = '{{ token }}';
