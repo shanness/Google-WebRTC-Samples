@@ -33,6 +33,13 @@ function plugin0()
 }
 plugin = plugin0;
 
+function TemInitPlugin0() {
+  console.log("plugin loaded");
+  plugin().setPluginId(TemPageId, "plugin0");
+  plugin().setLogFunction(console);
+  if (TemPluginLoaded)
+    TemPluginLoaded();
+}
 
 if (navigator.mozGetUserMedia) {
   console.log("This appears to be Firefox");
@@ -260,15 +267,6 @@ if (navigator.mozGetUserMedia) {
       // Unsupported
       return;
     }
-  }
-
-
-  function TemInitPlugin0() {
-    console.log("plugin loaded");
-    plugin().setPluginId(TemPageId, "plugin0");
-    plugin().setLogFunction(console);
-    if (TemPluginLoaded)
-      TemPluginLoaded();
   }
 
   function DeInitPlugin() {
