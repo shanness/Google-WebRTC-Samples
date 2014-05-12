@@ -11,6 +11,6 @@ function errorCallback(error){
   console.log("navigator.getUserMedia error: ", error);
 }
 
-function TemPluginLoaded() {
+function WebRTCReadyCb() {
 	navigator.getUserMedia(constraints, successCallback, errorCallback);
 }

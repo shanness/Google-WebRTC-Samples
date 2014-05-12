@@ -13,16 +13,16 @@
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 </head>
 <body>
+<script type="text/javascript"> 
+  function WebRTCReadyCb() {
+    setTimeout(initialize, 1);
+  }
+</script>
 <script src="/js/adapter.js"></script>
 <object id="plugin0" type="application/x-temwebrtcplugin" width="0" height="0">
     <param name="onload" value="TemInitPlugin0" />
     <param name="pluginId" value="plugin0" />
 </object><br />
-<script type="text/javascript"> 
-  function TemPluginLoaded() {
-    initialize();
-  }
-</script>
 <script type="text/javascript">
   var errorMessages = {{ error_messages }};
   var channelToken = '{{ token }}';
