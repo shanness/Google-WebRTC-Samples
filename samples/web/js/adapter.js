@@ -32,7 +32,7 @@ TemPrivateWebRTCReadyCb = function() {
   // Need to prevent Chrome + plugin form calling WebRTCReadyCb twice
   arguments.callee.StaticWasInit = arguments.callee.StaticWasInit || 1;
   if (arguments.callee.StaticWasInit == 1)
-    if (WebRTCReadyCb)
+    if (typeof WebRTCReadyCb === 'function')
       WebRTCReadyCb();
   arguments.callee.StaticWasInit++;
 
