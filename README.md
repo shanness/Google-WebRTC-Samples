@@ -18,6 +18,8 @@ Tests updated today
 
 [ICE candidate gathering](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/trickle-ice)
 
+[AppRTC](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/apprtc)
+
 Tests to be updated in the future
 =========
 
