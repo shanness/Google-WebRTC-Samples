@@ -292,6 +292,21 @@ if (navigator.mozGetUserMedia) {
     function isDefined(variable) {
       return variable != null && variable != undefined;
     }
+
+    injectPlugin = function() {
+      var frag = document.createDocumentFragment();
+      var temp = document.createElement('div');
+      temp.innerHTML = '<object id="plugin0" type="application/x-temwebrtcplugin" width="0" height="0">'
+      + '<param name="pluginId" value="plugin0" /> '
+      + '<param name="onload" value="TemInitPlugin0" />'
+      + '</object>';
+      while (temp.firstChild) {
+        frag.appendChild(temp.firstChild);
+      }
+      document.body.appendChild(frag);
+    }
+    injectPlugin();
+
     // END OF UTIL FUNCTIONS
 
     // === WEBRTC INTERFACE ===
