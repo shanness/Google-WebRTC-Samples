@@ -1,20 +1,27 @@
 
-This is a repository for client-side HTML/CSS/JavaScript WebRTC code samples.
+This repository hosts forks of the different [samples provided by Google](https://github.com/GoogleChrome/webrtc) with the  few changes needed so they would work on IE and Safari with the [plugin provided by Temasys](http://plugin.temasys.com.sg/0.8.512/)
 
-Many of the samples use new browser features. They may only work in Chrome Canary and/or Firefox Beta, and may require flags to be set.
+All of the samples use [adapter.js](https://github.com/TemasysCommunications/Google-WebRTC-Samples/blob/master/samples/web/js/adapter.js), a shim to insulate apps from spec changes and prefix differences. In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. 
 
-All of the samples use [adapter.js](https://github.com/GoogleChrome/webrtc/blob/master/samples/web/js/adapter.js), a shim to insulate apps from spec changes and prefix differences. In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. For full interop information, see [webrtc.org/interop](http://www.webrtc.org/interop).
-
-NB: all samples that use `getUserMedia()` must be run from a server. Calling `getUserMedia()` from a file:// URL will result in a PERMISSION_DENIED NavigatorUserMediaError.  See [What are some chromium command-line flags relevant to WebRTC development/testing?](http://www.webrtc.org/chrome#TOC-What-are-some-chromium-command-line-flags-relevant-to-WebRTC-development-testing-) for relevant flags.
-
-For more information about WebRTC, we maintain a list of [WebRTC Resources](https://docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit). If you've never worked with WebRTC, we recommend you start with the 2013 Google I/O [WebRTC presentation](http://www.youtube.com/watch?v=p2HzZkd2A40).
+NB for chrome: all samples that use `getUserMedia()` must be run from a server. Calling `getUserMedia()` from a file:// URL will result in a PERMISSION_DENIED NavigatorUserMediaError.  See [What are some chromium command-line flags relevant to WebRTC development/testing?](http://www.webrtc.org/chrome#TOC-What-are-some-chromium-command-line-flags-relevant-to-WebRTC-development-testing-) for relevant flags.
 
 Patches and issues welcome!
 
-The demos
+Tests updated today
 =========
 
-[getUserMedia()](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia)
+[getUserMedia()](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia) 
+
+[Audio-only peer connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection-audio)
+
+[Munge SDP](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/munge-sdp)
+
+[ICE candidate gathering](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/trickle-ice)
+
+[AppRTC](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/apprtc)
+
+Tests to be updated in the future
+=========
 
 [getUserMedia() + Canvas](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-canvas)
 
@@ -32,15 +39,9 @@ The demos
 
 [Peer connection](http://googlechrome.github.io/webrtc/samples/web/content/peerconnection)
 
-[Audio-only peer connection](http://googlechrome.github.io/webrtc/samples/web/content/peerconnection-audio)
-
 [Multiple peer connections](http://googlechrome.github.io/webrtc/samples/web/content/multiple)
 
 [Multiple relay](http://googlechrome.github.io/webrtc/samples/web/content/multiple-relay)
-
-[Munge SDP](http://googlechrome.github.io/webrtc/samples/web/content/munge-sdp)
-
-[ICE candidate gathering](http://googlechrome.github.io/webrtc/samples/web/content/trickle-ice)
 
 [Accept incoming peer connection](http://googlechrome.github.io/webrtc/samples/web/content/pr-answer)
 
