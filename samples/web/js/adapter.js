@@ -1,6 +1,6 @@
 /*
   Temasys extended adapter
-  version: 0.8.598
+  version: 0.8.619
 */
 
 var RTCPeerConnection = null;
