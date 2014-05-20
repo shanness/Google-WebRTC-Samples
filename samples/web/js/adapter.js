@@ -1,3 +1,8 @@
+/*
+  Temasys extended adapter
+  version: 0.8.598
+*/
+
 var RTCPeerConnection = null;
 var getUserMedia = null;
 var attachMediaStream = null;
