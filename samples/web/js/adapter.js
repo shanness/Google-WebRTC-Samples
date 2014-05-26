@@ -361,7 +361,7 @@ if (navigator.mozGetUserMedia) {
 
     MediaStreamTrack = {};
     MediaStreamTrack.getSources = function(callback) {
-      plugin().GetSources(callback);
+      return plugin().GetSources(callback);
     };
 
     getUserMedia = function(constraints, successCallback, failureCallback) {
