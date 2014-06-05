@@ -171,7 +171,7 @@ if (navigator.mozGetUserMedia) {
   }
 
   TemPrivateWebRTCReadyCb();
-} else if (false) { //(navigator.webkitGetUserMedia) {
+} else if (navigator.webkitGetUserMedia) {
   console.log("This appears to be Chrome");
 
   webrtcDetectedBrowser = "chrome";
@@ -308,6 +308,7 @@ if (navigator.mozGetUserMedia) {
       temp.innerHTML = '<object id="plugin0" type="application/x-temwebrtcplugin" ' + 
                                             'width="0" height="0">' + 
         '<param name="pluginId" value="plugin0" /> ' + 
+        '<param name="pageId" value="' + TemPageId + '" /> ' + 
         '<param name="onload" value="TemInitPlugin0" />' + 
       '</object>';
       while (temp.firstChild) {
