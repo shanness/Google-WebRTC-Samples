@@ -196,6 +196,7 @@ function onAddIceCandidateError(error) {
 }
 
 function trace(text) {
-  console.log((window.performance.now() / 1000).toFixed(3) + ': ' + text);
+  console.log(text);
+  // console.log((window.performance.now() / 1000).toFixed(3) + ': ' + text);
 }
 

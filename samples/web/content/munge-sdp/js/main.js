@@ -195,7 +195,11 @@ function setOffer() {
     onSetSessionDescriptionError);
 }
 
+var dd;
+
 function gotDescription1(description) {
+dd=description;
+
   offerSdpTextarea.disabled = false;
   offerSdpTextarea.value = description.sdp;
 }

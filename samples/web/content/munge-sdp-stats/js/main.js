@@ -294,7 +294,6 @@ function onAddIceCandidateError(error) {
 
 function getStats() {
   remotePeerConnection.getStats(function(stats) {
-    debugger;
     var results = stats.result();
     for(var i=0; i<results.length; i++) {
       var res = results[i];
