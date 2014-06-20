@@ -65,9 +65,11 @@ plugin = plugin0; // use this function whenever you want to call the plugin
 // TemPluginLoaded function might be called on Chrome/Firefox
 function TemInitPlugin0() {
   trace('plugin loaded');
-  plugin().setPluginId(TemPageId, 'plugin0');
-  plugin().setLogFunction(console);
-  TemPrivateWebRTCReadyCb();
+  plugin().setPluginId(TemPageId, 'plugin0'); // needed for everything, the id should match the one from the DOM
+  plugin().setLogFunction(console); // needed for logs from the plugin
+  plugin().setStrToAB(_Tem_str2ab); // needed for the DataChannel
+  plugin().setABToStr(_Tem_ab2str); // needed for the DataChannel
+  TemPrivateWebRTCReadyCb(); 
 }
 
 if (navigator.mozGetUserMedia) {
@@ -294,6 +296,20 @@ if (navigator.mozGetUserMedia) {
       return;
     }
   };
+
+  _Tem_ab2str = function(buf) {
+    return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
+  }
+
+  _Tem_str2ab = function(str) {
+    var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+    var bufView = new Uint8Array(buf);
+    for (var i=0, strLen=str.length; i<strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+
+    return buf;
+  }
 
   // defines webrtc's JS interface according to the plugin's implementation
   defineWebRTCInterface = function() { 

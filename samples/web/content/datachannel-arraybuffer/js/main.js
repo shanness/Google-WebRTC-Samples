@@ -29,19 +29,19 @@ closeButton.onclick = closeDataChannels;
 rtpSelect.onclick = enableStartButton;
 sctpSelect.onclick = enableStartButton;
 
-ab2str = function(buf) {
-  return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
-}
+// ab2str = function(buf) {
+//   return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
+// }
 
-str2ab = function(str) {
-  var buf = new ArrayBuffer(str.length); // 2 bytes for each char
-  var bufView = new Uint8Array(buf);
-  for (var i=0, strLen=str.length; i<strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
+// str2ab = function(str) {
+//   var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+//   var bufView = new Uint8Array(buf);
+//   for (var i=0, strLen=str.length; i<strLen; i++) {
+//     bufView[i] = str.charCodeAt(i);
+//   }
 
-  return buf;
-}
+//   return buf;
+// }
 
 function enableStartButton() {
   startButton.disabled = false;
@@ -88,8 +88,8 @@ function createConnection() {
     // Data Channel api supported from Chrome M25.
     // You might need to start chrome with  --enable-data-channels flag.
     sendChannel = localConnection.createDataChannel('sendDataChannel', dataConstraint);
-    sendChannel.SetStrToAB(str2ab);
-    sendChannel.SetABToStr(ab2str);
+    // sendChannel.SetStrToAB(str2ab);
+    // sendChannel.SetABToStr(ab2str);
     trace('Created send data channel');
   } catch (e) {
     alert('Failed to create data channel. ' +
@@ -202,8 +202,8 @@ function receiveChannelCallback(event) {
   receiveChannel.onmessage = onReceiveMessageCallback;
   receiveChannel.onopen = onReceiveChannelStateChange;
   receiveChannel.onclose = onReceiveChannelStateChange;
-  receiveChannel.SetStrToAB(str2ab);
-  receiveChannel.SetABToStr(ab2str);
+  // receiveChannel.SetStrToAB(str2ab);
+  // receiveChannel.SetABToStr(ab2str);
 }
 
 function onReceiveMessageCallback(event) {
