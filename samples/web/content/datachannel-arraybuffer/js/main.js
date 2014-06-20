@@ -289,39 +289,4 @@ function onReceiveChannelStateChange() {
   trace('Receive channel state is: ' + readyState);
 }
 
-function onReadAsDataURL(event, text) {
-    var data = {}; // data object to transmit over data channel
-
-    if (event) text = event.target.result; // on first invocation
-
-    if (text.length > chunkLength) {
-        data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-    } else {
-        data.message = text;
-        data.last = true;
-    }
-
-    sendChannel.send(JSON.stringify(data)); // use JSON.stringify for chrome!
-
-    var remainingDataURL = text.slice(data.message.length);
-    if (remainingDataURL.length) setTimeout(function () {
-        onReadAsDataURL(null, remainingDataURL); // continue transmitting
-    }, 500)
-}
-
-function saveToDisk(fileUrl, fileName) {
-    var save = document.createElement('a');
-    save.href = fileUrl;
-    save.target = '_blank';
-    save.download = fileName || fileUrl;
-
-    var evt = document.createEvent('MouseEvents');
-    evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-
-    save.dispatchEvent(evt);
-
-    (window.URL || window.webkitURL).revokeObjectURL(save.href);
-}
-
-
 
