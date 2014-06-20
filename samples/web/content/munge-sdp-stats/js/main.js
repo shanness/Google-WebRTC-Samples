@@ -4,6 +4,7 @@ var createOfferButton = document.querySelector('button#createOffer');
 var setOfferButton = document.querySelector('button#setOffer');
 var createAnswerButton = document.querySelector('button#createAnswer');
 var setAnswerButton = document.querySelector('button#setAnswer');
+var getStatsButton = document.querySelector('button#getStats');
 var hangupButton = document.querySelector('button#hangup');
 
 getMediaButton.onclick = getMedia;
@@ -12,6 +13,7 @@ createOfferButton.onclick = createOffer;
 setOfferButton.onclick = setOffer;
 createAnswerButton.onclick = createAnswer;
 setAnswerButton.onclick = setAnswer;
+getStatsButton.onclick = getStats;
 hangupButton.onclick = hangup;
 
 var offerSdpTextarea = document.querySelector('div#local textarea');
@@ -35,6 +37,16 @@ var sdpConstraints = {
     'OfferToReceiveVideo': true
   }
 };
+
+var bitrate = {
+  value : null,
+  bsnow : null,
+  bsbefore : null,
+  tsnow : null,
+  tsbefore : null,
+  timer : null
+};
+
 
 function WebRTCReadyCb() {
   getSources();
@@ -83,7 +95,7 @@ function gotSources(sourceInfos) {
 }
 
 function getMedia() {
-  // getMediaButton.disabled = true;
+  getMediaButton.disabled = true;
   createPeerConnectionButton.disabled = false;
 
   if (!!localStream) {
@@ -131,6 +143,7 @@ function createPeerConnection() {
   createAnswerButton.disabled = false;
   setOfferButton.disabled = false;
   setAnswerButton.disabled = false;
+  getStatsButton.disabled = false;
   hangupButton.disabled = false;
   trace('Starting call');
   var videoTracks = localStream.getVideoTracks();
@@ -195,11 +208,7 @@ function setOffer() {
     onSetSessionDescriptionError);
 }
 
-var dd;
-
 function gotDescription1(description) {
-dd=description;
-
   offerSdpTextarea.disabled = false;
   offerSdpTextarea.value = description.sdp;
 }
@@ -236,7 +245,7 @@ function gotDescription2(description) {
 function hangup() {
   remoteVideo.src = '';
   trace('Ending call');
-  localStream.stop();
+//  localStream.stop();
   localPeerConnection.close();
   remotePeerConnection.close();
   localPeerConnection = null;
@@ -280,4 +289,28 @@ function onAddIceCandidateSuccess() {
 
 function onAddIceCandidateError(error) {
   trace('Failed to add Ice Candidate: ' + error.toString());
+}
+
+
+function getStats() {
+  remotePeerConnection.getStats(function(stats) {
+    var results = stats.result();
+    for(var i=0; i<results.length; i++) {
+      var res = results[i];
+      if(res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
+        bitrate.bsnow = res.stat('bytesReceived');
+        bitrate.tsnow = res.timestamp;
+        if(bitrate.bsbefore === null || bitrate.tsbefore === null) { 
+          // Skip this round 
+          bitrate.bsbefore = bitrate.bsnow; 
+          bitrate.tsbefore = bitrate.tsnow; 
+        }
+        else { 
+          // Calculate bitrate 
+          var bitRate = Math.round((bitrate.bsnow - bitrate.bsbefore) * 8 / (bitrate.tsnow - bitrate.tsbefore)); 
+          bitrate.value = bitRate + ' kbits/sec'; //~ Janus.log("Estimated bitrate is " + config.bitrate.value); config.bitrate.bsbefore = config.bitrate.bsnow; config.bitrate.tsbefore = config.bitrate.tsnow; 
+        }
+      }
+    }
+  });
 }
