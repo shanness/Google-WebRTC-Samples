@@ -83,7 +83,7 @@ function gotSources(sourceInfos) {
 }
 
 function getMedia() {
-  getMediaButton.disabled = true;
+  // getMediaButton.disabled = true;
   createPeerConnectionButton.disabled = false;
 
   if (!!localStream) {
@@ -236,7 +236,7 @@ function gotDescription2(description) {
 function hangup() {
   remoteVideo.src = '';
   trace('Ending call');
-//  localStream.stop();
+  localStream.stop();
   localPeerConnection.close();
   remotePeerConnection.close();
   localPeerConnection = null;

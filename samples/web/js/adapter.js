@@ -1,6 +1,6 @@
 /*
   Temasys extended adapter
-  version: 0.8.703
+  version: 0.8.725
 */
 
 var RTCPeerConnection = null;
@@ -171,7 +171,7 @@ if (navigator.mozGetUserMedia) {
   }
 
   TemPrivateWebRTCReadyCb();
-} else if (navigator.webkitGetUserMedia) {
+} else if (false) { // (navigator.webkitGetUserMedia) {
   console.log("This appears to be Chrome");
 
   webrtcDetectedBrowser = "chrome";
