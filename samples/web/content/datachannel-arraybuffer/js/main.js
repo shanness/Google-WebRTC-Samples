@@ -1,5 +1,17 @@
 var chunkLength = 1000;
 var arrayToStoreChunks = [];
+var sendCounter = 0;
+var typeList = [Int8Array,
+                Uint8Array,
+                Int16Array,
+                Uint16Array,
+                Int32Array,
+                Uint32Array,
+                Float32Array, 
+                Float64Array];
+var bufSize = 10;
+var sendBuf = null;
+var receiveBuf = null;
 
 var localConnection, remotePeerConnection, sendChannel, receiveChannel, pcConstraint, dataConstraint;
 // var dataChannelSend = document.querySelector('textarea#dataChannelSend');
@@ -9,9 +21,10 @@ var rtpSelect = document.querySelector('input#useRtp');
 var startButton = document.querySelector('button#startButton');
 var sendButton = document.querySelector('button#sendButton');
 var closeButton = document.querySelector('button#closeButton');
+var resultsTable = document.querySelector('table#resultsTable');
 
 startButton.onclick = createConnection;
-sendButton.onclick = sendData;
+sendButton.onclick = startSending;
 closeButton.onclick = closeDataChannels;
 rtpSelect.onclick = enableStartButton;
 sctpSelect.onclick = enableStartButton;
@@ -102,18 +115,30 @@ function onCreateSessionDescriptionError(error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
-function sendData() {
-  var buff = new Float64Array(10);
-  buff[2] = 82;
-  buff[3] = 4294967290; //Math.floor((Math.random() * 100) + 1);
-  buff[4] = 7;
-  buff[5] = 3.980;
-  buff[8] = 6;
-  buff[9] = Math.floor((Math.random() * 100) + 1);
+function startSending() {
+  // init values
+  sendCounter = 0;
 
-  console.log('sending');
-  console.log(buff);
-  var m = sendChannel.send(buff);
+  // reset table
+  while (resultsTable.children.length != 1)
+    resultsTable.deleteRow(resultsTable.children.length - 1);
+
+  // start testing process
+  sendData();
+}
+
+function sendData() {
+  // create a new buffer
+  sendBuf = new typeList[sendCounter](bufSize);
+  for (var i = 0; i < bufSize; i++) 
+    sendBuf[i] = (Math.random() * 100);
+
+  // log the value
+  console.log('send: ');
+  console.log(sendBuf);
+
+  // send the buffer
+  sendChannel.send(sendBuf);
 }
 
 function closeDataChannels() {
@@ -182,19 +207,69 @@ function receiveChannelCallback(event) {
 }
 
 function onReceiveMessageCallback(event) {
-  var data = event.data;
-
-  var buf = new Float64Array(data);
+  // parse received data
+  receiveBuf = new typeList[sendCounter](event.data);
   console.log('received: ');
-  console.log(buf);
+  console.log(receiveBuf);
 
-  
-  // arrayToStoreChunks.push(data.message); // pushing chunks in array
-  // if (data.last) {
-  // 	saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
-  // 	arrayToStoreChunks = []; // resetting array
-  // }
+  // populate result table
+  var row = document.createElement("tr");
 
+  typeCell = document.createElement("td");
+  sentCell = document.createElement("td");
+  receivedCell = document.createElement("td");
+  validCell = document.createElement("td");
+
+  text = document.createTextNode(typeList[sendCounter].name);
+  typeCell.appendChild(text);
+
+  text = document.createTextNode(makeStringWithBuffer(sendBuf));
+  sentCell.appendChild(text);
+
+  text = document.createTextNode(makeStringWithBuffer(receiveBuf));
+  receivedCell.appendChild(text);
+
+  var valid = compareBuffers(sendBuf, receiveBuf);
+  text = document.createTextNode(valid);
+  validCell.appendChild(text);  
+  validCell.style.background = valid ? 'green' : 'red'
+
+  row.appendChild(typeCell);
+  row.appendChild(sentCell);
+  row.appendChild(receivedCell);
+  row.appendChild(validCell);
+
+  resultsTable.appendChild(row);
+
+  // start next sending
+  sendCounter++;
+  if (sendCounter < typeList.length)
+    sendData();
+}
+
+// strigigies a bufferview
+function makeStringWithBuffer(buffer) {
+  var str = '[';
+  for (var i = 0; i < buffer.length; i++) {
+    str += buffer[i];
+    str += ', ';
+  }
+  str = str.substring(0, str.length - 2); // remove last comma
+  str += ']';
+
+  return str;
+}
+
+// compares 2 bufferviews 
+function compareBuffers(b1, b2) {
+  if (b1.length != b2.length)
+    return false;
+
+  for (var i = 0; i < b1.length; i++)
+    if (b1[i] != b2[i])
+      return false;
+
+  return true;
 }
 
 function onSendChannelStateChange() {
