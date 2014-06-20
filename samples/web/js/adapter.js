@@ -289,6 +289,27 @@ if (navigator.mozGetUserMedia) {
       // Unsupported
       return;
     }
+  };
+
+  _Tem_ab2str = function(buf) {
+    if (typeof buf == 'string')
+      return buf;
+    else
+      return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
+  }
+
+  _Tem_str2ab = function(str) {
+    if (typeof buf == 'string')
+      return buf;
+    else {
+      var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+      var bufView = new Uint8Array(buf);
+      for (var i=0, strLen=str.length; i<strLen; i++) {
+        bufView[i] = str.charCodeAt(i);
+      }
+
+      return buf;
+    }
   }
 
   // defines webrtc's JS interface according to the plugin's implementation
