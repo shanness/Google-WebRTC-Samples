@@ -32,7 +32,9 @@ function createConnection() {
   dataChannelSend.placeholder = '';
   var servers = null;
   pcConstraint = null;
-  dataConstraint = null;
+  dataConstraint = {
+    'id': 34
+  };
   if (sctpSelect.checked &&
      (webrtcDetectedBrowser === 'chrome' && webrtcDetectedVersion >= 31) ||
       webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'Safari'){

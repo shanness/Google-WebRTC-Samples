@@ -1,6 +1,7 @@
+
 /*
   Temasys extended adapter
-  version: 0.8.725
+  version: 0.8.768
 */
 
 var RTCPeerConnection = null;
@@ -31,46 +32,42 @@ function maybeFixConfiguration(pcConfig) {
   }
 }
 
-var TemPageId = Math.random().toString(36).slice(2); // Unique identifier of each opened page
+///
+/// Unique identifier of each opened page
+///
+var TemPageId = Math.random().toString(36).slice(2); 
 
+///
+/// Private function that will be called once the browser 
+/// is WebRTC Ready. This can be because the plugin natively
+/// WebRTC ready, or because the plugin was successfuly 
+/// initialised
+/// This callback will launch the function WebRTCReadyCb if 
+/// it is defined. Override this function if you need to do
+/// anything "as soon as the browser is ready"
+///
 var TemStaticWasInit = 1;
 TemPrivateWebRTCReadyCb = function() {
   // webRTC ready Cb, should only be called once. 
   // Need to prevent Chrome + plugin form calling WebRTCReadyCb twice
-  // arguments.callee.StaticWasInit = arguments.callee.StaticWasInit || 1;
   if (TemStaticWasInit === 1) {
     if (typeof WebRTCReadyCb === 'function') {
       WebRTCReadyCb();
     }
   }
   TemStaticWasInit++;
-
-  // WebRTCReadyCb is callback function called when the browser is webrtc ready
-  // this can be because of the browser or because of the plugin
-  // Override WebRTCReadyCb and use it to do whatever you need to do when the
-  // page is ready
-
 }; 
-function plugin0() {
-  return document.getElementById('plugin0');
-}
-plugin = plugin0; // use this function whenever you want to call the plugin
 
-// !!! DO NOT OVERRIDE THIS FUNCTION !!!
-// This function will be called when plugin is ready
-// it sends necessary details to the plugin. 
-// If you need to do something once the page/plugin is ready, override
-// TemPrivateWebRTCReadyCb instead.
-// This function is not in the IE/Safari condition brackets so that
-// TemPluginLoaded function might be called on Chrome/Firefox
-function TemInitPlugin0() {
-  trace('plugin loaded');
-  plugin().setPluginId(TemPageId, 'plugin0'); // needed for everything, the id should match the one from the DOM
-  plugin().setLogFunction(console); // needed for logs from the plugin
-  plugin().setStrToAB(_Tem_str2ab); // needed for the DataChannel
-  plugin().setABToStr(_Tem_ab2str); // needed for the DataChannel
-  TemPrivateWebRTCReadyCb(); 
+///
+/// DO NOT OVERLOAD THIS FUNCTION
+/// we define a function to access the plugin API
+/// call plugin() whenever you need to access the plugin API
+///
+function plugin0() {
+  return document.getElementById('_Tem_plugin0');
 }
+plugin = plugin0; 
+
 
 if (navigator.mozGetUserMedia) {
   console.log("This appears to be Firefox");
@@ -173,7 +170,7 @@ if (navigator.mozGetUserMedia) {
   }
 
   TemPrivateWebRTCReadyCb();
-} else if (false) { // (navigator.webkitGetUserMedia) {
+} else if (navigator.webkitGetUserMedia) {
   console.log("This appears to be Chrome");
 
   webrtcDetectedBrowser = "chrome";
@@ -253,12 +250,19 @@ if (navigator.mozGetUserMedia) {
   };
 
   TemPrivateWebRTCReadyCb();
-} else if (navigator.userAgent.indexOf('Safari')) { ////////////////////////////////////////////////
+} else { // Non WebRTC ready browser /////////////////////////////////////////////////////
+  ///
+  /// This part of the adatper is plugin specific
+  ///
+
   // Note: IE is detected as Safari...
   console.log('This appears to be either Safari or IE');
   webrtcDetectedBrowser = 'Safari';
 
-  // Browser identification // TODO: move this up and use it for implementation choice
+  ///
+  /// These booleans tell you on which browser you are working
+  ///
+  // TODO: move this up and use it for implementation choice
   var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
     // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
   var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
@@ -267,12 +271,13 @@ if (navigator.mozGetUserMedia) {
   var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
   var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
 
-
-  // This function detects whether or not a plugin is installed
-  // Com name : the company name,
-  // plugName : the plugin name
-  // installedCb : callback if the plugin is detected (no argument)
-  // notInstalledCb : callback if the plugin is not detected (no argument)
+  ///
+  /// This function detects whether or not a plugin is installed
+  /// Com name : the company name,
+  /// plugName : the plugin name
+  /// installedCb : callback if the plugin is detected (no argument)
+  /// notInstalledCb : callback if the plugin is not detected (no argument)
+  ///
   isPluginInstalled = function(comName, plugName, installedCb, notInstalledCb) {
     if (isChrome || isSafari || isFirefox) { // Not IE (firefox, for example)
       var pluginArray = navigator.plugins;
@@ -297,20 +302,6 @@ if (navigator.mozGetUserMedia) {
     }
   };
 
-  _Tem_ab2str = function(buf) {
-    return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
-  }
-
-  _Tem_str2ab = function(str) {
-    var buf = new ArrayBuffer(str.length); // 2 bytes for each char
-    var bufView = new Uint8Array(buf);
-    for (var i=0, strLen=str.length; i<strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-
-    return buf;
-  }
-
   // defines webrtc's JS interface according to the plugin's implementation
   defineWebRTCInterface = function() { 
     // ==== UTIL FUNCTIONS ===
@@ -321,11 +312,13 @@ if (navigator.mozGetUserMedia) {
     injectPlugin = function() {
       var frag = document.createDocumentFragment();
       var temp = document.createElement('div');
-      temp.innerHTML = '<object id="plugin0" type="application/x-temwebrtcplugin" ' + 
-                                            'width="0" height="0">' + 
-        '<param name="pluginId" value="plugin0" /> ' + 
+      temp.innerHTML = '<object id="_Tem_plugin0" type="application/x-temwebrtcplugin" ' + 
+                                            'width="1" height="1">' + 
+        '<param name="pluginId" value="_Tem_plugin0" /> ' + 
+        '<param name="windowless" value="false" /> ' + 
         '<param name="pageId" value="' + TemPageId + '" /> ' + 
-        '<param name="onload" value="TemInitPlugin0" />' + 
+        '<param name="onload" value="TemPrivateWebRTCReadyCb" />' + 
+        '<param name="forceGetAllCams" value="True" />' + 
       '</object>';
       while (temp.firstChild) {
         frag.appendChild(temp.firstChild);
@@ -341,16 +334,16 @@ if (navigator.mozGetUserMedia) {
       var iceServer = null;
       var url_parts = url.split(':');
       if (url_parts[0].indexOf('stun') === 0) {
-          // Create iceServer with stun url.
-          iceServer = { 'url': url, 'hasCredentials': false};
-        } else if (url_parts[0].indexOf('turn') === 0) {
-          iceServer = { 'url': url,
-          'hasCredentials': true,
-          'credential': password,
-          'username': username };
-        }
-        return iceServer;
-      };
+        // Create iceServer with stun url.
+        iceServer = { 'url': url, 'hasCredentials': false};
+      } else if (url_parts[0].indexOf('turn') === 0) {
+        iceServer = { 'url': url,
+        'hasCredentials': true,
+        'credential': password,
+        'username': username };
+      }
+      return iceServer;
+    };
 
     createIceServers = function(urls, username, password) {  
       var iceServers = [];
@@ -410,6 +403,7 @@ if (navigator.mozGetUserMedia) {
             classHTML + 'type="application/x-temwebrtcplugin">' + 
             '<param name="pluginId" value="' + elementId + '" /> ' + 
             '<param name="pageId" value="' + TemPageId + '" /> ' + 
+            '<param name="windowless" value="true" /> ' + 
             '<param name="streamId" value="' + stream.id + '" /> ' + 
           '</object>';
           while (temp.firstChild) {
@@ -488,6 +482,5 @@ if (navigator.mozGetUserMedia) {
 
   // Try to detect the plugin and act accordingly
   isPluginInstalled('Tem', 'TemWebRTCPlugin', defineWebRTCInterface, pluginNeededButNotInstalledCb);
-} else {
-  console.log('Browser does not appear to be WebRTC-capable');
-}
+
+} 

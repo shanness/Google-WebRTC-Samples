@@ -45,7 +45,7 @@ function getSources() {
     alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
   } else {
     MediaStreamTrack.getSources(gotSources);
-    selectSourceDiv.classList.remove('hidden');
+    // selectSourceDiv.classList.remove('hidden');
   }
 }
 
