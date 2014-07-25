@@ -34,18 +34,7 @@ section:last-child {
 
   <section>
 
-
-    <p>This is a repository for client-side HTML/CSS/JavaScript WebRTC code samples. The source for these samples is available at <a href="//github.com/GoogleChrome/webrtc" title="View Github repositry for these files">github.com/GoogleChrome/webrtc</a>.</p>
-
-    <p>Some of the samples use new browser features. They may only work in <a href="//www.google.co.uk/intl/en/chrome/browser/canary.html" title="Download Chrome Canary">Chrome Canary</a> and/or <a href="http://www.mozilla.org/firefox/beta/" title="Download Firefox Beta">Firefox Beta</a>, and may require flags to be set.</p>
-
-    <p>Most of the samples use <a href="//github.com/GoogleChrome/webrtc/blob/master/samples/web/js/adapter.js">adapter.js</a>, a shim to insulate apps from spec changes and prefix differences. (In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. For full interop information, see <a href="//www.webrtc.org/interop">webrtc.org/interop</a>.)</p>
-
-    <p>Please note that all samples that use <code>getUserMedia()</code> must be run from a server. Calling <code>getUserMedia()</code> from a file:// URL will result in a PERMISSION_DENIED NavigatorUserMediaError.</p>
-
-    <p>For more information about WebRTC, we maintain a list of <a href="//docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit">WebRTC Resources</a>. If you've never worked with WebRTC, we recommend you start with the 2013 Google I/O <a href="//www.youtube.com/watch?v=p2HzZkd2A40">WebRTC presentation</a>.</p>
-
-    <p>Patches and issues welcome!</p>
+    <p>This following examples are forks of Google's samples to test WebRTC <a href="//github.com/GoogleChrome/webrtc" title="View Github repositry for these files">github.com/GoogleChrome/webrtc</a> with the  few changes needed so they would work on IE and Safari with the  <a href="//github.com/GoogleChrome/webrtc" title="View Github repositry for these files"> plugin provided by Temasys</a>
 
   </section>
 
@@ -55,23 +44,27 @@ section:last-child {
 
 <!--     <p><a href="//apprtc.appspot.com" title="WebRTC video chat application">Video chat</a></p>
  -->
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia">getUserMedia()</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-canvas">getUserMedia() + Canvas</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/getusermedia/index.html">getUserMedia()</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-filter">getUserMedia() + Canvas + CSS filters</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/getusermedia-source/index.html">Choose camera and microphone</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-resolution">Choose camera resolution</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/trickle-ice/index.html">ICE candidate gathering</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-source">Choose camera and microphone</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/peerconnection/index.html">Peer connection</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-audio">Audio-only getUserMedia() output to local audio element</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/multiple/index.html">Multiple peer connections</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/getusermedia-volume">Audio-only getUserMedia() displaying volume</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/multiple-relay/index.html">Multiple relay</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/peerconnection">Peer connection</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/munge-sdp/index.html">Munge SDP</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/peerconnection-audio">Audio-only peer connection</a></p>
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/peerconnection-audio/index.html">Audio-only peer connection</a></p>
+
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/peerconnection-states/index.html">Peer connection states</a></p>    
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/datachannel/index.html">Data channels</a></p>
+
+    <p><a href="https://plugin.temasys.com.sg/WebRTC-samples/samples/web/content/datachannel-arraybuffer/index.html">Data channels with arraybuffers</a></p>
 
     <p><a href="//googlechrome.github.io/webrtc/samples/web/content/multiple">Multiple peer connections</a></p>
 
@@ -81,25 +74,9 @@ section:last-child {
 
     <p><a href="//googlechrome.github.io/webrtc/samples/web/content/pr-answer">Accept incoming peer connection</a></p>
 
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/peerconnection-states">Peer connection states</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/webaudio-input">Web Audio output as input to peer connection</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/datachannel">Data channels</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/constraints">Constraints and stats</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/create-offer">Display createOffer output</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/dtmf">DTMF</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/face">Face tracking</a></p>
-
-    <p><a href="//googlechrome.github.io/webrtc/samples/web/content/trickle-ice">ICE candidate gathering</a></p>
-
   </section>
 
-  <a href="//github.com/GoogleChrome/webrtc" title="View the repository" id="viewSource">github.com/GoogleChrome/webrtc</a>
+  <a href="https://github.com/Temasys/Google-WebRTC-Samples" title="View the repository" id="viewSource">View samples source code</a>
 
   </div>
 

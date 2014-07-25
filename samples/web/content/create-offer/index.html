@@ -4,7 +4,6 @@
 <!-- This sample demonstrates calling createOffer to get a SDP blob that
      indicates the capabilities of the PeerConnection. -->
 <title>Show createOffer Output Demo</title>
-<script src="../../js/adapter.js"></script>
 <style>
 button {
   font: 18px sans-serif;
@@ -36,6 +35,8 @@ textarea {
 <button id="start" onclick="createOffer()">Create Offer</button><br>
 <br>
 <textarea id="output"></textarea>
+
+<script src="../../js/adapter.js"></script>
 <script>
 var numAudioTracks = document.getElementById('num-audio-tracks');
 var audio = document.getElementById('audio');

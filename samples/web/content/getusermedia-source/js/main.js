@@ -23,16 +23,9 @@ function gotSources(sourceInfos) {
   }
 }
 
-if (typeof MediaStreamTrack === 'undefined'){
-  alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
-} else {
-  MediaStreamTrack.getSources(gotSources);
-}
-
-
 function successCallback(stream) {
   window.stream = stream; // make stream available to console
-  videoElement.src = window.URL.createObjectURL(stream);
+  videoElement = attachMediaStream(videoElement, stream);
 }
 
 function errorCallback(error){
@@ -60,4 +53,12 @@ function start(){
 audioSelect.onchange = start;
 videoSelect.onchange = start;
 
-start();
+WebRTCReadyCb = function() {
+  if (typeof MediaStreamTrack === 'undefined'){
+    alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
+  } else {
+    MediaStreamTrack.getSources(gotSources);
+  }
+  
+  start();
+}

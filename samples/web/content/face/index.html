@@ -5,7 +5,7 @@
 <script type="text/javascript" src="../../js/lib/ccv.js"></script>
 <script type="text/javascript" src="../../js/lib/face.js"></script>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
-<script src="../../js/adapter.js"></script>
+
   <style type="text/css">
 * { margin:0; padding:0; } /* to remove the top and left whitespace */
 html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
@@ -137,12 +137,15 @@ onFailedStream = function(error) {
   //trace_warning("Failed to get access to local media. Error code was " + error.code);
 }
 
+WebRTCReadyCb = function() {
+  setTimeout(initialize, 1);
+};
 
-setTimeout(initialize, 1);
 </script>
 
   <video id="localVideo" autoplay="autoplay" muted="true"></video>
   <canvas width="1000" height="1000" id="localCanvas"></canvas>
   <a href="http://liuliu.me/eyes/javascript-face-detection-explained"><div id="credit">JS Face Detect by Liu Liu</div></a>
+<script src="../../js/adapter.js"></script>
 </body>
 </html>

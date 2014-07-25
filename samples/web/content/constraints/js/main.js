@@ -32,7 +32,9 @@ var localStream;
 var bytesPrev = 0;
 var timestampPrev = 0;
 
-main();
+WebRTCReadyCb() {
+  main();
+}
 
 function main() {
   displayGetUserMediaConstraints();
@@ -61,7 +63,7 @@ function gotStream(stream) {
   connectButton.disabled = false;
   console.log('GetUserMedia succeeded');
   localStream = stream;
-  attachMediaStream(localVideo, stream);
+  localVideo = attachMediaStream(localVideo, stream);
 }
 
 function getUserMediaConstraints() {
@@ -145,7 +147,7 @@ function createPeerConnection() {
   };
   remotePeerConnection.onaddstream = function (e) {
     console.log('remotePeerConnection got stream');
-    attachMediaStream(remoteVideo, e.stream);
+    remoteVideo = attachMediaStream(remoteVideo, e.stream);
     console.log('Remote video is ' + remoteVideo.src);
   };
   localPeerConnection.createOffer(function (desc) {

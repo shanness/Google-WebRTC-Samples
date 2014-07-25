@@ -3,7 +3,6 @@
 <head>
 <title>PeerConnection Demo 1</title>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
-<script src="../../js/adapter.js"></script>
 <style>
 video {
   border:5px solid black;
@@ -31,6 +30,8 @@ textarea {
 <button id="btn2" onclick="call()">Call</button>
 <button id="btn3" onclick="hangup()">Hang Up</button>
 <br>
+
+<script src="../../js/adapter.js"></script>
 <script>
 //var vid1 = document.getElementById("vid1");
 //var vid2 = document.getElementById("vid2");
@@ -47,7 +48,7 @@ var sdpConstraints = {'mandatory': {
 function gotStream(stream){
   trace("Received local stream");
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(vid1, stream);
+  vid1 = attachMediaStream(vid1, stream);
   localstream = stream;
   btn2.disabled = false;
 }
@@ -148,13 +149,13 @@ function hangup() {
 
 function gotRemoteStream1(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(vid2, e.stream);
+  vid2 = attachMediaStream(vid2, e.stream);
   trace("PC1: Received remote stream");
 }
 
 function gotRemoteStream2(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(vid3, e.stream);
+  vid3 = attachMediaStream(vid3, e.stream);
   trace("PC2: Received remote stream");
 }
 

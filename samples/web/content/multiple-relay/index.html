@@ -3,8 +3,7 @@
 <head>
 <title>PeerConnection Demo 1</title>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
-<script src="../../js/adapter.js"></script>
-<script src="../../js/videopipe.js"></script>
+
 <style>
 video {
   border:5px solid black;
@@ -35,6 +34,9 @@ textarea {
 <button id="btn4" onclick="hangup()">Hang Up</button>
 <br>
 <textarea id="ta1"></textarea><br>
+
+<script src="../../js/adapter.js"></script>
+<script src="../../js/videopipe.js"></script>
 <script>
 btn1.disabled = false;
 btn2.disabled = true;
@@ -46,23 +48,23 @@ var localstream;
 var remotestream;
 
 function gotStream(stream){
-  trace("Received local stream");
-  attachMediaStream(vid1, stream);
+  console.log("Received local stream");
+  vid1 = attachMediaStream(vid1, stream);
   localstream = stream;
   btn2.disabled = false;
 }
 
 function gotRemoteStream(stream){
   remotestream = stream;
-  attachMediaStream(vid2, stream);
-  trace("Received remote stream");
-  trace(pipes.length + ' elements in chain');
+  vid2 = attachMediaStream(vid2, stream);
+  console.log("Received remote stream");
+  console.log(pipes.length + ' elements in chain');
   ta1.textContent = pipes.length + ' elements in chain';
   btn3.disabled = false;
 }
 
 function start() {
-  trace("Requesting local stream");
+  console.log("Requesting local stream");
   btn1.disabled = true;
   getUserMedia({audio:false, video:true},
                 gotStream,
@@ -75,7 +77,7 @@ function call() {
   btn2.disabled = true;
   btn3.disabled = false;
   btn4.disabled = false;
-  trace("Starting call");
+  console.log("Starting call");
   pipes.push(new VideoPipe(localstream, gotRemoteStream));
 }
 
@@ -85,7 +87,7 @@ function addrelay() {
 }
 
 function hangup() {
-  trace("Ending call");
+  console.log("Ending call");
   while (pipes.length > 0) {
     var pipe = pipes.pop()
     pipe.close();

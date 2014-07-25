@@ -28,11 +28,11 @@ remoteVideo.onresize = function() {
         remoteVideo.videoWidth  + 'x' + remoteVideo.videoHeight);
   // We'll use the first onsize callback as an indication that video has started
   // playing out.
-  if (startTime) {
-    var elapsedTime = performance.now() - startTime;
-    trace('Setup time: ' + elapsedTime.toFixed(3) + 'ms');
-    startTime = null;
-  }
+  // if (startTime) {
+  //   var elapsedTime = performance.now() - startTime;
+  //   trace('Setup time: ' + elapsedTime.toFixed(3) + 'ms');
+  //   startTime = null;
+  // }
 }
 
 var localStream, pc1, pc2;
@@ -53,7 +53,7 @@ function getOtherPc(pc) {
 function gotStream(stream) {
   trace('Received local stream');
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(localVideo, stream);
+  localVideo = attachMediaStream(localVideo, stream);
   localStream = stream;
   callButton.disabled = false;
 }
@@ -75,7 +75,7 @@ function call() {
   callButton.disabled = true;
   hangupButton.disabled = false;
   trace('Starting call');
-  startTime = performance.now();
+  // startTime = performance.now();
   var videoTracks = localStream.getVideoTracks();
   var audioTracks = localStream.getAudioTracks();
   if (videoTracks.length > 0)
@@ -128,7 +128,7 @@ function onSetRemoteSuccess(pc) {
 
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(remoteVideo, e.stream);
+  remoteVideo = attachMediaStream(remoteVideo, e.stream);
   trace('pc2 received remote stream');
 }
 
