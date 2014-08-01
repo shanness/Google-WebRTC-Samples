@@ -4,7 +4,7 @@ constraints = {audio: false, video: true};
 
 function successCallback(stream){
   window.stream = stream; // stream available to console
-	video = attachMediaStream(video, stream);
+  video = attachMediaStream(video, stream);
 }
 
 function errorCallback(error){

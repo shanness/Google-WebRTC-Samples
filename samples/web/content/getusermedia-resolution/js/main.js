@@ -10,7 +10,13 @@ navigator.getUserMedia = navigator.getUserMedia ||
 
 function successCallback(stream) {
   window.stream = stream; // stream available to console
-  video.src = window.URL.createObjectURL(stream);
+  // video.src = window.URL.createObjectURL(stream);
+  video = attachMediaStream(video, stream);
+  attachEventListener(video, 'play', function () {
+        setTimeout(function () {
+            displayVideoDimensions();
+        }, 500);
+  });
 }
 
 function errorCallback(error){
