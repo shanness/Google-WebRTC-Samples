@@ -32,7 +32,7 @@ var localStream;
 var bytesPrev = 0;
 var timestampPrev = 0;
 
-WebRTCReadyCb() {
+function WebRTCReadyCb() {
   main();
 }
 
@@ -158,8 +158,8 @@ function createPeerConnection() {
       console.log('remotePeerConnection answering');
       remotePeerConnection.setLocalDescription(desc2);
       localPeerConnection.setRemoteDescription(desc2);
-    });
-  });
+    }, function (e) { console.log("Error on createAnswer."); });
+  }, function (e) { console.log("Error on createOffer."); });
 }
 
 function onAddIceCandidateSuccess() {
