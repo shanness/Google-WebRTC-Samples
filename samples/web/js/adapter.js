@@ -1,7 +1,7 @@
 
 /*
   Temasys extended adapter
-  version: 0.8.768
+  version: 0.8.770
 */
 
 var RTCPeerConnection = null;
@@ -318,7 +318,7 @@ if (navigator.mozGetUserMedia) {
         '<param name="windowless" value="false" /> ' + 
         '<param name="pageId" value="' + TemPageId + '" /> ' + 
         '<param name="onload" value="TemPrivateWebRTCReadyCb" />' + 
-        '<param name="forceGetAllCams" value="True" />' + 
+        // '<param name="forceGetAllCams" value="True" />' +  // uncomment to be able to use virtual cams
       '</object>';
       while (temp.firstChild) {
         frag.appendChild(temp.firstChild);
