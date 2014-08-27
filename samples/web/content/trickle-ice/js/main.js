@@ -61,7 +61,7 @@ function start() {
   }
   var config = {'iceServers': iceServers };
   var constraints = {'mandatory': {'IceTransports':iceTransports}};
-  trace('Creating new PeerConnection with config=' + JSON.stringify(config) +
+  console.log('Creating new PeerConnection with config=' + JSON.stringify(config) +
         ', constraints=' + JSON.stringify(constraints));
   pc = new RTCPeerConnection(config, constraints);
   pc.onicecandidate = iceCallback;

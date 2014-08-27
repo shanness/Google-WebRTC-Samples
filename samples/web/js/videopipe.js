@@ -15,13 +15,13 @@
 
 function errorHandler(context) {
   return function(error) {
-    trace('Failure in ' + context + ': ' + error.toString);
+    console.log('Failure in ' + context + ': ' + error.toString);
   }
 }
 
 function successHandler(context) {
   return function() {
-    trace('Success in ' + context);
+    console.log('Success in ' + context);
   }
 }
 

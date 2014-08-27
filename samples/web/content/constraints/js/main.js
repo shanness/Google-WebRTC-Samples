@@ -32,7 +32,7 @@ var localStream;
 var bytesPrev = 0;
 var timestampPrev = 0;
 
-function WebRTCReadyCb() {
+window.onwebrtcready = function() {
   main();
 }
 
@@ -163,11 +163,11 @@ function createPeerConnection() {
 }
 
 function onAddIceCandidateSuccess() {
-  trace('AddIceCandidate success.');
+  console.log('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-  trace('Failed to add Ice Candidate: ' + error.toString());
+  console.log('Failed to add Ice Candidate: ' + error.toString());
 }
 
 // Augumentation of stats entries with utility functions.

@@ -39,7 +39,7 @@ function initialize() {
     return;
   }
 
-  trace('Initializing; room=' + roomKey + '.');
+  console.log('Initializing; room=' + roomKey + '.');
   card = document.getElementById('card');
   localVideo = document.getElementById('localVideo');
   // Reset localVideo display to center.
@@ -67,7 +67,7 @@ function initialize() {
 }
 
 function openChannel() {
-  trace('Opening channel.');
+  console.log('Opening channel.');
   var channel = new goog.appengine.Channel(channelToken);
   var handler = {
     'onopen': onChannelOpened,
@@ -144,7 +144,7 @@ function doGetUserMedia() {
   try {
     getUserMedia(mediaConstraints, onUserMediaSuccess,
                  onUserMediaError);
-    trace('Requested access to local media with mediaConstraints:\n' +
+    console.log('Requested access to local media with mediaConstraints:\n' +
                 '  \'' + JSON.stringify(mediaConstraints) + '\'');
   } catch (e) {
     alert('getUserMedia() failed. Is this a WebRTC capable browser?');
@@ -157,7 +157,7 @@ function createPeerConnection() {
     // Create an RTCPeerConnection via the polyfill (adapter.js).
     pc = new RTCPeerConnection(pcConfig, pcConstraints);
     pc.onicecandidate = onIceCandidate;
-    trace('Created RTCPeerConnnection with:\n' +
+    console.log('Created RTCPeerConnnection with:\n' +
                 '  config: \'' + JSON.stringify(pcConfig) + '\';\n' +
                 '  constraints: \'' + JSON.stringify(pcConstraints) + '\'.');
   } catch (e) {
@@ -177,14 +177,14 @@ function maybeStart() {
       (localStream || !hasLocalStream)) {
     // startTime = performance.now();
     setStatus('Connecting...');
-    trace('Creating PeerConnection.');
+    console.log('Creating PeerConnection.');
     createPeerConnection();
 
     if (hasLocalStream) {
-      trace('Adding local stream.');
+      console.log('Adding local stream.');
       pc.addStream(localStream);
     } else {
-      trace('Not sending any stream.');
+      console.log('Not sending any stream.');
     }
     started = true;
 
@@ -201,7 +201,7 @@ function setStatus(state) {
 
 function doCall() {
   var constraints = mergeConstraints(offerConstraints, sdpConstraints);
-  trace('Sending offer to peer, with constraints: \n' +
+  console.log('Sending offer to peer, with constraints: \n' +
               '  \'' + JSON.stringify(constraints) + '\'.')
   pc.createOffer(setLocalAndSendMessage,
                  onCreateSessionDescriptionError, constraints);
@@ -215,7 +215,7 @@ function calleeStart() {
 }
 
 function doAnswer() {
-  trace('Sending answer to peer.');
+  console.log('Sending answer to peer.');
   pc.createAnswer(setLocalAndSendMessage,
                   onCreateSessionDescriptionError, sdpConstraints);
 }
@@ -249,13 +249,13 @@ function setRemote(message) {
        onSetRemoteDescriptionSuccess, onSetSessionDescriptionError);
 
   function onSetRemoteDescriptionSuccess() {
-    trace("Set remote session description success.");
+    console.log("Set remote session description success.");
     // By now all addstream events for the setRemoteDescription have fired.
     // So we can know if the peer is sending any stream or is only receiving.
    /* if (remoteStream) {
       waitForRemoteVideo();
     } else {*/
-      trace("No remote video stream; not waiting for media to arrive.");
+      console.log("No remote video stream; not waiting for media to arrive.");
       transitionToActive();
     // }
   }
@@ -263,7 +263,7 @@ function setRemote(message) {
 
 function sendMessage(message) {
   var msgString = JSON.stringify(message);
-  trace('C->S: ' + msgString);
+  console.log('C->S: ' + msgString);
   // NOTE: AppRTCClient.java searches & parses this line; update there when
   // changing here.
   path = '/message?r=' + roomKey + '&u=' + me;
@@ -295,7 +295,7 @@ function processSignalingMessage(message) {
 }
 
 function onAddIceCandidateSuccess() {
-  trace('Remote candidate added successfully.');
+  console.log('Remote candidate added successfully.');
 }
 
 function onAddIceCandidateError(error) {
@@ -303,13 +303,13 @@ function onAddIceCandidateError(error) {
 }
 
 function onChannelOpened() {
-  trace('Channel opened.');
+  console.log('Channel opened.');
   channelReady = true;
   maybeStart();
 }
 
 function onChannelMessage(message) {
-  trace('S->C: ' + message.data);
+  console.log('S->C: ' + message.data);
   var msg = JSON.parse(message.data);
   // Since the turn response is async and also GAE might disorder the
   // Message delivery due to possible datastore query at server side,
@@ -335,17 +335,17 @@ function onChannelError() {
 }
 
 function onChannelClosed() {
-  trace('Channel closed.');
+  console.log('Channel closed.');
 }
 
 function messageError(msg) {
-  trace(msg);
+  console.log(msg);
   infoDivErrors.push(msg);
   updateInfoDiv();
 }
 
 function onUserMediaSuccess(stream) {
-  trace('User has granted access to local media.');
+  console.log('User has granted access to local media.');
   // Call the polyfill wrapper to attach the media stream to this element.
   localVideo = attachMediaStream(localVideo, stream);
   localVideo.style.opacity = 1;
@@ -369,7 +369,7 @@ function onCreateSessionDescriptionError(error) {
 }
 
 function onSetSessionDescriptionSuccess() {
-  trace('Set session description success.');
+  console.log('Set session description success.');
 }
 
 function onSetSessionDescriptionError(error) {
@@ -394,18 +394,18 @@ function onIceCandidate(event) {
                  candidate: event.candidate.candidate});
     noteIceCandidate("Local", iceCandidateType(event.candidate.candidate));
   } else {
-    trace('End of candidates.');
+    console.log('End of candidates.');
   }
 }
 
 function onRemoteStreamAdded(event) {
-  trace('Remote stream added.');
+  console.log('Remote stream added.');
   remoteVideo = attachMediaStream(remoteVideo, event.stream);
   remoteStream = event.stream;
 }
 
 function onRemoteStreamRemoved(event) {
-  trace('Remote stream removed.');
+  console.log('Remote stream removed.');
 }
 
 function onSignalingStateChanged(event) {
@@ -417,7 +417,7 @@ function onIceConnectionStateChanged(event) {
 }
 
 function onHangup() {
-  trace('Hanging up.');
+  console.log('Hanging up.');
   transitionToDone();
   localStream.stop();
   stop();
@@ -426,7 +426,7 @@ function onHangup() {
 }
 
 function onRemoteHangup() {
-  trace('Session terminated.');
+  console.log('Session terminated.');
   initiator = 0;
   transitionToWaiting();
   stop();
@@ -455,7 +455,7 @@ function waitForRemoteVideo() {
 
 function transitionToActive() {
   // var elapsedTime = performance.now() - startTime;
-  // trace('Call setup time: ' + elapsedTime + ' ms.');
+  // console.log('Call setup time: ' + elapsedTime + ' ms.');
   miniVideo = reattachMediaStream(miniVideo, localVideo);
   remoteVideo.style.opacity = 1;
   localVideo.style.opacity = 0;
@@ -549,7 +549,7 @@ function toggleVideoMute() {
   videoTracks = localStream.getVideoTracks();
 
   if (videoTracks.length === 0) {
-    trace('No local video available.');
+    console.log('No local video available.');
     return;
   }
 
@@ -557,12 +557,12 @@ function toggleVideoMute() {
     for (i = 0; i < videoTracks.length; i++) {
       videoTracks[i].enabled = true;
     }
-    trace('Video unmuted.');
+    console.log('Video unmuted.');
   } else {
     for (i = 0; i < videoTracks.length; i++) {
       videoTracks[i].enabled = false;
     }
-    trace('Video muted.');
+    console.log('Video muted.');
   }
 
   isVideoMuted = !isVideoMuted;
@@ -573,7 +573,7 @@ function toggleAudioMute() {
   audioTracks = localStream.getAudioTracks();
 
   if (audioTracks.length === 0) {
-    trace('No local audio available.');
+    console.log('No local audio available.');
     return;
   }
 
@@ -581,12 +581,12 @@ function toggleAudioMute() {
     for (i = 0; i < audioTracks.length; i++) {
       audioTracks[i].enabled = true;
     }
-    trace('Audio unmuted.');
+    console.log('Audio unmuted.');
   } else {
     for (i = 0; i < audioTracks.length; i++){
       audioTracks[i].enabled = false;
     }
-    trace('Audio muted.');
+    console.log('Audio muted.');
   }
 
   isAudioMuted = !isAudioMuted;
@@ -717,19 +717,19 @@ function preferBitRate(sdp, bitrate, mediaType) {
 
 function maybePreferAudioSendCodec(sdp) {
   if (audioSendCodec == '') {
-    trace('No preference on audio send codec.');
+    console.log('No preference on audio send codec.');
     return sdp;
   }
-  trace('Prefer audio send codec: ' + audioSendCodec);
+  console.log('Prefer audio send codec: ' + audioSendCodec);
   return preferAudioCodec(sdp, audioSendCodec);
 }
 
 function maybePreferAudioReceiveCodec(sdp) {
   if (audioRecvCodec == '') {
-    trace('No preference on audio receive codec.');
+    console.log('No preference on audio receive codec.');
     return sdp;
   }
-  trace('Prefer audio receive codec: ' + audioRecvCodec);
+  console.log('Prefer audio receive codec: ' + audioRecvCodec);
   return preferAudioCodec(sdp, audioRecvCodec);
 }
 
@@ -738,7 +738,7 @@ function maybePreferAudioReceiveCodec(sdp) {
 function preferAudioCodec(sdp, codec) {
   var fields = codec.split('/');
   if (fields.length != 2) {
-    trace('Invalid codec setting: ' + codec);
+    console.log('Invalid codec setting: ' + codec);
     return sdp;
   }
   var name = fields[0];

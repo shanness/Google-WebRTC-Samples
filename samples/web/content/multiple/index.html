@@ -46,7 +46,7 @@ var sdpConstraints = {'mandatory': {
                         'OfferToReceiveVideo':true }};
 
 function gotStream(stream){
-  trace("Received local stream");
+  console.log("Received local stream");
   // Call the polyfill wrapper to attach the media stream to this element.
   vid1 = attachMediaStream(vid1, stream);
   localstream = stream;
@@ -54,7 +54,7 @@ function gotStream(stream){
 }
 
 function start() {
-  trace("Requesting local stream");
+  console.log("Requesting local stream");
   btn1.disabled = true;
   // Call into getUserMedia via the polyfill (adapter.js).
   getUserMedia({audio:true, video:true},
@@ -64,13 +64,13 @@ function start() {
 function call() {
   btn2.disabled = true;
   btn3.disabled = false;
-  trace("Starting calls");
+  console.log("Starting calls");
   videoTracks = localstream.getVideoTracks();
   audioTracks = localstream.getAudioTracks();
   if (videoTracks.length > 0)
-    trace("Using Video device: " + videoTracks[0].label);
+    console.log("Using Video device: " + videoTracks[0].label);
   if (audioTracks.length > 0)
-    trace("Using Audio device: " + audioTracks[0].label);
+    console.log("Using Audio device: " + audioTracks[0].label);
 
   // Create an RTCPeerConnection via the polyfill (adapter.js).
   var servers = null;
@@ -79,31 +79,31 @@ function call() {
   pc1_remote.onaddstream = gotRemoteStream1;
   pc1_local.onicecandidate = iceCallback1Local;
   pc1_remote.onicecandidate = iceCallback1Remote;
-  trace("PC1: created local and remote peer connection objects");
+  console.log("PC1: created local and remote peer connection objects");
 
   pc2_local = new RTCPeerConnection(servers);
   pc2_remote = new RTCPeerConnection(servers);
   pc2_remote.onaddstream = gotRemoteStream2;
   pc2_local.onicecandidate = iceCallback2Local;
   pc2_remote.onicecandidate = iceCallback2Remote;
-  trace("PC2: created local and remote peer connection objects");
+  console.log("PC2: created local and remote peer connection objects");
 
   pc1_local.addStream(localstream);
-  trace("Adding local stream to pc1_local");
+  console.log("Adding local stream to pc1_local");
   pc1_local.createOffer(gotDescription1Local, onCreateSessionDescriptionError);
 
   pc2_local.addStream(localstream);
-  trace("Adding local stream to pc2_local");
+  console.log("Adding local stream to pc2_local");
   pc2_local.createOffer(gotDescription2Local, onCreateSessionDescriptionError);
 }
 
 function onCreateSessionDescriptionError(error) {
-  trace('Failed to create session description: ' + error.toString());
+  console.log('Failed to create session description: ' + error.toString());
 }
 
 function gotDescription1Local(desc) {
   pc1_local.setLocalDescription(desc);
-  trace("Offer from pc1_local \n" + desc.sdp);
+  console.log("Offer from pc1_local \n" + desc.sdp);
   pc1_remote.setRemoteDescription(desc);
   // Since the "remote" side has no media stream we need
   // to pass in the right constraints in order for it to
@@ -114,13 +114,13 @@ function gotDescription1Local(desc) {
 
 function gotDescription1Remote(desc) {
   pc1_remote.setLocalDescription(desc);
-  trace("Answer from pc1_remote \n" + desc.sdp);
+  console.log("Answer from pc1_remote \n" + desc.sdp);
   pc1_local.setRemoteDescription(desc);
 }
 
 function gotDescription2Local(desc) {
   pc2_local.setLocalDescription(desc);
-  trace("Offer from pc2_local \n" + desc.sdp);
+  console.log("Offer from pc2_local \n" + desc.sdp);
   pc2_remote.setRemoteDescription(desc);
   // Since the "remote" side has no media stream we need
   // to pass in the right constraints in order for it to
@@ -131,12 +131,12 @@ function gotDescription2Local(desc) {
 
 function gotDescription2Remote(desc) {
   pc2_remote.setLocalDescription(desc);
-  trace("Answer from pc2_remote \n" + desc.sdp);
+  console.log("Answer from pc2_remote \n" + desc.sdp);
   pc2_local.setRemoteDescription(desc);
 }
 
 function hangup() {
-  trace("Ending calls");
+  console.log("Ending calls");
   pc1_local.close();
   pc1_remote.close();
   pc2_local.close();
@@ -150,13 +150,13 @@ function hangup() {
 function gotRemoteStream1(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
   vid2 = attachMediaStream(vid2, e.stream);
-  trace("PC1: Received remote stream");
+  console.log("PC1: Received remote stream");
 }
 
 function gotRemoteStream2(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
   vid3 = attachMediaStream(vid3, e.stream);
-  trace("PC2: Received remote stream");
+  console.log("PC2: Received remote stream");
 }
 
 function iceCallback1Local(event) {
@@ -179,16 +179,16 @@ function handleCandidate(candidate, dest, prefix, type) {
   if (candidate) {
     dest.addIceCandidate(new RTCIceCandidate(candidate),
                          onAddIceCandidateSuccess, onAddIceCandidateError);
-    trace(prefix + "New " + type + " ICE candidate: " + candidate.candidate);
+    console.log(prefix + "New " + type + " ICE candidate: " + candidate.candidate);
   }
 }
 
 function onAddIceCandidateSuccess() {
-  trace("AddIceCandidate success.");
+  console.log("AddIceCandidate success.");
 }
 
 function onAddIceCandidateError(error) {
-  trace("Failed to add Ice Candidate: " + error.toString());
+  console.log("Failed to add Ice Candidate: " + error.toString());
 }
 </script>
 </body>

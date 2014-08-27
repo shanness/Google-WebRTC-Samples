@@ -11,6 +11,6 @@ function errorCallback(error){
   console.log("navigator.getUserMedia error: ", error);
 }
 
-function WebRTCReadyCb() {
+window.onwebrtcready = function() {
 	navigator.getUserMedia(constraints, successCallback, errorCallback);
 }
