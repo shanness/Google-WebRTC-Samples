@@ -45,9 +45,9 @@ function getSources() {
   }
 }
 
-window.onwebrtcready = function() {
+// window.onwebrtcready = function() {
   getSources();
-}
+// }
 
 function gotSources(sourceInfos) {
   var audioCount = 0;

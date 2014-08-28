@@ -13,12 +13,12 @@
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 </head>
 <body>
-<script type="text/javascript"> 
-  window.onwebrtcready = function() {
-    setTimeout(initialize, 1);
-  }
-</script>
 <script src="/js/adapter.js"></script>
+<script type="text/javascript"> 
+  // window.onwebrtcready = function() {
+    setTimeout(initialize, 1);
+  // }
+</script>
 <script type="text/javascript">
   var errorMessages = {{ error_messages }};
   var channelToken = '{{ token }}';
