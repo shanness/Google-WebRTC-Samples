@@ -713,6 +713,7 @@ if (webrtcDetectedBrowser.mozWebRTC) {
       Temasys.WebRTCPlugin.temPluginInfo.pluginId + '">' +
       '<param name="windowless" value="false" /> ' +
       '<param name="pageId" value="' + Temasys.WebRTCPlugin.TemPageId + '">';
+      // '<param name="forceGetAllCams" value="True" />'
     document.body.appendChild(Temasys.WebRTCPlugin.TemRTCPlugin);
 
     // FIXEM: dead code?
