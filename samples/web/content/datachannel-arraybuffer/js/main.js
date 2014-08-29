@@ -49,8 +49,8 @@ function createConnection() {
   pcConstraint = null;
   dataConstraint = null;
   if (sctpSelect.checked &&
-     (webrtcDetectedBrowser.browser === 'chrome' && webrtcDetectedVersion >= 31) ||
-      webrtcDetectedBrowser.browser === 'firefox' || webrtcDetectedBrowser.browser === 'Safari'){
+     (webrtcDetectedBrowser === 'chrome' && webrtcDetectedVersion >= 31) ||
+      webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'Safari'){
     // SCTP is supported from Chrome M31 and is supported in FF.
     // No need to pass DTLS constraint as it is on by default in Chrome M31.
     // For SCTP, reliable and ordered is true by default.
