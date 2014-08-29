@@ -53,12 +53,12 @@ function start(){
 audioSelect.onchange = start;
 videoSelect.onchange = start;
 
-window.onwebrtcready = function() {
-  if (typeof MediaStreamTrack === 'undefined'){
-    alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
-  } else {
-    MediaStreamTrack.getSources(gotSources);
-  }
-  
-  start();
+
+if (typeof MediaStreamTrack === 'undefined'){
+  alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
+} else {
+  MediaStreamTrack.getSources(gotSources);
 }
+
+start();
+
