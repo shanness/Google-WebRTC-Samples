@@ -260,7 +260,7 @@ function gotRemoteStream(e) {
 
 function iceCallback1(event) {
   if (event.candidate) {
-    remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    remotePeerConnection.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Local ICE candidate: \n' + event.candidate.candidate);
   }
@@ -268,7 +268,7 @@ function iceCallback1(event) {
 
 function iceCallback2(event) {
   if (event.candidate) {
-    localPeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    localPeerConnection.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   }

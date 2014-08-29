@@ -50,7 +50,8 @@ function createConnection() {
   dataConstraint = null;
   if (sctpSelect.checked &&
      (webrtcDetectedBrowser === 'chrome' && webrtcDetectedVersion >= 31) ||
-      webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'Safari'){
+      webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'Safari'
+      || webrtcDetectedBrowser ==='IE'){
     // SCTP is supported from Chrome M31 and is supported in FF.
     // No need to pass DTLS constraint as it is on by default in Chrome M31.
     // For SCTP, reliable and ordered is true by default.
@@ -156,7 +157,7 @@ function gotDescription2(desc) {
 function iceCallback1(event) {
   console.log('local ice callback');
   if (event.candidate) {
-    remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    remotePeerConnection.addIceCandidate(event.candidate,
                         onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Local ICE candidate: \n' + event.candidate.candidate);
   }
@@ -165,7 +166,7 @@ function iceCallback1(event) {
 function iceCallback2(event) {
   console.log('remote ice callback');
   if (event.candidate) {
-    localConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    localConnection.addIceCandidate(event.candidate,
                         onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   }

@@ -169,7 +169,7 @@ function iceStateCallback2() {
 
 function iceCallback1(event){
   if (event.candidate) {
-    pc2.addIceCandidate(new RTCIceCandidate(event.candidate),
+    pc2.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Local ICE candidate: \n' + event.candidate.candidate);
   } else {
@@ -179,7 +179,7 @@ function iceCallback1(event){
 
 function iceCallback2(event){
   if (event.candidate) {
-    pc1.addIceCandidate(new RTCIceCandidate(event.candidate),
+    pc1.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   } else {
