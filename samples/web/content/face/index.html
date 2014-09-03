@@ -63,10 +63,10 @@ initialize = function() {
   localCanvas = document.getElementById("localCanvas");
   try {
     navigator.getUserMedia({video:true}, onGotStream, onFailedStream);
-    //trace("Requested access to local media");
+    //console.log("Requested access to local media");
   } catch (e) {
     alert("getUserMedia error " + e);
-    //trace_e(e, "getUserMedia error");
+    //console.log_e(e, "getUserMedia error");
   }
 }
 
@@ -128,16 +128,16 @@ onGotStream = function(stream) {
   attachMediaStream(localVideo, stream);
   localStream = stream;
 
-  //trace("User has granted access to local media. url = " + url);
+  //console.log("User has granted access to local media. url = " + url);
   setTimeout(poll, 2000);
 }
 
 onFailedStream = function(error) {
   alert("Failed to get access to local media. Error code was " + error.code + ".");
-  //trace_warning("Failed to get access to local media. Error code was " + error.code);
+  //console.log_warning("Failed to get access to local media. Error code was " + error.code);
 }
 
-WebRTCReadyCb = function() {
+window.onwebrtcready = function() {
   setTimeout(initialize, 1);
 };
 

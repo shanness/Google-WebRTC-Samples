@@ -32,7 +32,7 @@ var localStream;
 var bytesPrev = 0;
 var timestampPrev = 0;
 
-WebRTCReadyCb() {
+window.onwebrtcready = function() {
   main();
 }
 
@@ -158,16 +158,16 @@ function createPeerConnection() {
       console.log('remotePeerConnection answering');
       remotePeerConnection.setLocalDescription(desc2);
       localPeerConnection.setRemoteDescription(desc2);
-    });
-  });
+    }, function (e) { console.log("Error on createAnswer."); });
+  }, function (e) { console.log("Error on createOffer."); });
 }
 
 function onAddIceCandidateSuccess() {
-  trace('AddIceCandidate success.');
+  console.log('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-  trace('Failed to add Ice Candidate: ' + error.toString());
+  console.log('Failed to add Ice Candidate: ' + error.toString());
 }
 
 // Augumentation of stats entries with utility functions.

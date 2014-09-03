@@ -37,16 +37,17 @@ function createConnection() {
   };
   if (sctpSelect.checked &&
      (webrtcDetectedBrowser === 'chrome' && webrtcDetectedVersion >= 31) ||
-      webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'Safari'){
+      webrtcDetectedBrowser === 'firefox' || webrtcDetectedBrowser === 'safari'
+      || webrtcDetectedBrowser ==='IE'){
     // SCTP is supported from Chrome M31 and is supported in FF.
     // No need to pass DTLS constraint as it is on by default in Chrome M31.
     // For SCTP, reliable and ordered is true by default.
-    trace('Using SCTP based Data Channels');
+    console.log('Using SCTP based Data Channels');
   } else {
     pcConstraint = {optional: [{RtpDataChannels: true}]};
     if (!rtpSelect.checked) {
       // Use rtp data channels for chrome versions older than M31.
-      trace('Using RTP based Data Channels,' +
+      console.log('Using RTP based Data Channels,' +
             'as you are on an older version than M31.');
       alert('Reverting to RTP based data channels,' +
             'as you are on an older version than M31.');
@@ -54,24 +55,24 @@ function createConnection() {
     }
   }
   localConnection = new RTCPeerConnection(servers, pcConstraint);
-  trace('Created local peer connection object localConnection');
+  console.log('Created local peer connection object localConnection');
 
   try {
     // Data Channel api supported from Chrome M25.
     // You might need to start chrome with  --enable-data-channels flag.
     sendChannel = localConnection.createDataChannel('sendDataChannel', dataConstraint);
-    trace('Created send data channel');
+    console.log('Created send data channel');
   } catch (e) {
     alert('Failed to create data channel. ' +
           'You need Chrome M25 or later with --enable-data-channels flag');
-    trace('Create Data channel failed with exception: ' + e.message);
+    console.log('Create Data channel failed with exception: ' + e.message);
   }
   localConnection.onicecandidate = iceCallback1;
   sendChannel.onopen = onSendChannelStateChange;
   sendChannel.onclose = onSendChannelStateChange;
 
   remotePeerConnection = new RTCPeerConnection(servers, pcConstraint);
-  trace('Created remote peer connection object remotePeerConnection');
+  console.log('Created remote peer connection object remotePeerConnection');
 
   remotePeerConnection.onicecandidate = iceCallback2;
   remotePeerConnection.ondatachannel = receiveChannelCallback;
@@ -82,26 +83,26 @@ function createConnection() {
 }
 
 function onCreateSessionDescriptionError(error) {
-  trace('Failed to create session description: ' + error.toString());
+  console.log('Failed to create session description: ' + error.toString());
 }
 
 function sendData() {
   var data = dataChannelSend.value;
   sendChannel.send(data);
-  trace('Sent Data: ' + data);
+  console.log('Sent Data: ' + data);
 }
 
 function closeDataChannels() {
-  trace('Closing data Channels');
+  console.log('Closing data Channels');
   sendChannel.close();
-  trace('Closed data channel with label: ' + sendChannel.label);
+  console.log('Closed data channel with label: ' + sendChannel.label);
   receiveChannel.close();
-  trace('Closed data channel with label: ' + receiveChannel.label);
+  console.log('Closed data channel with label: ' + receiveChannel.label);
   localConnection.close();
   remotePeerConnection.close();
   localConnection = null;
   remotePeerConnection = null;
-  trace('Closed peer connections');
+  console.log('Closed peer connections');
   startButton.disabled = false;
   sendButton.disabled = true;
   closeButton.disabled = true;
@@ -112,45 +113,45 @@ function closeDataChannels() {
 
 function gotDescription1(desc) {
   localConnection.setLocalDescription(desc);
-  trace('Offer from localConnection \n' + desc.sdp);
+  console.log('Offer from localConnection \n' + desc.sdp);
   remotePeerConnection.setRemoteDescription(desc);
   remotePeerConnection.createAnswer(gotDescription2, onCreateSessionDescriptionError);
 }
 
 function gotDescription2(desc) {
   remotePeerConnection.setLocalDescription(desc);
-  trace('Answer from remotePeerConnection \n' + desc.sdp);
+  console.log('Answer from remotePeerConnection \n' + desc.sdp);
   localConnection.setRemoteDescription(desc);
 }
 
 function iceCallback1(event) {
-  trace('local ice callback');
+  console.log('local ice callback');
   if (event.candidate) {
-    remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    remotePeerConnection.addIceCandidate(event.candidate,
                         onAddIceCandidateSuccess, onAddIceCandidateError);
-    trace('Local ICE candidate: \n' + event.candidate.candidate);
+    console.log('Local ICE candidate: \n' + event.candidate.candidate);
   }
 }
 
 function iceCallback2(event) {
-  trace('remote ice callback');
+  console.log('remote ice callback');
   if (event.candidate) {
-    localConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    localConnection.addIceCandidate(event.candidate,
                         onAddIceCandidateSuccess, onAddIceCandidateError);
-    trace('Remote ICE candidate: \n ' + event.candidate.candidate);
+    console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   }
 }
 
 function onAddIceCandidateSuccess() {
-  trace('AddIceCandidate success.');
+  console.log('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-  trace('Failed to add Ice Candidate: ' + error.toString());
+  console.log('Failed to add Ice Candidate: ' + error.toString());
 }
 
 function receiveChannelCallback(event) {
-  trace('Receive Channel Callback');
+  console.log('Receive Channel Callback');
   receiveChannel = event.channel;
   receiveChannel.onmessage = onReceiveMessageCallback;
   receiveChannel.onopen = onReceiveChannelStateChange;
@@ -158,13 +159,13 @@ function receiveChannelCallback(event) {
 }
 
 function onReceiveMessageCallback(event) {
-  trace('Received Message');
+  console.log('Received Message');
   dataChannelReceive.value = event.data;
 }
 
 function onSendChannelStateChange() {
   var readyState = sendChannel.readyState;
-  trace('Send channel state is: ' + readyState);
+  console.log('Send channel state is: ' + readyState);
   if (readyState == 'open') {
     dataChannelSend.disabled = false;
     dataChannelSend.focus();
@@ -179,5 +180,5 @@ function onSendChannelStateChange() {
 
 function onReceiveChannelStateChange() {
   var readyState = receiveChannel.readyState;
-  trace('Receive channel state is: ' + readyState);
+  console.log('Receive channel state is: ' + readyState);
 }

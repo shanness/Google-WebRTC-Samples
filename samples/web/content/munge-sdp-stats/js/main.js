@@ -48,7 +48,7 @@ var bitrate = {
 };
 
 
-function WebRTCReadyCb() {
+window.onwebrtcready = function() {
   getSources();
 }
 
@@ -103,9 +103,9 @@ function getMedia() {
     localStream.stop();
   }
   var audioSource = audioSelect.value;
-  trace('Selected audio source: ' + audioSource);
+  console.log('Selected audio source: ' + audioSource);
   var videoSource = videoSelect.value;
-  trace('Selected video source: ' + videoSource);
+  console.log('Selected video source: ' + videoSource);
 
   var constraints = {};
   if (audioSource === '') {
@@ -124,14 +124,14 @@ function getMedia() {
     };
   }
 
-  trace('Requested local stream');
+  console.log('Requested local stream');
   getUserMedia(constraints, gotStream, function(e){
     console.log("navigator.getUserMedia error: ", e);
   });
 }
 
 function gotStream(stream) {
-  trace('Received local stream');
+  console.log('Received local stream');
   // Call the polyfill wrapper to attach the media stream to this element.
   localVideo = attachMediaStream(localVideo, stream);
   localStream = stream;
@@ -145,34 +145,34 @@ function createPeerConnection() {
   setAnswerButton.disabled = false;
   getStatsButton.disabled = false;
   hangupButton.disabled = false;
-  trace('Starting call');
+  console.log('Starting call');
   var videoTracks = localStream.getVideoTracks();
   var audioTracks = localStream.getAudioTracks();
   if (videoTracks.length > 0) {
-    trace('Using video device: ' + videoTracks[0].label);
+    console.log('Using video device: ' + videoTracks[0].label);
   }
   if (audioTracks.length > 0) {
-    trace('Using audio device: ' + audioTracks[0].label);
+    console.log('Using audio device: ' + audioTracks[0].label);
   }
   var servers = null;
   localPeerConnection = new RTCPeerConnection(servers);
-  trace('Created local peer connection object localPeerConnection');
+  console.log('Created local peer connection object localPeerConnection');
   localPeerConnection.onicecandidate = iceCallback1;
   remotePeerConnection = new RTCPeerConnection(servers);
-  trace('Created remote peer connection object remotePeerConnection');
+  console.log('Created remote peer connection object remotePeerConnection');
   remotePeerConnection.onicecandidate = iceCallback2;
   remotePeerConnection.onaddstream = gotRemoteStream;
 
   localPeerConnection.addStream(localStream);
-  trace('Adding Local Stream to peer connection');
+  console.log('Adding Local Stream to peer connection');
 }
 
 function onSetSessionDescriptionSuccess() {
-  trace('Set session description success.');
+  console.log('Set session description success.');
 }
 
 function onSetSessionDescriptionError(error) {
-  trace('Failed to set session description: ' + error.toString());
+  console.log('Failed to set session description: ' + error.toString());
 }
 
 // Workaround for crbug/322756.
@@ -189,7 +189,7 @@ function createOffer() {
 }
 
 function onCreateSessionDescriptionError(error) {
-  trace('Failed to create session description: ' + error.toString());
+  console.log('Failed to create session description: ' + error.toString());
 }
 
 function setOffer() {
@@ -202,7 +202,7 @@ function setOffer() {
   localPeerConnection.setLocalDescription(offer,
     onSetSessionDescriptionSuccess,
     onSetSessionDescriptionError);
-  trace('Modified Offer from localPeerConnection \n' + sdp);
+  console.log('Modified Offer from localPeerConnection \n' + sdp);
   remotePeerConnection.setRemoteDescription(offer,
     onSetSessionDescriptionSuccess,
     onSetSessionDescriptionError);
@@ -231,7 +231,7 @@ function setAnswer() {
   remotePeerConnection.setLocalDescription(answer,
     onSetSessionDescriptionSuccess,
     onSetSessionDescriptionError);
-  trace('Modified Answer from remotePeerConnection \n' + sdp);
+  console.log('Modified Answer from remotePeerConnection \n' + sdp);
   localPeerConnection.setRemoteDescription(answer,
     onSetSessionDescriptionSuccess,
     onSetSessionDescriptionError);
@@ -244,7 +244,7 @@ function gotDescription2(description) {
 
 function hangup() {
   remoteVideo.src = '';
-  trace('Ending call');
+  console.log('Ending call');
 //  localStream.stop();
   localPeerConnection.close();
   remotePeerConnection.close();
@@ -264,31 +264,31 @@ function hangup() {
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
   remoteVideo = attachMediaStream(remoteVideo, e.stream);
-  trace('Received remote stream');
+  console.log('Received remote stream');
 }
 
 function iceCallback1(event) {
   if (event.candidate) {
-    remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    remotePeerConnection.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
-    trace('Local ICE candidate: \n' + event.candidate.candidate);
+    console.log('Local ICE candidate: \n' + event.candidate.candidate);
   }
 }
 
 function iceCallback2(event) {
   if (event.candidate) {
-    localPeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate),
+    localPeerConnection.addIceCandidate(event.candidate,
       onAddIceCandidateSuccess, onAddIceCandidateError);
-    trace('Remote ICE candidate: \n ' + event.candidate.candidate);
+    console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   }
 }
 
 function onAddIceCandidateSuccess() {
-  trace('AddIceCandidate success.');
+  console.log('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-  trace('Failed to add Ice Candidate: ' + error.toString());
+  console.log('Failed to add Ice Candidate: ' + error.toString());
 }
 
 

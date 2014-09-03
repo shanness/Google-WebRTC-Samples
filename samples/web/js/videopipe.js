@@ -15,13 +15,13 @@
 
 function errorHandler(context) {
   return function(error) {
-    trace('Failure in ' + context + ': ' + error.toString);
+    console.log('Failure in ' + context + ': ' + error.toString);
   }
 }
 
 function successHandler(context) {
   return function() {
-    trace('Success in ' + context);
+    console.log('Success in ' + context);
   }
 }
 
@@ -37,13 +37,13 @@ function VideoPipe(stream, handler) {
   pc1.addStream(stream);
   pc1.onicecandidate = function(event) {
     if (event.candidate) {
-      pc2.addIceCandidate(new RTCIceCandidate(event.candidate),
+      pc2.addIceCandidate(event.candidate,
                           noAction, errorHandler('AddIceCandidate'));
     }
   }
   pc2.onicecandidate = function(event) {
     if (event.candidate) {
-      pc1.addIceCandidate(new RTCIceCandidate(event.candidate),
+      pc1.addIceCandidate(event.candidate,
                           noAction, errorHandler('AddIceCandidate'));
     }
   }
