@@ -15,6 +15,8 @@ var urlInput = document.querySelector('input#url');
 var usernameInput = document.querySelector('input#username');
 var ipv6Check = document.querySelector('input#ipv6');
 var unbundleCheck = document.querySelector('input#unbundle');
+var output = document.querySelector('textarea#output');
+
 
 addButton.onclick = addServer;
 gatherButton.onclick = start;
@@ -59,6 +61,7 @@ function start() {
 
   
   // Read the values from the input boxes.
+  output.value = '';
   var iceServers = [];
   for (var i = 0; i < servers.length; ++i) {
      iceServers.push(JSON.parse(servers[i].value));
@@ -141,6 +144,9 @@ function iceCallback(event) {
   // var elapsed = ((window.performance.now() - begin) / 1000).toFixed(3);
   var row = document.createElement("tr");
   if (event.candidate) {
+    output.value += (event.candidate.candidate);
+    output.value += "\n";
+
     appendCell(row, "Not captured");
     var c = parseCandidate(event.candidate.candidate);
     appendCell(row, c.component);
