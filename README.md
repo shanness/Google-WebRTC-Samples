@@ -1,3 +1,4 @@
+# WebRTC code samples #
 
 This repository hosts forks of the different [samples provided by Google](https://github.com/GoogleChrome/webrtc) with the  few changes needed so they would work on IE and Safari with the [plugin provided by Temasys](http://plugin.temasys.com.sg/0.8.512/)
 
@@ -23,36 +24,43 @@ Tests updated today
 Tests to be updated in the future
 =========
 
-[getUserMedia() + Canvas](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-canvas)
+[Basic getUserMedia demo](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/gum)
 
-[getUserMedia() + Canvas + CSS Filters](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-filter)
+[getUserMedia + canvas](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/canvas)
 
-[getUserMedia() with resolution constraints](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-resolution)
+[getUserMedia + canvas + CSS Filters](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/filter)
 
-[getUserMedia() with camera/mic selection](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-source)
+[getUserMedia with resolution constraints](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/resolution)
 
-[Audio-only getUserMedia() output to local audio element](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-audio)
+[getUserMedia with camera/mic selection](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/source)
 
-[Audio-only getUserMedia() displaying volume](http://googlechrome.github.io/webrtc/samples/web/content/getusermedia-volume)
+[Audio-only getUserMedia output to local audio element](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/audio)
 
-[Data channels](http://googlechrome.github.io/webrtc/samples/web/content/datachannel)
+[Audio-only getUserMedia displaying volume](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/volume)
 
-[Peer connection](http://googlechrome.github.io/webrtc/samples/web/content/peerconnection)
+[Face tracking](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/face)
 
 [Multiple peer connections](http://googlechrome.github.io/webrtc/samples/web/content/multiple)
 
-[Multiple relay](http://googlechrome.github.io/webrtc/samples/web/content/multiple-relay)
+[Audio-only peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/audio)
 
 [Accept incoming peer connection](http://googlechrome.github.io/webrtc/samples/web/content/pr-answer)
 
-[Peer connection states](http://googlechrome.github.io/webrtc/samples/web/content/peerconnection-states)
+[Use pranswer when setting up a peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/pr-answer)
 
-[Web Audio output as input to peer connection](http://googlechrome.github.io/webrtc/samples/web/content/webaudio-input)
+[Adjust constraints, view stats](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/constraints)
 
-[Adjust constraints, view stats](http://googlechrome.github.io/webrtc/samples/web/content/constraints)
+[Display createOffer output](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/create-offer)
 
-[Display createOffer output](http://googlechrome.github.io/webrtc/samples/web/content/create-offer)
+[Use RTCDTMFSender](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/dtmf)
 
-[DTMF](http://googlechrome.github.io/webrtc/samples/web/content/dtmf)
+[Display peer connection states](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/states)
 
-[Face tracking](http://googlechrome.github.io/webrtc/samples/web/content/face)
+[ICE candidate gathering from STUN/TURN servers](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/trickle-ice)
+
+[Web Audio output as input to peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/webaudio-input)
+
+### RTCDataChannel ###
+
+[Data channels](https://googlechrome.github.io/webrtc/samples/web/content/datachannel)
+

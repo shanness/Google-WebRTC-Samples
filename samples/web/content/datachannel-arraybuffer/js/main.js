@@ -196,11 +196,17 @@ function onReceiveMessageCallback(event) {
 
   // populate result table
   var row = document.createElement("tr");
+  row.className = "resultRow";
 
   typeCell = document.createElement("td");
   sentCell = document.createElement("td");
   receivedCell = document.createElement("td");
   validCell = document.createElement("td");
+  
+  typeCell.className = "typeCell";
+  sentCell.className = "sentValue";
+  receivedCell.className = "receivedValue";
+  validCell.className = "resultValidity";
 
   text = document.createTextNode(typeList[sendCounter].name);
   typeCell.appendChild(text);

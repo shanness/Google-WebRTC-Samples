@@ -1,4 +1,15 @@
-var localConnection, remotePeerConnection, sendChannel, receiveChannel, pcConstraint, dataConstraint;
+/*
+ *  Copyright (c) 2014 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+ */
+
+'use strict';
+
+var localConnection, remotePeerConnection, sendChannel, receiveChannel,
+  pcConstraint, dataConstraint;
 var dataChannelSend = document.querySelector('textarea#dataChannelSend');
 var dataChannelReceive = document.querySelector('textarea#dataChannelReceive');
 var sctpSelect = document.querySelector('input#useSctp');
@@ -44,7 +55,11 @@ function createConnection() {
     // For SCTP, reliable and ordered is true by default.
     console.log('Using SCTP based Data Channels');
   } else {
-    pcConstraint = {optional: [{RtpDataChannels: true}]};
+    pcConstraint = {
+      optional: [{
+        RtpDataChannels: true
+      }]
+    };
     if (!rtpSelect.checked) {
       // Use rtp data channels for chrome versions older than M31.
       console.log('Using RTP based Data Channels,' +
@@ -58,8 +73,8 @@ function createConnection() {
   console.log('Created local peer connection object localConnection');
 
   try {
-    // Data Channel api supported from Chrome M25.
-    // You might need to start chrome with  --enable-data-channels flag.
+    // Data Channel API supported from Chrome M25.
+    // You might need to start Chrome with --enable-data-channels flag.
     sendChannel = localConnection.createDataChannel('sendDataChannel', dataConstraint);
     console.log('Created send data channel');
   } catch (e) {
