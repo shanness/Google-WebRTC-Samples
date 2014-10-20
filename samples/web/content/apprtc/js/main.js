@@ -168,7 +168,6 @@ function doGetUserMedia() {
   // Call into getUserMedia via the polyfill (adapter.js).
   try {
     getUserMedia(mediaConstraints, onUserMediaSuccess, onUserMediaError);
-                 onUserMediaError);
     console.log('Requested access to local media with mediaConstraints:\n' +
                 '  \'' + JSON.stringify(mediaConstraints) + '\'');
   } catch (e) {
