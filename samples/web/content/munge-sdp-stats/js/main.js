@@ -1,11 +1,11 @@
-var getMediaButton = document.querySelector('button#getMedia');
-var createPeerConnectionButton = document.querySelector('button#createPeerConnection');
-var createOfferButton = document.querySelector('button#createOffer');
-var setOfferButton = document.querySelector('button#setOffer');
-var createAnswerButton = document.querySelector('button#createAnswer');
-var setAnswerButton = document.querySelector('button#setAnswer');
-var getStatsButton = document.querySelector('button#getStats');
-var hangupButton = document.querySelector('button#hangup');
+var getMediaButton = document.getElementById('getMedia');
+var createPeerConnectionButton = document.getElementById('createPeerConnection');
+var createOfferButton = document.getElementById('createOffer');
+var setOfferButton = document.getElementById('setOffer');
+var createAnswerButton = document.getElementById('createAnswer');
+var setAnswerButton = document.getElementById('setAnswer');
+var getStatsButton = document.getElementById('getStats');
+var hangupButton = document.getElementById('hangup');
 
 getMediaButton.onclick = getMedia;
 createPeerConnectionButton.onclick = createPeerConnection;

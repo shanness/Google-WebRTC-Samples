@@ -5,10 +5,10 @@
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
-var videoElement = document.querySelector("video");
-var audioSelect = document.querySelector("select#audioSource");
-var videoSelect = document.querySelector("select#videoSource");
-var startButton = document.querySelector("button#start");
+var videoElement = document.getElementById("video");
+var audioSelect = document.getElementById("audioSource");
+var videoSelect = document.getElementById("videoSource");
+var startButton = document.getElementById("start");
 
 navigator.getUserMedia = navigator.getUserMedia ||
   navigator.webkitGetUserMedia || navigator.mozGetUserMedia;

@@ -23,7 +23,11 @@
 
   <h1><a href="https://plugin.temasys.com.sg/demo/index.html" title="WebRTC samples homepage">WebRTC samples</a> <span>getUserMedia</span></h1>
 
-  <video autoplay></video>
+	<div id="errorDiv" hidden="true">
+		<p id="errorPrompt" style="color: red;"></p>
+	</div>
+
+  <video id="video" autoplay></video>
 
   <p>Display the video stream from <code>getUserMedia()</code> in the video element.</p>
 

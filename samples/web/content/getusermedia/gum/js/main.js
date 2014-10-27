@@ -6,7 +6,10 @@
  *  tree.
  */
 // variables in global scope so available to console
-video = document.querySelector("video");
+video = document.getElementById("video");
+errorDiv = document.getElementById('errorDiv');
+errorPrompt = document.getElementById('errorPrompt');
+
 constraints = {audio: false, video: true};
 
 function successCallback(stream){
@@ -15,9 +18,9 @@ function successCallback(stream){
 }
 
 function errorCallback(error){
+	errorPrompt.innerHTML = "navigator.getUserMedia error: " + error;
+	errorDiv.hidden = false;
   console.log("navigator.getUserMedia error: ", error);
 }
 
-// window.onwebrtcready = function() {
-	navigator.getUserMedia(constraints, successCallback, errorCallback);
-// }
+navigator.getUserMedia(constraints, successCallback, errorCallback);

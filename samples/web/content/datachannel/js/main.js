@@ -10,13 +10,13 @@
 
 var localConnection, remotePeerConnection, sendChannel, receiveChannel,
   pcConstraint, dataConstraint;
-var dataChannelSend = document.querySelector('textarea#dataChannelSend');
-var dataChannelReceive = document.querySelector('textarea#dataChannelReceive');
-var sctpSelect = document.querySelector('input#useSctp');
-var rtpSelect = document.querySelector('input#useRtp');
-var startButton = document.querySelector('button#startButton');
-var sendButton = document.querySelector('button#sendButton');
-var closeButton = document.querySelector('button#closeButton');
+var dataChannelSend = document.getElementById('dataChannelSend');
+var dataChannelReceive = document.getElementById('dataChannelReceive');
+var sctpSelect = document.getElementById('useSctp');
+var rtpSelect = document.getElementById('useRtp');
+var startButton = document.getElementById('startButton');
+var sendButton = document.getElementById('sendButton');
+var closeButton = document.getElementById('closeButton');
 
 startButton.onclick = createConnection;
 sendButton.onclick = sendData;

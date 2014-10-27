@@ -8,12 +8,12 @@
 var iceconnectionstate1 = null;
 var iceconnectionstate2 = null;
 
-var video1 = document.querySelector('video#video1');
-var video2 = document.querySelector('video#video2');
+var video1 = document.getElementById('video1');
+var video2 = document.getElementById('video2');
 
-var startButton = document.querySelector('button#startButton');
-var callButton = document.querySelector('button#callButton');
-var hangupButton = document.querySelector('button#hangupButton');
+var startButton = document.getElementById('startButton');
+var callButton = document.getElementById('callButton');
+var hangupButton = document.getElementById('hangupButton');
 startButton.disabled = false;
 callButton.disabled = true;
 hangupButton.disabled = true;
@@ -21,10 +21,10 @@ startButton.onclick = start;
 callButton.onclick = call;
 hangupButton.onclick = hangup;
 
-var pc1StateDiv = document.querySelector('div#pc1State');
-var pc1IceStateDiv = document.querySelector('div#pc1IceState');
-var pc2StateDiv = document.querySelector('div#pc2State');
-var pc2IceStateDiv = document.querySelector('div#pc2IceState');
+var pc1StateDiv = document.getElementById('pc1State');
+var pc1IceStateDiv = document.getElementById('pc1IceState');
+var pc2StateDiv = document.getElementById('pc2State');
+var pc2IceStateDiv = document.getElementById('pc2IceState');
 
 var localstream, pc1, pc2;
 

@@ -5,8 +5,8 @@
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
-var callButton = document.querySelector('button#callButton');
-var hangupButton = document.querySelector('button#hangupButton');
+var callButton = document.getElementById('callButton');
+var hangupButton = document.getElementById('hangupButton');
 hangupButton.disabled = true;
 callButton.onclick = call;
 hangupButton.onclick = hangup;

@@ -5,17 +5,17 @@
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
-var addButton = document.querySelector('button#add');
-var candidateTBody = document.querySelector('tbody#candidatesBody');
-var gatherButton = document.querySelector('button#gather');
-var passwordInput = document.querySelector('input#password');
-var removeButton = document.querySelector('button#remove');
-var servers = document.querySelector('select#servers');
-var urlInput = document.querySelector('input#url');
-var usernameInput = document.querySelector('input#username');
-var ipv6Check = document.querySelector('input#ipv6');
-var unbundleCheck = document.querySelector('input#unbundle');
-var output = document.querySelector('textarea#output');
+var addButton = document.getElementById('add');
+var candidateTBody = document.getElementById('candidatesBody');
+var gatherButton = document.getElementById('gather');
+var passwordInput = document.getElementById('password');
+var removeButton = document.getElementById('remove');
+var servers = document.getElementById('servers');
+var urlInput = document.getElementById('url');
+var usernameInput = document.getElementById('username');
+var ipv6Check = document.getElementById('ipv6');
+var unbundleCheck = document.getElementById('unbundle');
+var output = document.getElementById('output');
 
 
 addButton.onclick = addServer;

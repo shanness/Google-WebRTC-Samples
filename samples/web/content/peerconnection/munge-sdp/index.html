@@ -49,17 +49,17 @@
   <div id="preview">
     <div id="local">
       <h2>Local</h2>
-      <video autoplay muted></video>
+      <video id="localVideo" autoplay muted></video>
       <h2>Offer SDP</h2>
-      <textarea></textarea>
+      <textarea id="localSDP"></textarea>
       <br>
       <br>
     </div>
     <div id="remote">
       <h2>Remote</h2>
-      <video autoplay></video>
+      <video id="remoteVideo" autoplay></video>
       <h2>Answer SDP</h2>
-      <textarea></textarea>
+      <textarea id="remoteSDP"></textarea>
     </div>
   </div>
 
@@ -72,7 +72,7 @@
 <a href="https://github.com/Temasys/Google-WebRTC-Samples/tree/master/samples/web/content/munge-sdp" title="View source for this page on Github" id="viewSource">View source on Github</a>
 </div>
 
-<script src="https://cdn.temasys.com.sg/adapterjs/0.9.3/adapter.debug.js"></script>
+<script src="../../../js/adapter.js"></script>
 <script src="js/main.js"></script>
 
 <script src="../../../js/lib/ga.js"></script>

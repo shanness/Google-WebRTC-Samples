@@ -5,13 +5,13 @@
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
-var getMediaButton = document.querySelector('button#getMedia');
-var createPeerConnectionButton = document.querySelector('button#createPeerConnection');
-var createOfferButton = document.querySelector('button#createOffer');
-var setOfferButton = document.querySelector('button#setOffer');
-var createAnswerButton = document.querySelector('button#createAnswer');
-var setAnswerButton = document.querySelector('button#setAnswer');
-var hangupButton = document.querySelector('button#hangup');
+var getMediaButton = document.getElementById('getMedia');
+var createPeerConnectionButton = document.getElementById('createPeerConnection');
+var createOfferButton = document.getElementById('createOffer');
+var setOfferButton = document.getElementById('setOffer');
+var createAnswerButton = document.getElementById('createAnswer');
+var setAnswerButton = document.getElementById('setAnswer');
+var hangupButton = document.getElementById('hangup');
 
 getMediaButton.onclick = getMedia;
 createPeerConnectionButton.onclick = createPeerConnection;
@@ -21,18 +21,18 @@ createAnswerButton.onclick = createAnswer;
 setAnswerButton.onclick = setAnswer;
 hangupButton.onclick = hangup;
 
-var offerSdpTextarea = document.querySelector('div#local textarea');
-var answerSdpTextarea = document.querySelector('div#remote textarea');
+var offerSdpTextarea = document.getElementById('localSDP');
+var answerSdpTextarea = document.getElementById('remoteSDP');
 
-var audioSelect = document.querySelector('select#audioSrc');
-var videoSelect = document.querySelector('select#videoSrc');
+var audioSelect = document.getElementById('audioSrc');
+var videoSelect = document.getElementById('videoSrc');
 
 // audioSelect.onchange = videoSelect.onchange = getMedia;
 
-var localVideo = document.querySelector('div#local video');
-var remoteVideo = document.querySelector('div#remote video');
+var localVideo = document.getElementById('localVideo');
+var remoteVideo = document.getElementById('remoteVideo');
 
-var selectSourceDiv = document.querySelector('div#selectSource');
+var selectSourceDiv = document.getElementById('selectSource');
 
 var localPeerConnection, remotePeerConnection;
 var localStream;
@@ -119,7 +119,7 @@ function getMedia() {
     };
   }
 
-  console.log('Requested local stream');
+  console.log('Re sted local stream');
   getUserMedia(constraints, gotStream, function(e){
     console.log("navigator.getUserMedia error: ", e);
   });
@@ -288,3 +288,82 @@ function onAddIceCandidateSuccess() {
 function onAddIceCandidateError(error) {
   console.log('Failed to add Ice Candidate: ' + error.toString());
 }
+
+function addEvent(evnt, elem, func) {
+   if (elem.addEventListener)  // W3C DOM
+      elem.addEventListener(evnt,func,false);
+   else if (elem.attachEvent) { // IE DOM
+      elem.attachEvent("on"+evnt, func);
+   }
+   else { // No much to do
+      elem[evnt] = func;
+   }
+}
+
+function Temasys_showUpdatePopup() {
+  if (document.readyState !== 'complete')
+    return;
+  
+  var w = window;
+  var i = document.createElement('iframe');
+  i.style.position = 'fixed';
+  i.style.top = '-41px';
+  i.style.left = 0;
+  i.style.right = 0;
+  i.style.width = '100%';
+  i.style.height = '40px';
+  i.style.backgroundColor = '#ffffe1';
+  i.style.border = 'none';
+  i.style.borderBottomWidth = '1px';
+  i.style.borderBottomColor = '#888888';
+  i.style.borderBottomStyle = 'solid';
+  i.style.zIndex = '9999999';
+  if(typeof i.style.webkitTransition === 'string') {
+    i.style.webkitTransition = 'all .5s ease-out';
+  } else if(typeof i.style.transition === 'string') {
+    i.style.transition = 'all .5s ease-out';
+  }
+  document.body.insertBefore(i, document.body.childNodes[0]);
+  c = (i.contentWindow) ? i.contentWindow :
+  (i.contentDocument.document) ? i.contentDocument.document : i.contentDocument;
+  c.document.open();
+  c.document.write('<!DOCTYPE html><html lang=\"en\">' +
+                  '<head> <meta charset=\"utf-8\">' +
+                  '<title>Temasys Plugin Update Panel</title> ' +
+                  '</head>' +
+                  '<body style=\"background: #ffffe1  ;\">');
+  c.document.write('<span style=\"font-family: Helvetica, Arial,' +
+                  'sans-serif; font-size: .9rem; padding: 7px; vertical-align: ' +
+                  'middle; cursor: default;\">A new version of the <a id=\"TemasysPlugin_pluginPortalLink\" href=\"\">Temasys WebRTC plugin</a> is available </span>');
+  c.document.write('<button id=\"TemasysPlugin_okay\">button</button><button id=\"TemasysPlugin_cancel\">Cancel</button>');
+  c.document.write('</body>' +
+                  '</html>');
+  c.document.close();
+  addEvent('click', c.document.getElementById('TemasysPlugin_okay'), function(e) {
+                   window.open('http://bit.ly/1kkS4FN', '_top');
+                    e.preventDefault();
+                    try {
+                      event.cancelBubble = true;
+                    } catch(error) { }
+                  });
+  addEvent('click', c.document.getElementById('TemasysPlugin_pluginPortalLink'), function(e) {
+                    window.open('https://temasys.atlassian.net/wiki/display/TWPP/WebRTC+Plugins', '_blank');
+                    e.preventDefault();
+                    try {
+                      event.cancelBubble = true;
+                    } catch(error) { }
+                  });
+  addEvent('click', c.document.getElementById('TemasysPlugin_cancel'), function() {
+                    w.document.body.removeChild(i);
+                  });
+  setTimeout(function() {
+    if(typeof i.style.webkitTransform === 'string') {
+      i.style.webkitTransform = 'translateY(40px)';
+    } else if(typeof i.style.transform === 'string') {
+      i.style.transform = 'translateY(40px)';
+    } else {
+      i.style.top = '0px';
+    }
+  }, 300); 
+};
+
