@@ -11,20 +11,36 @@ Patches and issues welcome!
 Tests updated today
 =========
 
-[getUserMedia()](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia) 
+[getUserMedia()](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/gum) 
 
-[Audio-only peer connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection-audio)
+[getUserMedia with camera/mic selection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/source)
 
-[Munge SDP](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/munge-sdp)
+[getUserMedia in iFrame](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/iframe)
 
-[ICE candidate gathering](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/trickle-ice)
+[getUserMedia in iFrame](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/playPause)
+
+[ICE candidate gathering](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/trickle-ice)
+
+[Peer Connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/pc1)
+
+[Peer Connection States](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/states)
+
+[Audio-only peer connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/audio)
+
+[Multiple peer connections](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/multiple)
+
+[Multiple relays](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/multiple-relay)
+
+[Munge SDP](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/munge-sdp)
+
+[Data channels](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/datachannel)
+
+[Data channels with arraybuffers](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/datachannel-arraybuffer)
 
 [AppRTC](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/apprtc)
 
 Tests to be updated in the future
 =========
-
-[Basic getUserMedia demo](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/gum)
 
 [getUserMedia + canvas](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/canvas)
 
@@ -32,17 +48,11 @@ Tests to be updated in the future
 
 [getUserMedia with resolution constraints](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/resolution)
 
-[getUserMedia with camera/mic selection](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/source)
-
 [Audio-only getUserMedia output to local audio element](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/audio)
 
 [Audio-only getUserMedia displaying volume](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/volume)
 
 [Face tracking](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/face)
-
-[Multiple peer connections](http://googlechrome.github.io/webrtc/samples/web/content/multiple)
-
-[Audio-only peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/audio)
 
 [Accept incoming peer connection](http://googlechrome.github.io/webrtc/samples/web/content/pr-answer)
 
@@ -54,13 +64,7 @@ Tests to be updated in the future
 
 [Use RTCDTMFSender](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/dtmf)
 
-[Display peer connection states](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/states)
-
-[ICE candidate gathering from STUN/TURN servers](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/trickle-ice)
-
 [Web Audio output as input to peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/webaudio-input)
 
-### RTCDataChannel ###
 
-[Data channels](https://googlechrome.github.io/webrtc/samples/web/content/datachannel)
 
