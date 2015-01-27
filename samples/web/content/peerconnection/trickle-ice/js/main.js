@@ -24,10 +24,10 @@ removeButton.onclick = removeServer;
 changeButton.onclick = changeStruct;
 
 var begin, pc;
-var changed = false;
+var arrayURLStruc = false;
 
 function changeStruct(){
-  if(!changed){
+  if(!arrayURLStruc){
     for(var i = servers.options.length - 1; i>=0; --i) {
       var sers = JSON.parse(servers[i].value);
       if(typeof sers.url === "string"){
@@ -35,7 +35,7 @@ function changeStruct(){
         servers[i].text = '[' + servers[i].text + ']';
       }
     }
-    changed = !changed;
+    arrayURLStruc = !arrayURLStruc;
   }else{
     for(var i = servers.options.length - 1; i>=0; --i) {
       var sers = JSON.parse(servers[i].value);
@@ -44,7 +44,7 @@ function changeStruct(){
         servers[i].text = servers[i].text.substr(1, servers[i].text.length - 2);
       }
     }
-    changed = !changed;
+    arrayURLStruc = !arrayURLStruc;
   }
 }
 function addServer() {
@@ -57,7 +57,7 @@ function addServer() {
   // Store the ICE server as a stringified JSON object in option.value.
   var option = document.createElement('option');
   var iceServer = createIceServer(urlInput.value, usernameInput.value, passwordInput.value);
-  if(changed){
+  if(arrayURLStruc){
     option.value = JSON.stringify(iceServer).replace("\""+iceServer.url+"\"" , "[\""+ iceServer.url + "\"]");
     option.text = '[' + urlInput.value + ']';
   }else{
