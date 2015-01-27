@@ -31,8 +31,7 @@ function changeStruct(){
     for(var i = servers.options.length - 1; i>=0; --i) {
       var sers = JSON.parse(servers[i].value);
       if(typeof sers.url === "string"){
-        servers[i].value = servers[i].value.replace("\":\"", "\":[\"");
-        servers[i].value = servers[i].value.replace("\",", "\"],");
+        servers[i].value = servers[i].value.replace("\""+sers.url+"\"" , "[\""+ sers.url + "\"]");
         servers[i].text = '[' + servers[i].text + ']';
       }
     }
@@ -41,8 +40,7 @@ function changeStruct(){
     for(var i = servers.options.length - 1; i>=0; --i) {
       var sers = JSON.parse(servers[i].value);
       if(sers.url.length === 1 ){
-        servers[i].value = servers[i].value.replace("\":[\"", "\":\"");
-        servers[i].value = servers[i].value.replace("\"],", "\",");   
+        servers[i].value = servers[i].value.replace("[\""+ sers.url + "\"]", "\""+sers.url+"\"" ); 
         servers[i].text = servers[i].text.substr(1, servers[i].text.length - 2);
       }
     }
@@ -59,11 +57,12 @@ function addServer() {
   // Store the ICE server as a stringified JSON object in option.value.
   var option = document.createElement('option');
   var iceServer = createIceServer(urlInput.value, usernameInput.value, passwordInput.value);
-  option.value = JSON.stringify(iceServer);
   if(changed){
-    option.text = '[' + urlInput.value + '] ';
+    option.value = JSON.stringify(iceServer).replace("\""+iceServer.url+"\"" , "[\""+ iceServer.url + "\"]");
+    option.text = '[' + urlInput.value + ']';
   }else{
     option.text = urlInput.value + ' ';
+    option.value = JSON.stringify(iceServer);
   }
   var username = usernameInput.value;
   var password = passwordInput.value;
@@ -93,7 +92,10 @@ function start() {
   output.value = '';
   var iceServers = [];
   for (var i = 0; i < servers.length; ++i) {
-     iceServers.push(JSON.parse(servers[i].value));
+    if(servers[i].value.search("hasCredentials") === -1){
+      servers[i].value = servers[i].value.replace("}" , ",\"hasCredentials\":false}");
+    }
+    iceServers.push(JSON.parse(servers[i].value));
   }
   var transports = document.getElementsByName('transports');
   var iceTransports;
