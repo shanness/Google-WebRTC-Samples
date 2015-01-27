@@ -37,9 +37,10 @@
   <h2>ICE servers</h2>
 
   <select id="servers" size="4">
-    <option value="{&quot;url&quot;:&quot;stun:stun.l.google.com:19302&quot;}">stun:stun.l.google.com:19302</option>
+    <option value="{&quot;url&quot;:&quot;stun:stun.l.google.com:19302&quot;,&quot;hasCredentials&quot;:false}">stun:stun.l.google.com:19302</option>
+    <option value="{&quot;url&quot;:[&quot;stun:stun.voxgratia.org&quot;,&quot;stun:stunserver.org&quot;],&quot;hasCredentials&quot;:false}">[stun:stun.voxgratia.org ; stun:stunserver.org]</option>
+    <option value="{&quot;url&quot;:&quot;stun:stun.callwithus.com&quot;,&quot;hasCredentials&quot;:false}">stun:stun.callwithus.com</option>
   </select>
-
   <div>
     <label for="url">STUN or TURN URI:</label>
     <input id="url">
@@ -58,6 +59,7 @@
   <div>
     <button id="add">Add Server</button>
     <button id="remove">Remove Server</button>
+    <button id="changeStruct">Change url structure</button>
   </div>
 
 </section>
@@ -110,7 +112,6 @@
 
 <script src="https://cdn.temasys.com.sg/adapterjs/0.10.x/adapter.debug.js"></script>
 <script src="js/main.js"></script>
-
 <script src="../../../js/lib/ga.js"></script>
 </body>
 </html>
