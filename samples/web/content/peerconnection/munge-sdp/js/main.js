@@ -52,9 +52,10 @@ function getSources() {
   }
 }
 
-// window.onwebrtcready = function() {
+var AdapterJS = AdapterJS || {};
+AdapterJS.onwebrtcready = function(isUsingPlugin) {
   getSources();
-// }
+}
 
 function gotSources(sourceInfos) {
   var audioCount = 0;
