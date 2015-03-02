@@ -1,6 +1,6 @@
 # WebRTC code samples #
 
-This repository hosts forks of the different [samples provided by Google](https://github.com/GoogleChrome/webrtc) with the  few changes needed so they would work on IE and Safari with the [plugin provided by Temasys](http://plugin.temasys.com.sg/0.8.512/)
+This repository hosts forks of the different [samples provided by Google](https://github.com/GoogleChrome/webrtc) with the  few changes needed so they would work on IE and Safari with the [plugin provided by Temasys](http://plugin.temasys.com.sg/)
 
 All of the samples use [adapter.js](https://github.com/Temasys/AdapterJS), a shim to insulate apps from spec changes and prefix differences. In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. 
 
