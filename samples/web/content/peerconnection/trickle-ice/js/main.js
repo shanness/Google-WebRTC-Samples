@@ -10,6 +10,7 @@ var candidateTBody = document.getElementById('candidatesBody');
 var gatherButton = document.getElementById('gather');
 var passwordInput = document.getElementById('password');
 var removeButton = document.getElementById('remove');
+var changeButton = document.getElementById('changeStruct');
 var servers = document.getElementById('servers');
 var urlInput = document.getElementById('url');
 var usernameInput = document.getElementById('username');
@@ -17,13 +18,35 @@ var ipv6Check = document.getElementById('ipv6');
 var unbundleCheck = document.getElementById('unbundle');
 var output = document.getElementById('output');
 
-
 addButton.onclick = addServer;
 gatherButton.onclick = start;
 removeButton.onclick = removeServer;
+changeButton.onclick = changeStruct;
 
 var begin, pc;
+var arrayURLStruc = false;
 
+function changeStruct(){
+  if(!arrayURLStruc){
+    for(var i = servers.options.length - 1; i>=0; --i) {
+      var sers = JSON.parse(servers[i].value);
+      if(typeof sers.url === "string"){
+        servers[i].value = servers[i].value.replace("\""+sers.url+"\"" , "[\""+ sers.url + "\"]");
+        servers[i].text = '[' + servers[i].text + ']';
+      }
+    }
+    arrayURLStruc = !arrayURLStruc;
+  }else{
+    for(var i = servers.options.length - 1; i>=0; --i) {
+      var sers = JSON.parse(servers[i].value);
+      if(sers.url.length === 1 ){
+        servers[i].value = servers[i].value.replace("[\""+ sers.url + "\"]", "\""+sers.url+"\"" ); 
+        servers[i].text = servers[i].text.substr(1, servers[i].text.length - 2);
+      }
+    }
+    arrayURLStruc = !arrayURLStruc;
+  }
+}
 function addServer() {
   var scheme = urlInput.value.split(':')[0];
   if (scheme !== 'stun' && scheme !== 'turn' && scheme !== 'turns') {
@@ -34,8 +57,13 @@ function addServer() {
   // Store the ICE server as a stringified JSON object in option.value.
   var option = document.createElement('option');
   var iceServer = createIceServer(urlInput.value, usernameInput.value, passwordInput.value);
-  option.value = JSON.stringify(iceServer);
-  option.text = urlInput.value + ' ';
+  if(arrayURLStruc){
+    option.value = JSON.stringify(iceServer).replace("\""+iceServer.url+"\"" , "[\""+ iceServer.url + "\"]");
+    option.text = '[' + urlInput.value + ']';
+  }else{
+    option.text = urlInput.value + ' ';
+    option.value = JSON.stringify(iceServer);
+  }
   var username = usernameInput.value;
   var password = passwordInput.value;
   if (username || password) {
@@ -64,7 +92,10 @@ function start() {
   output.value = '';
   var iceServers = [];
   for (var i = 0; i < servers.length; ++i) {
-     iceServers.push(JSON.parse(servers[i].value));
+    if(servers[i].value.search("hasCredentials") === -1){
+      servers[i].value = servers[i].value.replace("}" , ",\"hasCredentials\":false}");
+    }
+    iceServers.push(JSON.parse(servers[i].value));
   }
   var transports = document.getElementsByName('transports');
   var iceTransports;
@@ -78,7 +109,7 @@ function start() {
   // Create a PeerConnection with no streams, but force a m=audio line.
   // This will gather candidates for either 1 or 2 ICE components, depending
   // on whether the unbundle RTCP checkbox is checked.
-  var config = {"iceServers": iceServers };
+  var config = {"iceServers":iceServers};
   var pcConstraints = {"mandatory": {"IceTransports": iceTransports}};
   var offerConstraints = {"mandatory": {"OfferToReceiveAudio": true}};
   // Whether we gather IPv6 candidates.
