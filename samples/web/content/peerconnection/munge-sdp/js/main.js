@@ -79,6 +79,14 @@ function gotSources(sourceInfos) {
     }
   }
 
+  if (AdapterJS.WebRTCPlugin.plugin.HasScreensharingFeature
+    && AdapterJS.WebRTCPlugin.plugin.isScreensharingAvailable) {
+    var option = document.createElement('option');
+    option.value = AdapterJS.WebRTCPlugin.plugin.screensharingKey;
+    option.text = "Screensharing";
+    videoSelect.appendChild(option);
+  }
+
   var option = document.createElement('option');
   option.value = '';
   option.text = 'none'; 
