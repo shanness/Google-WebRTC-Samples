@@ -25,6 +25,4 @@ function errorCallback(error){
   console.log("navigator.getUserMedia error: ", error);
 }
 
-// window.onwebrtcready = function() {
-	navigator.getUserMedia(constraints, successCallback, errorCallback);
-// }
+navigator.getUserMedia(constraints, successCallback, errorCallback);

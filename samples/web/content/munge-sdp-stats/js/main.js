@@ -48,9 +48,9 @@ var bitrate = {
 };
 
 
-window.onwebrtcready = function() {
+AdapterJS.webRTCReady(function () {
   getSources();
-}
+});
 
 function getSources() {
   if (typeof MediaStreamTrack === 'undefined'){

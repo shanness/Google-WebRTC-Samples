@@ -36,6 +36,7 @@ var selectSourceDiv = document.getElementById('selectSource');
 
 var localPeerConnection, remotePeerConnection;
 var localStream;
+var remoteStream;
 var sdpConstraints = {
   'mandatory': {
     'OfferToReceiveAudio': true,
@@ -52,10 +53,9 @@ function getSources() {
   }
 }
 
-var AdapterJS = AdapterJS || {};
-AdapterJS.onwebrtcready = function(isUsingPlugin) {
+AdapterJS.webRTCReady(function () {
   getSources();
-}
+});
 
 function gotSources(sourceInfos) {
   var audioCount = 0;
@@ -270,7 +270,8 @@ function hangup() {
 
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
-  remoteVideo = attachMediaStream(remoteVideo, e.stream);
+  remoteStream = e.stream;
+  remoteVideo = attachMediaStream(remoteVideo, remoteStream);
   console.log('Received remote stream');
 }
 

@@ -39,14 +39,10 @@ var localStream;
 var bytesPrev = 0;
 var timestampPrev = 0;
 
-window.onwebrtcready = function() {
-  main();
-}
-
-function main() {
+AdapterJS.webRTCReady(function () {
   displayGetUserMediaConstraints();
   displayAddStreamConstraints();
-}
+});
 
 function getMedia() {
   connectButton.disabled = true;
