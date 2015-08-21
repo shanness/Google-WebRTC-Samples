@@ -26,7 +26,7 @@ var pc1IceStateDiv = document.getElementById('pc1IceState');
 var pc2StateDiv = document.getElementById('pc2State');
 var pc2IceStateDiv = document.getElementById('pc2IceState');
 
-var localstream, pc1, pc2;
+var localstream, remoteStream, pc1, pc2;
 
 var sdpConstraints =
   {
@@ -121,6 +121,7 @@ function hangup() {
 }
 
 function gotRemoteStream(e){
+  remoteStream = e.stream;
   video2 = attachMediaStream(video2, e.stream);
   console.log('Got remote stream');
 }

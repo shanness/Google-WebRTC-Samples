@@ -12,7 +12,7 @@ callButton.onclick = call;
 hangupButton.onclick = hangup;
 
 var pc1, pc2;
-var localstream;
+var localstream, remoteStream;
 
 var sdpConstraints = {
   'mandatory': {
@@ -93,6 +93,7 @@ function hangup() {
 
 function gotRemoteStream(e) {
   // Call the polyfill wrapper to attach the media stream to this element.
+  remoteStream = e.stream;
   audio2 = attachMediaStream(audio2, e.stream);
   console.log('Received remote stream');
 }
