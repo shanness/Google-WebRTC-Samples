@@ -79,7 +79,8 @@ function gotSources(sourceInfos) {
     }
   }
 
-  if (AdapterJS.WebRTCPlugin.plugin.HasScreensharingFeature
+  if (AdapterJS.WebRTCPlugin.plugin
+    && AdapterJS.WebRTCPlugin.plugin.HasScreensharingFeature
     && AdapterJS.WebRTCPlugin.plugin.isScreensharingAvailable) {
     var option = document.createElement('option');
     option.value = AdapterJS.WebRTCPlugin.plugin.screensharingKey;
@@ -104,7 +105,9 @@ function getMedia() {
 
   if (!!localStream) {
     localVideo.src = null;
-    localStream.stop();
+    if (typeof localStream.stop !== 'undefined') {
+      localStream.stop();
+    }
   }
   var audioSource = audioSelect.value;
   console.log('Selected audio source: ' + audioSource);
@@ -252,7 +255,9 @@ function gotDescription2(description) {
 function hangup() {
   remoteVideo.src = '';
   console.log('Ending call');
-  localStream.stop();
+  if (typeof localStream.stop !== 'undefined') {
+    localStream.stop();
+  }
   localPeerConnection.close();
   remotePeerConnection.close();
   localPeerConnection = null;
