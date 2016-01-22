@@ -1,10 +1,13 @@
 /*
- *  Copyright (c) 2014 The WebRTC project authors. All Rights Reserved.
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
+
+'use strict';
+
 var callButton = document.querySelector('button#callButton');
 var sendTonesButton = document.querySelector('button#sendTonesButton');
 var hangupButton = document.querySelector('button#hangupButton');
@@ -20,22 +23,31 @@ var durationInput = document.querySelector('input#duration');
 var gapInput = document.querySelector('input#gap');
 var tonesInput = document.querySelector('input#tones');
 
+var durationValue = document.querySelector('span#durationValue');
+var gapValue = document.querySelector('span#gapValue');
+
 var sentTonesDiv = document.querySelector('div#sentTones');
 var dtmfStatusDiv = document.querySelector('div#dtmfStatus');
 
 var audio = document.querySelector('audio');
 
-var pc1, pc2;
+var pc1;
+var pc2;
 var localStream;
 var dtmfSender;
 
-var sdpConstraints = {
-  'mandatory': {
-    'OfferToReceiveAudio': true,
-    'OfferToReceiveVideo': false
-  }
+var offerOptions = {
+  offerToReceiveAudio: 1,
+  offerToReceiveVideo: 0
 };
 
+durationInput.oninput = function() {
+  durationValue.textContent = durationInput.value;
+};
+
+gapInput.oninput = function() {
+  gapValue.textContent = gapInput.value;
+};
 
 main();
 
@@ -45,14 +57,15 @@ function main() {
 
 function gotStream(stream) {
   console.log('Received local stream');
-  // Call the polyfill wrapper to attach the media stream to this element.
   localStream = stream;
   var audioTracks = localStream.getAudioTracks();
-  if (audioTracks.length > 0)
+  if (audioTracks.length > 0) {
     console.log('Using Audio device: ' + audioTracks[0].label);
+  }
   pc1.addStream(localStream);
   console.log('Adding Local Stream to peer connection');
-  pc1.createOffer(gotDescription1, onCreateSessionDescriptionError);
+  pc1.createOffer(gotDescription1, onCreateSessionDescriptionError,
+      offerOptions);
 }
 
 function onCreateSessionDescriptionError(error) {
@@ -95,8 +108,7 @@ function gotDescription1(desc) {
   // Since the 'remote' side has no media stream we need
   // to pass in the right constraints in order for it to
   // accept the incoming offer of audio.
-  pc2.createAnswer(gotDescription2, onCreateSessionDescriptionError,
-    sdpConstraints);
+  pc2.createAnswer(gotDescription2, onCreateSessionDescriptionError);
 }
 
 function gotDescription2(desc) {
@@ -124,29 +136,30 @@ function hangup() {
 }
 
 function gotRemoteStream(e) {
-  // Call the polyfill wrapper to attach the media stream to this element.
-  attachMediaStream(audio, e.stream);
-  trace('Received remote stream');
+  audio.srcObject = e.stream;
+  console.log('Received remote stream');
   if (pc1.createDTMFSender) {
     enableDtmfSender();
   } else {
-    alert('This demo requires the RTCPeerConnection method createDTMFSender() which is not support by this browser.');
+    alert(
+      'This demo requires the RTCPeerConnection method createDTMFSender() ' +
+        'which is not support by this browser.'
+    );
   }
-
 }
 
 function iceCallback1(event) {
   if (event.candidate) {
-    pc2.addIceCandidate(event.candidate,
-      onAddIceCandidateSuccess, onAddIceCandidateError);
+    pc2.addIceCandidate(new RTCIceCandidate(event.candidate),
+        onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Local ICE candidate: \n' + event.candidate.candidate);
   }
 }
 
 function iceCallback2(event) {
   if (event.candidate) {
-    pc1.addIceCandidate(event.candidate,
-      onAddIceCandidateSuccess, onAddIceCandidateError);
+    pc1.addIceCandidate(new RTCIceCandidate(event.candidate),
+        onAddIceCandidateSuccess, onAddIceCandidateError);
     console.log('Remote ICE candidate: \n ' + event.candidate.candidate);
   }
 }
@@ -187,14 +200,14 @@ function sendTones(tones) {
   }
 }
 
-function handleSendTonesClick(){
+function handleSendTonesClick() {
   sendTones(tonesInput.value);
 }
 
 function addDialPadHandlers() {
   var dialPad = document.querySelector('div#dialPad');
   var buttons = dialPad.querySelectorAll('button');
-  for (var i = 0; i != buttons.length; ++i) {
+  for (var i = 0; i !== buttons.length; ++i) {
     buttons[i].onclick = sendDtmfTone;
   }
 }
@@ -202,4 +215,3 @@ function addDialPadHandlers() {
 function sendDtmfTone() {
   sendTones(this.textContent);
 }
-
