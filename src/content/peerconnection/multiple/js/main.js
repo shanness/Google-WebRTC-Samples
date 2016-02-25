@@ -32,7 +32,7 @@ var offerOptions = {
 
 function gotStream(stream) {
   trace('Received local stream');
-  video1.srcObject = stream;
+  video1 = attachMediaStream(video1, stream);
   window.localstream = stream;
   callButton.disabled = false;
 }
@@ -140,12 +140,12 @@ function hangup() {
 }
 
 function gotRemoteStream1(e) {
-  video2.srcObject = e.stream;
+  video2 = attachMediaStream(video2, e.stream);
   trace('pc1: received remote stream');
 }
 
 function gotRemoteStream2(e) {
-  video3.srcObject = e.stream;
+  video3 = attachMediaStream(video3, e.stream);
   trace('pc2: received remote stream');
 }
 

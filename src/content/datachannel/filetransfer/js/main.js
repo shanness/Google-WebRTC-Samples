@@ -82,7 +82,7 @@ function sendData() {
   }
   sendProgress.max = file.size;
   receiveProgress.max = file.size;
-  var chunkSize = 16384;
+  var chunkSize = 20;
   var sliceFile = function(offset) {
     var reader = new window.FileReader();
     reader.onload = (function() {

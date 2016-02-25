@@ -51,7 +51,7 @@ var fullHdConstraints = {
 
 function successCallback(mediaStream) {
   window.stream = mediaStream; // stream available to console
-  video.srcObject = mediaStream;
+  video = attachMediaStream(video, mediaStream); 
 }
 
 function errorCallback(error) {

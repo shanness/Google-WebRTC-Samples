@@ -64,7 +64,7 @@ function getOtherPc(pc) {
 
 function gotStream(stream) {
   trace('Received local stream');
-  localVideo.srcObject = stream;
+  localVideo = attachMediaStream(localVideo, stream);
   localStream = stream;
   callButton.disabled = false;
 }
@@ -168,7 +168,7 @@ function onSetSessionDescriptionError(error) {
 }
 
 function gotRemoteStream(e) {
-  remoteVideo.srcObject = e.stream;
+  remoteVideo = attachMediaStream(remoteVideo, e.stream);
   trace('pc2 received remote stream');
 }
 
@@ -213,7 +213,7 @@ function onIceStateChange(pc, event) {
     // TODO: get rid of this in favor of http://w3c.github.io/webrtc-pc/#widl-RTCIceTransport-onselectedcandidatepairchange
     if (pc.iceConnectionState === 'connected' ||
         pc.iceConnectionState === 'completed') {
-      pc.getStats(null).then(function(results) {
+      pc.getStats(null, function(results) {
         // figure out the peer's ip
         var activeCandidatePair = null;
         var remoteCandidate = null;
@@ -246,7 +246,7 @@ function onIceStateChange(pc, event) {
               .textContent = remoteCandidate.ipAddress + ':' +
                   remoteCandidate.portNumber;
         }
-      });
+      }, function(){});
     }
   }
 }

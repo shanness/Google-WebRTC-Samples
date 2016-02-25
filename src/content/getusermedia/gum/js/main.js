@@ -25,7 +25,7 @@ navigator.mediaDevices.getUserMedia(constraints)
     console.log('Stream ended');
   };
   window.stream = stream; // make variable available to browser console
-  video.srcObject = stream;
+  video = attachMediaStream(video, stream); 
 })
 .catch(function(error) {
   if (error.name === 'ConstraintNotSatisfiedError') {

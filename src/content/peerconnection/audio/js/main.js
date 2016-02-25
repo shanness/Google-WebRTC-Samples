@@ -125,7 +125,7 @@ function hangup() {
 }
 
 function gotRemoteStream(e) {
-  audio2.srcObject = e.stream;
+  audio2 = attachMediaStream(audio2, e.stream); 
   trace('Received remote stream');
 }
 
@@ -241,40 +241,42 @@ function setDefaultCodec(mLine, payload) {
   return newLine.join(' ');
 }
 
+function gotStats(res) {
+  Object.keys(res).forEach(function(key) {
+    var report = res[key];
+    var bytes;
+    var packets;
+    var now = report.timestamp;
+    if ((report.type === 'outboundrtp') ||
+        (report.type === 'outbound-rtp') ||
+        (report.type === 'ssrc' && report.bytesSent)) {
+      bytes = report.bytesSent;
+      packets = report.packetsSent;
+      if (lastResult && lastResult[report.id]) {
+        // calculate bitrate
+        var bitrate = 8 * (bytes - lastResult[report.id].bytesSent) /
+            (now - lastResult[report.id].timestamp);
+
+        // append to chart
+        bitrateSeries.addPoint(now, bitrate);
+        bitrateGraph.setDataSeries([bitrateSeries]);
+        bitrateGraph.updateEndDate();
+
+        // calculate number of packets and append to chart
+        packetSeries.addPoint(now, packets -
+            lastResult[report.id].packetsSent);
+        packetGraph.setDataSeries([packetSeries]);
+        packetGraph.updateEndDate();
+      }
+    }
+  });
+  lastResult = res;
+}
+
 // query getStats every second
 window.setInterval(function() {
   if (!window.pc1) {
     return;
   }
-  window.pc1.getStats(null).then(function(res) {
-    Object.keys(res).forEach(function(key) {
-      var report = res[key];
-      var bytes;
-      var packets;
-      var now = report.timestamp;
-      if ((report.type === 'outboundrtp') ||
-          (report.type === 'outbound-rtp') ||
-          (report.type === 'ssrc' && report.bytesSent)) {
-        bytes = report.bytesSent;
-        packets = report.packetsSent;
-        if (lastResult && lastResult[report.id]) {
-          // calculate bitrate
-          var bitrate = 8 * (bytes - lastResult[report.id].bytesSent) /
-              (now - lastResult[report.id].timestamp);
-
-          // append to chart
-          bitrateSeries.addPoint(now, bitrate);
-          bitrateGraph.setDataSeries([bitrateSeries]);
-          bitrateGraph.updateEndDate();
-
-          // calculate number of packets and append to chart
-          packetSeries.addPoint(now, packets -
-              lastResult[report.id].packetsSent);
-          packetGraph.setDataSeries([packetSeries]);
-          packetGraph.updateEndDate();
-        }
-      }
-    });
-    lastResult = res;
-  });
+  window.pc1.getStats(null, gotStats, function(){});
 }, 1000);

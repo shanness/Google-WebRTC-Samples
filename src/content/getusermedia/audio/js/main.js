@@ -23,7 +23,7 @@ function successCallback(stream) {
     console.log('Stream ended');
   };
   window.stream = stream; // make variable available to browser console
-  audio.srcObject = stream;
+  audio = attachMediaStream(audio, stream); 
 }
 
 function errorCallback(error) {

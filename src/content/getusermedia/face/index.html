@@ -132,7 +132,7 @@ poll = function() {
 
 onGotStream = function(stream) {
   localVideo.style.opacity = 1;
-  localVideo.srcObject = stream;
+  localVideo = attachMediaStream(localVideo, stream); 
   localStream = stream;
 
   //trace("User has granted access to local media. url = " + url);
@@ -147,6 +147,8 @@ onFailedStream = function(error) {
 
 setTimeout(initialize, 1);
 </script>
+
+<object data="../../wip.html" width="100%" height="70px"></object>
 
 <video id="localVideo" autoplay muted></video>
 <canvas width="1000" height="1000" id="localCanvas"></canvas>

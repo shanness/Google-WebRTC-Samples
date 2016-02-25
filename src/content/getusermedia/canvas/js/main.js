@@ -29,7 +29,7 @@ var constraints = {
 
 function successCallback(stream) {
   window.stream = stream; // make stream available to browser console
-  video.srcObject = stream;
+  video = attachMediaStream(video, stream); 
 }
 
 function errorCallback(error) {

@@ -61,7 +61,7 @@ function getOtherPc(pc) {
 
 function gotStream(stream) {
   trace('Received local stream');
-  localVideo.srcObject = stream;
+  localVideo = attachMediaStream(localVideo, stream);
   localStream = stream;
   callButton.disabled = false;
 }
@@ -153,7 +153,7 @@ function onSetSessionDescriptionError(error) {
 }
 
 function gotRemoteStream(e) {
-  remoteVideo.srcObject = e.stream;
+  remoteVideo = attachMediaStream(remoteVideo, e.stream);
   trace('pc2 received remote stream');
 }
 

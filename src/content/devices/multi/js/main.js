@@ -52,8 +52,8 @@ navigator.mediaDevices.enumerateDevices()
 
 function successCallback(stream) {
   window.stream = stream; // make stream available to console
-  gumAudio.srcObject = stream;
-  gumVideo.srcObject = stream;
+  gumAudio = attachMediaStream(gumAudio, stream); 
+  gumVideo = attachMediaStream(gumVideo, stream); 
 }
 
 function errorCallback(error) {

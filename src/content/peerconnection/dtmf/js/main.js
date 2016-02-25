@@ -136,7 +136,7 @@ function hangup() {
 }
 
 function gotRemoteStream(e) {
-  audio.srcObject = e.stream;
+  audio = attachMediaStream(audio, e.stream);
   trace('Received remote stream');
   if (pc1.createDTMFSender) {
     enableDtmfSender();
