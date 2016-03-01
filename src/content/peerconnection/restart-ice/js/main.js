@@ -117,7 +117,9 @@ function call() {
   };
   pc1.oniceconnectionstatechange = function(e) {
     onIceStateChange(pc1, e);
-    if (pc1 && pc1.iceConnectionState === 'completed') {
+    if (pc1 && 
+      (pc1.iceConnectionState === 'completed') ||
+      (pc1.iceConnectionState === 'connected')) {
       restartButton.disabled = false;
     }
   };

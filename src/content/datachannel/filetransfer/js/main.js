@@ -82,12 +82,13 @@ function sendData() {
   }
   sendProgress.max = file.size;
   receiveProgress.max = file.size;
-  var chunkSize = 20;
+  var chunkSize = 512;
   var sliceFile = function(offset) {
     var reader = new window.FileReader();
     reader.onload = (function() {
       return function(e) {
-        sendChannel.send(e.target.result);
+        var packet = new Int8Array(e.target.result, 0, e.target.result.byteLength);
+        sendChannel.send(packet);
         if (file.size > offset + e.target.result.byteLength) {
           window.setTimeout(sliceFile, 0, offset + chunkSize);
         }
