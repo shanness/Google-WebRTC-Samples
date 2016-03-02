@@ -22,67 +22,67 @@ Head over to [test/README.md](https://github.com/webrtc/samples/blob/gh-pages/te
 
 ### getUserMedia ###
 
-[Basic getUserMedia demo](https://webrtc.github.io/samples/src/content/getusermedia/gum/)
+[Basic getUserMedia demo](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/gum/)
 
-<!-- [getUserMedia + canvas](https://webrtc.github.io/samples/src/content/getusermedia/canvas/) -->
+<!-- [getUserMedia + canvas](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/canvas/) -->
 
-<!-- [getUserMedia + canvas + CSS Filters](https://webrtc.github.io/samples/src/content/getusermedia/filter/) -->
+<!-- [getUserMedia + canvas + CSS Filters](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/filter/) -->
 
-[getUserMedia with resolution constraints](https://webrtc.github.io/samples/src/content/getusermedia/resolution/)
+[getUserMedia with resolution constraints](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/resolution/)
 
-[getUserMedia with camera, mic and speaker selection](https://webrtc.github.io/samples/src/content/getusermedia/source/)
+[getUserMedia with camera, mic and speaker selection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/source/)
 
-[Audio-only getUserMedia output to local audio element](https://webrtc.github.io/samples/src/content/getusermedia/audio/)
+[Audio-only getUserMedia output to local audio element](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/audio/)
 
-<!-- [Audio-only getUserMedia displaying volume](https://webrtc.github.io/samples/src/content/getusermedia/volume/) -->
+<!-- [Audio-only getUserMedia displaying volume](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/volume/) -->
 
-<!-- [Face tracking](https://webrtc.github.io/samples/src/content/getusermedia/face/) -->
+<!-- [Face tracking](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/face/) -->
 
-<!-- [Record stream](https://webrtc.github.io/samples/src/content/getusermedia/record/) -->
+<!-- [Record stream](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/record/) -->
 
 ### Devices ###
 
-[Select camera, microphone and speaker](https://webrtc.github.io/samples/src/content/devices/input-output/)
+[Select camera, microphone and speaker](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/input-output/)
 
-[Select media source and audio output](https://webrtc.github.io/samples/src/content/devices/multi/)
+[Select media source and audio output](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/multi/)
 
 ### RTCPeerConnection ###
 
-[Basic peer connection](https://webrtc.github.io/samples/src/content/peerconnection/pc1/)
+[Basic peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/pc1/)
 
-[Audio-only peer connection](https://webrtc.github.io/samples/src/content/peerconnection/audio/)
+[Audio-only peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/audio/)
 
-[Multiple peer connections at once](https://webrtc.github.io/samples/src/content/peerconnection/multiple/)
+[Multiple peer connections at once](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/multiple/)
 
-[Forward output of one peer connection into another](https://webrtc.github.io/samples/src/content/peerconnection/multiple-relay/)
+[Forward output of one peer connection into another](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/multiple-relay/)
 
-[Munge SDP parameters](https://webrtc.github.io/samples/src/content/peerconnection/munge-sdp/)
+[Munge SDP parameters](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/munge-sdp/)
 
-<!-- [Use pranswer when setting up a peer connection](https://webrtc.github.io/samples/src/content/peerconnection/pr-answer/) -->
+<!-- [Use pranswer when setting up a peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/pr-answer/) -->
 
-[Adjust constraints, view stats](https://webrtc.github.io/samples/src/content/peerconnection/constraints/)
+[Adjust constraints, view stats](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/constraints/)
 
-<!-- [Display createOffer output](https://webrtc.github.io/samples/src/content/peerconnection/create-offer/) -->
+<!-- [Display createOffer output](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/create-offer/) -->
 
-[Use RTCDTMFSender](https://webrtc.github.io/samples/src/content/peerconnection/dtmf/)
+[Use RTCDTMFSender](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/dtmf/)
 
-[Display peer connection states](https://webrtc.github.io/samples/src/content/peerconnection/states/)
+[Display peer connection states](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/states/)
 
-[ICE candidate gathering from STUN/TURN servers](https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/)
+[ICE candidate gathering from STUN/TURN servers](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/trickle-ice/)
 
-[Do an ICE restart](https://webrtc.github.io/samples/src/content/peerconnection/restart-ice/)
+[Do an ICE restart](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/restart-ice/)
 
-<!-- [Web Audio output as input to peer connection](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-input/) -->
+<!-- [Web Audio output as input to peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/webaudio-input/) -->
 
-<!-- [Peer connection as input to Web Audio](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-output/) -->
+<!-- [Peer connection as input to Web Audio](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/webaudio-output/) -->
 
 ### RTCDataChannel ###
 
-[Transmit text](https://webrtc.github.io/samples/src/content/datachannel/basic/)
+[Transmit text](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/basic/)
 
-<!-- [Transfer a file](https://webrtc.github.io/samples/src/content/datachannel/filetransfer/) -->
+<!-- [Transfer a file](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/filetransfer/) -->
 
-<!-- [Transfer data](https://webrtc.github.io/samples/src/content/datachannel/datatransfer/) -->
+<!-- [Transfer data](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/datatransfer/) -->
 
 <!-- ### Video chat ###
 

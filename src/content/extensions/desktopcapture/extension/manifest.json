@@ -11,12 +11,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://webrtc.github.io/samples/*"],
+      "matches": ["https://github.com/Temasys/Google-WebRTC-Samples/*"],
       "js": ["content-script.js"]
     }
   ],
   "permissions": [
     "desktopCapture",
-    "https://webrtc.github.io/samples/*"
+    "https://github.com/Temasys/Google-WebRTC-Samples/*"
   ]
 }
