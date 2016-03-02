@@ -10,7 +10,7 @@ This guide assumes you are running a Debian based Linux distribution (travis-mul
 
 #### Clone the repo in desired folder
 ```bash
-git clone https://github.com/webrtc/samples.git
+git clone https://github.com/Temasys/Google-WebRTC-Samples.git
 ```
 
 #### Install npm dependencies

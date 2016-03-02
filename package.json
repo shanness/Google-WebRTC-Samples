@@ -8,16 +8,16 @@
     "samples",
     "javascript"
   ],
-  "homepage": "https://github.com/webrtc/samples",
+  "homepage": "https://github.com/Temasys/Google-WebRTC-Samples",
   "bugs": {
-    "url": "https://github.com/webrtc/samples/issues"
+    "url": "https://github.com/Temasys/Google-WebRTC-Samples/issues"
   },
   "license": "BSD-3-Clause",
   "author": "The WebRTC project authors",
   "main": "Gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/webrtc/samples.git"
+    "url": "https://github.com/Temasys/Google-WebRTC-Samples.git"
   },
   "scripts": {
     "postinstall": "cp node_modules/webrtc-adapter-test/adapter.js src/js",
