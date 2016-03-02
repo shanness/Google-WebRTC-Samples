@@ -24,9 +24,9 @@ Head over to [test/README.md](https://github.com/webrtc/samples/blob/gh-pages/te
 
 [Basic getUserMedia demo](https://webrtc.github.io/samples/src/content/getusermedia/gum/)
 
-[getUserMedia + canvas](https://webrtc.github.io/samples/src/content/getusermedia/canvas/)
+<!-- [getUserMedia + canvas](https://webrtc.github.io/samples/src/content/getusermedia/canvas/) -->
 
-[getUserMedia + canvas + CSS Filters](https://webrtc.github.io/samples/src/content/getusermedia/filter/)
+<!-- [getUserMedia + canvas + CSS Filters](https://webrtc.github.io/samples/src/content/getusermedia/filter/) -->
 
 [getUserMedia with resolution constraints](https://webrtc.github.io/samples/src/content/getusermedia/resolution/)
 
@@ -34,11 +34,11 @@ Head over to [test/README.md](https://github.com/webrtc/samples/blob/gh-pages/te
 
 [Audio-only getUserMedia output to local audio element](https://webrtc.github.io/samples/src/content/getusermedia/audio/)
 
-[Audio-only getUserMedia displaying volume](https://webrtc.github.io/samples/src/content/getusermedia/volume/)
+<!-- [Audio-only getUserMedia displaying volume](https://webrtc.github.io/samples/src/content/getusermedia/volume/) -->
 
-[Face tracking](https://webrtc.github.io/samples/src/content/getusermedia/face/)
+<!-- [Face tracking](https://webrtc.github.io/samples/src/content/getusermedia/face/) -->
 
-[Record stream](https://webrtc.github.io/samples/src/content/getusermedia/record/)
+<!-- [Record stream](https://webrtc.github.io/samples/src/content/getusermedia/record/) -->
 
 ### Devices ###
 
@@ -58,11 +58,11 @@ Head over to [test/README.md](https://github.com/webrtc/samples/blob/gh-pages/te
 
 [Munge SDP parameters](https://webrtc.github.io/samples/src/content/peerconnection/munge-sdp/)
 
-[Use pranswer when setting up a peer connection](https://webrtc.github.io/samples/src/content/peerconnection/pr-answer/)
+<!-- [Use pranswer when setting up a peer connection](https://webrtc.github.io/samples/src/content/peerconnection/pr-answer/) -->
 
 [Adjust constraints, view stats](https://webrtc.github.io/samples/src/content/peerconnection/constraints/)
 
-[Display createOffer output](https://webrtc.github.io/samples/src/content/peerconnection/create-offer/)
+<!-- [Display createOffer output](https://webrtc.github.io/samples/src/content/peerconnection/create-offer/) -->
 
 [Use RTCDTMFSender](https://webrtc.github.io/samples/src/content/peerconnection/dtmf/)
 
@@ -72,20 +72,21 @@ Head over to [test/README.md](https://github.com/webrtc/samples/blob/gh-pages/te
 
 [Do an ICE restart](https://webrtc.github.io/samples/src/content/peerconnection/restart-ice/)
 
-[Web Audio output as input to peer connection](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-input/)
+<!-- [Web Audio output as input to peer connection](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-input/) -->
 
-[Peer connection as input to Web Audio](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-output/)
+<!-- [Peer connection as input to Web Audio](https://webrtc.github.io/samples/src/content/peerconnection/webaudio-output/) -->
 
 ### RTCDataChannel ###
 
 [Transmit text](https://webrtc.github.io/samples/src/content/datachannel/basic/)
 
-[Transfer a file](https://webrtc.github.io/samples/src/content/datachannel/filetransfer/)
+<!-- [Transfer a file](https://webrtc.github.io/samples/src/content/datachannel/filetransfer/) -->
 
-[Transfer data](https://webrtc.github.io/samples/src/content/datachannel/datatransfer/)
+<!-- [Transfer data](https://webrtc.github.io/samples/src/content/datachannel/datatransfer/) -->
 
-### Video chat ###
+<!-- ### Video chat ###
 
 [AppRTC video chat client](https://apprtc.appspot.com/) powered by Google App Engine
 
 [AppRTC URL parameters](https://apprtc.appspot.com/params.html)
+ -->
