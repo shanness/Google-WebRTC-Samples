@@ -9,6 +9,10 @@
   display: none;
 }
 
+.notPorted {
+  display: none;
+}
+
 div#errorMsg p {
   color: #F00;
 }
