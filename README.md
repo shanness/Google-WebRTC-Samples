@@ -40,6 +40,8 @@ Head over to [test/README.md](https://github.com/Temasys/Google-WebRTC-Samples/b
 
 <!-- [Record stream](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/record/) -->
 
+[getUserMedia in an iFrame](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/iframe)
+
 ### Devices ###
 
 [Select camera, microphone and speaker](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/input-output/)
