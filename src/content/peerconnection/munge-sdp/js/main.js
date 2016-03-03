@@ -98,6 +98,25 @@ function gotSources(sourceInfos) {
       console.log('unknown', JSON.stringify(sourceInfos[i]));
     }
   }
+
+  if (AdapterJS.WebRTCPlugin.plugin &&
+    AdapterJS.WebRTCPlugin.plugin.HasScreensharingFeature &&
+    AdapterJS.WebRTCPlugin.plugin.isScreensharingAvailable) {
+    var option = document.createElement('option');
+    option.value = AdapterJS.WebRTCPlugin.plugin.screensharingKey;
+    option.text = "Screensharing";
+    videoSelect.appendChild(option);
+  }
+
+  var option = document.createElement('option');
+  option.value = '';
+  option.text = 'none'; 
+  audioSelect.appendChild(option);
+
+  option = document.createElement('option');
+  option.value = '';
+  option.text = 'none'; 
+  videoSelect.appendChild(option);
 }
 
 function gumFailed(e) {
@@ -120,12 +139,12 @@ function getMedia() {
   trace('Selected video source: ' + videoSource);
 
   var constraints = {
-    audio: {
+    audio: audioSource === '' ? false : {
       optional: [{
         sourceId: audioSource
       }]
     },
-    video: {
+    video: videoSource === '' ? false : {
       optional: [{
         sourceId: videoSource
       }]
