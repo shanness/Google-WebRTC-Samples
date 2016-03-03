@@ -72,6 +72,10 @@ function onCreateSessionDescriptionError(error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
+function gumFailed(e) {
+  alert('getUserMedia() error: ' + e.name);
+}
+
 function call() {
   trace('Starting call');
   var servers = null;
@@ -87,14 +91,17 @@ function call() {
   pc2.onaddstream = gotRemoteStream;
 
   trace('Requesting local stream');
-  navigator.mediaDevices.getUserMedia({
+  var constraints = {
     audio: true,
     video: false
-  })
-  .then(gotStream)
-  .catch(function(e) {
-    alert('getUserMedia() error: ' + e.name);
-  });
+  };
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 
   callButton.disabled = true;
   hangupButton.disabled = false;

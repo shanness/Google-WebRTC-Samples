@@ -27,7 +27,7 @@ function gotDevices(deviceInfos) {
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
-    option.value = deviceInfo.deviceId;
+    option.value = deviceInfo.id || deviceInfo.deviceId;
     if (deviceInfo.kind === 'audioinput' || 
         deviceInfo.kind === 'audio') {
       option.text = deviceInfo.label ||

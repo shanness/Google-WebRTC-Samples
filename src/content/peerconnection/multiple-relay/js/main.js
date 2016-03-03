@@ -48,17 +48,23 @@ function gotremoteStream(stream) {
   insertRelayButton.disabled = false;
 }
 
+function gumFailed(e) {
+  alert('getUserMedia() failed');
+  trace('getUserMedia() error: ', e);
+}
+
 function start() {
   trace('Requesting local stream');
   startButton.disabled = true;
   var options = audioCheckbox.checked ?
     {audio: true, video: true} : {audio: false, video: true};
-  navigator.mediaDevices.getUserMedia(options)
-  .then(gotStream)
-  .catch(function(e) {
-    alert('getUserMedia() failed');
-    trace('getUserMedia() error: ', e);
-  });
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(options, gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(options)
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 }
 
 function call() {

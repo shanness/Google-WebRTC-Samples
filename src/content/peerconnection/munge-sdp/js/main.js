@@ -63,7 +63,12 @@ function getSources() {
     alert(
       'This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
   } else {
-    navigator.mediaDevices.enumerateDevices().then(gotSources);
+    if (typeof Promise === 'undefined') {
+      return MediaStreamTrack.getSources(gotSources);
+    } else {
+      return navigator.mediaDevices.enumerateDevices()
+      .then(gotSources);
+    }
   }
 }
 
@@ -73,15 +78,17 @@ function gotSources(sourceInfos) {
   var videoCount = 0;
   for (var i = 0; i < sourceInfos.length; i++) {
     var option = document.createElement('option');
-    option.value = sourceInfos[i].deviceId;
+    option.value = sourceInfos[i].id || sourceInfos[i].deviceId;
     option.text = sourceInfos[i].label;
-    if (sourceInfos[i].kind === 'audioinput') {
+    if (sourceInfos[i].kind === 'audioinput' ||
+        sourceInfos[i].kind === 'audio') {
       audioCount++;
       if (option.text === '') {
         option.text = 'Audio ' + audioCount;
       }
       audioSelect.appendChild(option);
-    } else if (sourceInfos[i].kind === 'videoinput') {
+    } else if (sourceInfos[i].kind === 'videoinput' ||
+               sourceInfos[i].kind === 'video') {
       videoCount++;
       if (option.text === '') {
         option.text = 'Video ' + videoCount;
@@ -91,6 +98,10 @@ function gotSources(sourceInfos) {
       console.log('unknown', JSON.stringify(sourceInfos[i]));
     }
   }
+}
+
+function gumFailed(e) {
+  console.log('navigator.getUserMedia error: ', e);
 }
 
 function getMedia() {
@@ -121,11 +132,13 @@ function getMedia() {
     }
   };
   trace('Requested local stream');
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then(gotStream)
-  .catch(function(e) {
-    console.log('navigator.getUserMedia error: ', e);
-  });
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 }
 
 function gotStream(stream) {

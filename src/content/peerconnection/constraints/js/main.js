@@ -66,6 +66,14 @@ function hangup() {
   getMediaButton.disabled = false;
 }
 
+function gumFailed(e) {
+  var message = 'getUserMedia error: ' + e.name + '\n' +
+      'PermissionDeniedError may mean invalid constraints.';
+  alert(message);
+  console.log(message);
+  getMediaButton.disabled = false;  
+}
+
 function getMedia() {
   getMediaButton.disabled = true;
   if (localStream) {
@@ -77,15 +85,13 @@ function getMedia() {
       videoTracks[i].stop();
     }
   }
-  navigator.mediaDevices.getUserMedia(getUserMediaConstraints())
-  .then(gotStream)
-  .catch(function(e) {
-    var message = 'getUserMedia error: ' + e.name + '\n' +
-        'PermissionDeniedError may mean invalid constraints.';
-    alert(message);
-    console.log(message);
-    getMediaButton.disabled = false;
-  });
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(getUserMediaConstraints(), gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(getUserMediaConstraints())
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 }
 
 function gotStream(stream) {
