@@ -86,6 +86,8 @@ Head over to [test/README.md](https://github.com/Temasys/Google-WebRTC-Samples/b
 
 <!-- [Transfer data](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/datatransfer/) -->
 
+[ArrayBuffer sending](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/arraybuffer/)
+
 <!-- ### Video chat ###
 
 [AppRTC video chat client](https://apprtc.appspot.com/) powered by Google App Engine
