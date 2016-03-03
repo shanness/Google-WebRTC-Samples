@@ -54,13 +54,15 @@
 
     <section>
 
-      <p>This is a repository for the WebRTC Javascript code samples. The source for these samples is available at <a href="https://github.com/Temasys/Google-WebRTC-Samples" title="View GitHub repository for these files">github.com/webrtc/samples</a>.</p>
+      <p>This is a repository for the WebRTC Javascript code samples. The source for these samples is available at <a href="https://github.com/Temasys/Google-WebRTC-Samples" title="View GitHub repository for these files">github.com/Temasys/Google-WebRTC-Samples</a>.</p>
 
-      <p>Some of the samples use new browser features. They may only work in <a href="https://www.google.com/chrome/browser/canary.html" title="Download Chrome Canary">Chrome Canary</a>, <a href="http://www.mozilla.org/firefox/beta/" title="Download Firefox Beta">Firefox Beta</a> or Microsoft Edge (available with Windows 10), and may require flags to be set.</p>
+      <p>It is originally a fork of <a href="https://github.com/webrtc/samples">github.com/webrtc/samples</a>, but updated to integrate the <a href="plugin.temasys.com.sg">Temasys Plugin</a>, and work on Internet Explorer and Safari.</p>
 
-      <p>Most of the samples use <a href="https://github.com/webrtc/adapter">adapter.js</a>, a shim to insulate apps from spec changes and prefix differences. (In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. For full interop information, see <a href="http://www.webrtc.org/web-apis/interop">webrtc.org/web-apis/interop</a>.)</p>
+      <p>Some of the samples use new browser features. They may only work in <a href="https://www.google.com/chrome/browser/canary.html" title="Download Chrome Canary">Chrome Canary</a>, <a href="http://www.mozilla.org/firefox/beta/" title="Download Firefox Beta">Firefox Beta</a>, Microsoft Edge (available with Windows 10), and latest versions of the <a href="plugin.temasys.com.sg">Temasys Plugin</a> and may require flags to be set.</p>
 
-      <p>In Chrome and Opera, all samples that use <code>getUserMedia()</code> must be run from a server. Calling <code>getUserMedia()</code> from a file:// URL will work in Firefox, but fail silently in Chrome and Opera.</p>
+      <p>Most of the samples use <a href="https://github.com/Temasys/AdapterJS">AdapterJS</a>, a shim to insulate apps from spec changes and prefix differences. (In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. For full interop information, see <a href="http://www.webrtc.org/web-apis/interop">webrtc.org/web-apis/interop</a>, and <a href="plugin.temasys.com.sg">plugin.temasys.com.sg</a>.)</p>
+
+      <p>In Chrome and Opera, all samples that use <code>getUserMedia()</code> must be run from a server. Calling <code>getUserMedia()</code> from a file:// URL will work in Firefox and the Temasys Plugin, but fail silently in Chrome and Opera.</p>
 
       <p><a href="http://www.webrtc.org/testing" title="Command-line flags for WebRTC testing">webrtc.org/testing</a> lists command line flags useful for development and testing with Chrome.</p>
 
