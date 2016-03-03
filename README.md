@@ -42,6 +42,8 @@ Head over to [test/README.md](https://github.com/Temasys/Google-WebRTC-Samples/b
 
 [getUserMedia in an iFrame](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/iframe)
 
+[Screensharing]](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/screensharing)
+
 ### Devices ###
 
 [Select camera, microphone and speaker](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/input-output/)
