@@ -1,70 +1,98 @@
 # WebRTC code samples #
 
-This repository hosts forks of the different [samples provided by Google](https://github.com/GoogleChrome/webrtc) with the  few changes needed so they would work on IE and Safari with the [plugin provided by Temasys](http://plugin.temasys.com.sg/)
+This is a repository for the WebRTC Javascript code samples.
 
-All of the samples use [adapter.js](https://github.com/Temasys/AdapterJS), a shim to insulate apps from spec changes and prefix differences. In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. 
+It is originally a fork of [https://github.com/webrtc/samples](https://github.com/webrtc/samples), but updated to integrate the [Temasys Plugin](plugin.temasys.com.sg), and work on Internet Explorer and Safari.
 
-NB for chrome: all samples that use `getUserMedia()` must be run from a server. Calling `getUserMedia()` from a file:// URL will result in a PERMISSION_DENIED NavigatorUserMediaError.  See [What are some chromium command-line flags relevant to WebRTC development/testing?](http://www.webrtc.org/chrome#TOC-What-are-some-chromium-command-line-flags-relevant-to-WebRTC-development-testing-) for relevant flags.
+Some of the samples use new browser features. They may only work in Chrome Canary, Firefox Beta, Microsoft Edge (available with Windows 10), and latest versions of the [Temasys Plugin](plugin.temasys.com.sg), and may require flags to be set.
 
-Patches and issues welcome!
+All of the samples use [AdapterJS](https://github.com/Temasys/AdapterJS), a shim to insulate apps from spec changes and prefix differences. In fact, the standards and protocols used for WebRTC implementations are highly stable, and there are only a few prefixed names. For full interop information, see [webrtc.org/web-apis/interop](http://www.webrtc.org/web-apis/interop).
 
-Tests updated today
-=========
+In Chrome and Opera, all samples that use `getUserMedia()` must be run from a server. Calling `getUserMedia()` from a file:// URL will work in Firefox and the Temasys Plugin, but fail silently in Chrome and Opera.
 
-[getUserMedia()](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/gum) 
+[webrtc.org/testing](http://www.webrtc.org/testing) lists command line flags useful for development and testing with Chrome.
 
-[getUserMedia with camera/mic selection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/source)
+For more information about WebRTC, we maintain a list of [WebRTC Resources](https://docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit). If you've never worked with WebRTC, we recommend you start with the 2013 Google I/O [WebRTC presentation](http://www.youtube.com/watch?v=p2HzZkd2A40).
 
-[getUserMedia in iFrame](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/iframe)
+Patches and issues welcome! See [CONTRIBUTING](https://github.com/Temasys/Google-WebRTC-Samples/blob/dev/CONTRIBUTING.md) for instructions. All contributors must sign a contributor license agreement before code can be accepted. Please complete the agreement for an [individual](https://developers.google.com/open-source/cla/individual) or a [corporation](https://developers.google.com/open-source/cla/corporate) as appropriate.
+The [Developer's Guide](https://bit.ly/webrtcdevguide) for this repo has more information about code style, structure and validation.
+Head over to [test/README.md](https://github.com/Temasys/Google-WebRTC-Samples/blob/dev/test/README.md) and get started developing.
 
-[getUserMedia in iFrame](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/getusermedia/playPause)
+## The demos ##
 
-[ICE candidate gathering](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/trickle-ice)
+### getUserMedia ###
 
-[Peer Connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/pc1)
+[Basic getUserMedia demo](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/gum/)
 
-[Peer Connection States](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/states)
+<!-- [getUserMedia + canvas](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/canvas/) -->
 
-[Audio-only peer connection](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/audio)
+<!-- [getUserMedia + canvas + CSS Filters](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/filter/) -->
 
-[Multiple peer connections](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/multiple)
+[getUserMedia with resolution constraints](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/resolution/)
 
-[Multiple relays](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/multiple-relay)
+[getUserMedia with camera, mic and speaker selection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/source/)
 
-[Munge SDP](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/peerconnection/munge-sdp)
+[Audio-only getUserMedia output to local audio element](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/audio/)
 
-[Data channels](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/datachannel)
+<!-- [Audio-only getUserMedia displaying volume](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/volume/) -->
 
-[Data channels with arraybuffers](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/datachannel-arraybuffer)
+<!-- [Face tracking](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/face/) -->
 
-[AppRTC](https://github.com/TemasysCommunications/Google-WebRTC-Samples/tree/master/samples/web/content/apprtc)
+<!-- [Record stream](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/record/) -->
 
-Tests to be updated in the future
-=========
+[getUserMedia in an iFrame](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/iframe)
 
-[getUserMedia + canvas](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/canvas)
+[Screensharing]](https://github.com/Temasys/Google-WebRTC-Samples/src/content/getusermedia/screensharing)
 
-[getUserMedia + canvas + CSS Filters](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/filter)
+### Devices ###
 
-[getUserMedia with resolution constraints](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/resolution)
+[Select camera, microphone and speaker](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/input-output/)
 
-[Audio-only getUserMedia output to local audio element](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/audio)
+[Select media source and audio output](https://github.com/Temasys/Google-WebRTC-Samples/src/content/devices/multi/)
 
-[Audio-only getUserMedia displaying volume](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/volume)
+### RTCPeerConnection ###
 
-[Face tracking](https://googlechrome.github.io/webrtc/samples/web/content/getusermedia/face)
+[Basic peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/pc1/)
 
-[Accept incoming peer connection](http://googlechrome.github.io/webrtc/samples/web/content/pr-answer)
+[Audio-only peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/audio/)
 
-[Use pranswer when setting up a peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/pr-answer)
+[Multiple peer connections at once](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/multiple/)
 
-[Adjust constraints, view stats](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/constraints)
+[Forward output of one peer connection into another](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/multiple-relay/)
 
-[Display createOffer output](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/create-offer)
+[Munge SDP parameters](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/munge-sdp/)
 
-[Use RTCDTMFSender](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/dtmf)
+<!-- [Use pranswer when setting up a peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/pr-answer/) -->
 
-[Web Audio output as input to peer connection](https://googlechrome.github.io/webrtc/samples/web/content/peerconnection/webaudio-input)
+[Adjust constraints, view stats](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/constraints/)
 
+<!-- [Display createOffer output](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/create-offer/) -->
 
+[Use RTCDTMFSender](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/dtmf/)
 
+[Display peer connection states](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/states/)
+
+[ICE candidate gathering from STUN/TURN servers](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/trickle-ice/)
+
+[Do an ICE restart](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/restart-ice/)
+
+<!-- [Web Audio output as input to peer connection](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/webaudio-input/) -->
+
+<!-- [Peer connection as input to Web Audio](https://github.com/Temasys/Google-WebRTC-Samples/src/content/peerconnection/webaudio-output/) -->
+
+### RTCDataChannel ###
+
+[Transmit text](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/basic/)
+
+<!-- [Transfer a file](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/filetransfer/) -->
+
+<!-- [Transfer data](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/datatransfer/) -->
+
+[ArrayBuffer sending](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/arraybuffer/)
+
+<!-- ### Video chat ###
+
+[AppRTC video chat client](https://apprtc.appspot.com/) powered by Google App Engine
+
+[AppRTC URL parameters](https://apprtc.appspot.com/params.html)
+ -->
