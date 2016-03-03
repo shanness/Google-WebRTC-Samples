@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/webrtc/samples.svg?branch=gh-pages)](https://travis-ci.org/webrtc/samples/)
-
 # WebRTC code samples #
 
 This is a repository for the WebRTC Javascript code samples.
