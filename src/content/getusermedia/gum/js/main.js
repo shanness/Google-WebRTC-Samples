@@ -16,8 +16,7 @@ var constraints = window.constraints = {
 };
 var errorElement = document.querySelector('#errorMsg');
 
-navigator.mediaDevices.getUserMedia(constraints)
-.then(function(stream) {
+var onSuccess = function(stream) {
   var videoTracks = stream.getVideoTracks();
   console.log('Got stream with constraints:', constraints);
   console.log('Using video device: ' + videoTracks[0].label);
@@ -26,8 +25,9 @@ navigator.mediaDevices.getUserMedia(constraints)
   };
   window.stream = stream; // make variable available to browser console
   video = attachMediaStream(video, stream); 
-})
-.catch(function(error) {
+};
+
+var onFailure = function(error) {
   if (error.name === 'ConstraintNotSatisfiedError') {
     errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
         constraints.video.width.exact + ' px is not supported by your device.');
@@ -37,7 +37,14 @@ navigator.mediaDevices.getUserMedia(constraints)
       'order for the demo to work.');
   }
   errorMsg('getUserMedia error: ' + error.name, error);
-});
+};
+
+if (typeof Promise === 'undefined') {
+  navigator.getUserMedia(constraints, onSuccess, onFailure);
+} else {
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(onSuccess).catch(onFailure);
+}
 
 function errorMsg(msg, error) {
   errorElement.innerHTML += '<p>' + msg + '</p>';

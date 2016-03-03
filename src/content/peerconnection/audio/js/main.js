@@ -62,6 +62,10 @@ function onCreateSessionDescriptionError(error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
+function gumFailed(e) {
+  alert('getUserMedia() error: ' + e.name);
+}
+
 function call() {
   callButton.disabled = true;
   codecSelector.disabled = true;
@@ -78,14 +82,18 @@ function call() {
   pc2.onicecandidate = iceCallback2;
   pc2.onaddstream = gotRemoteStream;
   trace('Requesting local stream');
-  navigator.mediaDevices.getUserMedia({
+
+  var constraints = {
     audio: true,
-    video: false
-  })
-  .then(gotStream)
-  .catch(function(e) {
-    alert('getUserMedia() error: ' + e.name);
-  });
+    video: true
+  };
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 }
 
 function gotDescription1(desc) {

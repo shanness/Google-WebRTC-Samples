@@ -28,7 +28,8 @@ function gotDevices(deviceInfos) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
-    if (deviceInfo.kind === 'audioinput') {
+    if (deviceInfo.kind === 'audioinput' || 
+        deviceInfo.kind === 'audio') {
       option.text = deviceInfo.label ||
         'microphone ' + (audioInputSelect.length + 1);
       audioInputSelect.appendChild(option);
@@ -36,7 +37,8 @@ function gotDevices(deviceInfos) {
       option.text = deviceInfo.label || 'speaker ' +
           (audioOutputSelect.length + 1);
       audioOutputSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'videoinput') {
+    } else if (deviceInfo.kind === 'videoinput' ||
+               deviceInfo.kind === 'video') {
       option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
       videoSelect.appendChild(option);
     } else {
@@ -52,9 +54,16 @@ function gotDevices(deviceInfos) {
   });
 }
 
-navigator.mediaDevices.enumerateDevices()
-.then(gotDevices)
-.catch(errorCallback);
+function getDevices() {
+  if (typeof Promise === 'undefined') {
+    return MediaStreamTrack.getSources(gotDevices);
+  } else {
+    return navigator.mediaDevices.enumerateDevices()
+    .then(gotDevices)
+    .catch(errorCallback);
+  }
+}
+getDevices();
 
 function errorCallback(error) {
   console.log('navigator.getUserMedia error: ', error);
@@ -87,6 +96,13 @@ function changeAudioDestination() {
   attachSinkId(videoElement, audioDestination);
 }
 
+function gotStream(stream) {
+  window.stream = stream; // make stream available to console
+  videoElement = attachMediaStream(videoElement, stream);
+  // Refresh button list in case labels have become available
+  return getDevices();
+}
+
 function start() {
   if (window.stream) {
     window.stream.getTracks().forEach(function(track) {
@@ -99,15 +115,14 @@ function start() {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then(function(stream) {
-    window.stream = stream; // make stream available to console
-    videoElement = attachMediaStream(videoElement, stream);
-    // Refresh button list in case labels have become available
-    return navigator.mediaDevices.enumerateDevices();
-  })
-  .then(gotDevices)
-  .catch(errorCallback);
+
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, gotStream, function(){});
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream);
+  }
+  
 }
 
 audioInputSelect.onchange = start;

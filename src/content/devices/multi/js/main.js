@@ -46,9 +46,13 @@ function gotDevices(deviceInfos) {
   }
 }
 
-navigator.mediaDevices.enumerateDevices()
-.then(gotDevices)
-.catch(errorCallback);
+if (typeof Promise === 'undefined') {
+  MediaStreamTrack.getSources(gotDevices);
+} else {
+  navigator.mediaDevices.enumerateDevices()
+  .then(gotDevices)
+  .catch(errorCallback);
+}
 
 function successCallback(stream) {
   window.stream = stream; // make stream available to console

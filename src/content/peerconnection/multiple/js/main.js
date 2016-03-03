@@ -37,17 +37,24 @@ function gotStream(stream) {
   callButton.disabled = false;
 }
 
+function gumFailed(e) {
+  alert('getUserMedia() error: ' + e.name);
+}
+
 function start() {
   trace('Requesting local stream');
   startButton.disabled = true;
-  navigator.mediaDevices.getUserMedia({
+  var constraints = {
     audio: true,
     video: true
-  })
-  .then(gotStream)
-  .catch(function(e) {
-    console.log('getUserMedia() error: ', e);
-  });
+  };
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, gotStream, gumFailed);
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream)
+    .catch(gumFailed);
+  }
 }
 
 function call() {
