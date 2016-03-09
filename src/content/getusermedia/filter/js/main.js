@@ -19,8 +19,13 @@ canvas.height = 360;
 
 snapshotButton.onclick = function() {
   canvas.className = filterSelect.value;
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width,
-      canvas.height);
+  var base64 = video.getFrame();
+  var image = new Image();
+  image.onload = function () {
+      canvas.getContext("2d").
+      drawImage(image, 0, 0, canvas.width, canvas.height);
+  };
+  image.setAttribute('src', "data:image/png;base64," + base64);
 };
 
 filterSelect.onchange = function() {
@@ -34,7 +39,7 @@ var constraints = {
 
 function successCallback(stream) {
   window.stream = stream; // make stream available to browser console
-  video.srcObject = stream;
+  video = attachMediaStream(video, stream); 
 }
 
 function errorCallback(error) {

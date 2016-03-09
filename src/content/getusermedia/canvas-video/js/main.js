@@ -11,19 +11,9 @@
 // Put variables in global scope to make them available to the browser console.
 var video = document.querySelector('video');
 var canvas = window.canvas = document.querySelector('canvas');
+var FPS = 30; // TODO: add FPS setter
 canvas.width = 480;
 canvas.height = 360;
-
-var button = document.querySelector('button');
-button.onclick = function() {
-  var base64 = video.getFrame();
-  var image = new Image();
-  image.onload = function () {
-      canvas.getContext("2d").
-      drawImage(image, 0, 0, canvas.width, canvas.height);
-  };
-  image.setAttribute('src', "data:image/png;base64," + base64);
-};
 
 var constraints = {
   audio: false,
@@ -33,6 +23,15 @@ var constraints = {
 function successCallback(stream) {
   window.stream = stream; // make stream available to browser console
   video = attachMediaStream(video, stream); 
+  setInterval(function() {
+    var base64 = video.getFrame();
+    var image = new Image();
+    image.onload = function () {
+        canvas.getContext("2d").
+        drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.setAttribute('src', "data:image/png;base64," + base64);
+  }, 1000/FPS);
 }
 
 function errorCallback(error) {
