@@ -38,4 +38,9 @@ function errorCallback(error) {
   console.log('navigator.getUserMedia error: ', error);
 }
 
-navigator.getUserMedia(constraints, successCallback, errorCallback);
+if (typeof Promise === 'undefined') {
+  navigator.getUserMedia(constraints, successCallback, errorCallback);
+} else {
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(successCallback).catch(errorCallback);
+}
