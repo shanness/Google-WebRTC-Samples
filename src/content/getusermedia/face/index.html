@@ -97,7 +97,7 @@ poll = function() {
     localCanvas.width = localVideo.clientWidth;
     localCanvas.height = localVideo.clientHeight;
 
-    var ctx2 = localCanvas.getContext('2d');
+    var ctx2 = localCanvas.getContext("2d");
     ctx2.lineWidth = 2;
     ctx2.lineJoin = "round";
     ctx2.clearRect (0, 0, localCanvas.width,localCanvas.height);
@@ -132,8 +132,8 @@ poll = function() {
     }
     setTimeout(poll, 1000);
   };
-  image.setAttribute('src', "data:image/png;base64," + base64);
-}
+  image.setAttribute("src", "data:image/png;base64," + base64);
+};
 
 
 onGotStream = function(stream) {
@@ -143,13 +143,12 @@ onGotStream = function(stream) {
 
   //trace("User has granted access to local media. url = " + url);
   setTimeout(poll, 2000);
-}
+};
 
 onFailedStream = function(error) {
   alert("Failed to get access to local media. Error code was " + error.code + ".");
   //trace_warning("Failed to get access to local media. Error code was " + error.code);
-}
-
+};
 
 setTimeout(initialize, 1);
 </script>

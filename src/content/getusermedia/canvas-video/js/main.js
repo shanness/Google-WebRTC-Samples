@@ -27,10 +27,10 @@ function successCallback(stream) {
     var base64 = video.getFrame();
     var image = new Image();
     image.onload = function () {
-        canvas.getContext("2d").
+        canvas.getContext('2d').
         drawImage(image, 0, 0, canvas.width, canvas.height);
     };
-    image.setAttribute('src', "data:image/png;base64," + base64);
+    image.setAttribute('src', 'data:image/png;base64,' + base64);
   }, 1000/FPS);
 }
 
