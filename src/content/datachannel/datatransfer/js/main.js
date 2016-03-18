@@ -6,8 +6,6 @@
  *  tree.
  */
 
-'use strict';
-
 var localConnection;
 var remoteConnection;
 var sendChannel;
@@ -22,6 +20,8 @@ var errorMessage = document.querySelector('div#errorMsg');
 
 var receivedSize = 0;
 var bytesToSend = 0;
+var nSent = 0; 
+var nReceived = 0;
 
 sendButton.onclick = createConnection;
 
@@ -50,10 +50,9 @@ function createConnection() {
       pcConstraint);
   trace('Created local peer connection object localConnection');
 
-  var dataChannelParams = {ordered: false};
-  if (orderedCheckbox.checked) {
-    dataChannelParams.ordered = true;
-  }
+  var dataChannelParams = {
+    ordered: orderedCheckbox.checked,
+  };
 
   sendChannel = localConnection.createDataChannel(
       'sendDataChannel', dataChannelParams);
@@ -94,6 +93,9 @@ function sendGeneratedData() {
   receiveProgress.max = sendProgress.max;
   sendProgress.value = 0;
   receiveProgress.value = 0;
+  receivedSize = 0;
+  nReceived = 0;
+  nSent = 0;
 
   var chunkSize = 16384;
   var stringToSendRepeatedly = randomAsciiString(chunkSize);
@@ -130,6 +132,7 @@ function sendGeneratedData() {
         return;
       }
       sendProgress.value += chunkSize;
+      nSent++;
       sendChannel.send(stringToSendRepeatedly);
     }
   };
@@ -195,14 +198,15 @@ function receiveChannelCallback(event) {
   receiveChannel.binaryType = 'arraybuffer';
   receiveChannel.onmessage = onReceiveMessageCallback;
 
-  receivedSize = 0;
+  tryStartSending();
 }
 
 function onReceiveMessageCallback(event) {
+  nReceived ++;
   receivedSize += event.data.length;
   receiveProgress.value = receivedSize;
 
-  if (receivedSize === bytesToSend) {
+  if (receivedSize >= bytesToSend) {
     closeDataChannels();
     sendButton.disabled = false;
     megsToSend.disabled = false;
@@ -212,7 +216,12 @@ function onReceiveMessageCallback(event) {
 function onSendChannelStateChange() {
   var readyState = sendChannel.readyState;
   trace('Send channel state is: ' + readyState);
-  if (readyState === 'open') {
+  tryStartSending();
+}
+
+function tryStartSending() {
+  if (sendChannel && sendChannel.readyState === 'open' &&
+    receiveChannel && receiveChannel.readyState === 'open') {
     sendGeneratedData();
   }
 }
