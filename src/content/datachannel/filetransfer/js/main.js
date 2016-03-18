@@ -6,8 +6,6 @@
  *  tree.
  */
 
-'use strict';
-
 var localConnection;
 var remoteConnection;
 var sendChannel;
@@ -28,6 +26,7 @@ var timestampPrev = 0;
 var timestampStart;
 var statsInterval = null;
 var bitrateMax = 0;
+var fileType = '';
 
 fileInput.addEventListener('change', createConnection, false);
 
@@ -66,8 +65,22 @@ function onCreateSessionDescriptionError(error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint8Array(buf));
+}
+
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+  var bufView = new Uint8Array(buf);
+  for (var i=0, strLen=str.length; i<strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
 function sendData() {
   var file = fileInput.files[0];
+  receiveBuffer = [];
   trace('file is ' + [file.name, file.size, file.type,
       file.lastModifiedDate].join(' '));
 
@@ -82,12 +95,19 @@ function sendData() {
   }
   sendProgress.max = file.size;
   receiveProgress.max = file.size;
+  fileType = file.type.length > 0 ? file.type : 'text/plain';
   var chunkSize = 512;
+  var bufferFullThreshold = 5 * chunkSize;
   var sliceFile = function(offset) {
     var reader = new window.FileReader();
     reader.onload = (function() {
       return function(e) {
         var packet = new Int8Array(e.target.result, 0, e.target.result.byteLength);
+        packet = ab2str(packet.buffer);
+        if (sendChannel.bufferedAmount > bufferFullThreshold) {
+          setTimeout(sliceFile, 250, offset);
+          return;
+        }
         sendChannel.send(packet);
         if (file.size > offset + e.target.result.byteLength) {
           window.setTimeout(sliceFile, 0, offset + chunkSize);
@@ -175,21 +195,23 @@ function receiveChannelCallback(event) {
     URL.revokeObjectURL(downloadAnchor.href);
     downloadAnchor.removeAttribute('href');
   }
+  trySending();
 }
 
 function onReceiveMessageCallback(event) {
   // trace('Received Message ' + event.data.byteLength);
-  receiveBuffer.push(event.data);
-  receivedSize += event.data.byteLength;
+  var packet = str2ab(event.data);
+  // var packet = event.data;
+  receiveBuffer.push(packet);
+  receivedSize += packet.byteLength;
 
   receiveProgress.value = receivedSize;
 
   // we are assuming that our signaling protocol told
   // about the expected file size (and name, hash, etc).
   var file = fileInput.files[0];
-  if (receivedSize === file.size) {
-    var received = new window.Blob(receiveBuffer);
-    receiveBuffer = [];
+  if (receivedSize >= file.size) {
+    var received = new window.Blob(receiveBuffer, {type: fileType});
 
     downloadAnchor.href = URL.createObjectURL(received);
     downloadAnchor.download = file.name;
@@ -229,6 +251,13 @@ function onReceiveChannelStateChange() {
     window.setTimeout(displayStats, 100);
     window.setTimeout(displayStats, 300);
   }
+}
+
+function trySending() {
+  if (sendChannel && sendChannel.readyState === 'open' &&
+    receiveChannel && receiveChannel.readyState === 'open') {
+    sendData();
+  }  
 }
 
 // display bitrate statistics.
