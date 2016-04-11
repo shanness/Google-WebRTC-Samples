@@ -84,9 +84,9 @@ Head over to [test/README.md](https://github.com/Temasys/Google-WebRTC-Samples/b
 
 [Transmit text](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/basic/)
 
-<!-- [Transfer a file](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/filetransfer/) -->
+[Transfer a file](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/filetransfer/)
 
-<!-- [Transfer data](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/datatransfer/) -->
+[Transfer data](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/datatransfer/)
 
 [ArrayBuffer sending](https://github.com/Temasys/Google-WebRTC-Samples/src/content/datachannel/arraybuffer/)
 

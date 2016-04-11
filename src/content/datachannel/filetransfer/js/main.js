@@ -6,8 +6,6 @@
  *  tree.
  */
 
-'use strict';
-
 var localConnection;
 var remoteConnection;
 var sendChannel;
@@ -28,6 +26,7 @@ var timestampPrev = 0;
 var timestampStart;
 var statsInterval = null;
 var bitrateMax = 0;
+var fileType = '';
 
 fileInput.addEventListener('change', createConnection, false);
 
@@ -41,7 +40,7 @@ function createConnection() {
       pcConstraint);
   trace('Created local peer connection object localConnection');
 
-  sendChannel = localConnection.createDataChannel('sendDataChannel');
+  sendChannel = localConnection.createDataChannel('sendDataChannel', {ordered: true});
   sendChannel.binaryType = 'arraybuffer';
   trace('Created send data channel');
 
@@ -68,6 +67,7 @@ function onCreateSessionDescriptionError(error) {
 
 function sendData() {
   var file = fileInput.files[0];
+  receiveBuffer = [];
   trace('file is ' + [file.name, file.size, file.type,
       file.lastModifiedDate].join(' '));
 
@@ -82,12 +82,18 @@ function sendData() {
   }
   sendProgress.max = file.size;
   receiveProgress.max = file.size;
-  var chunkSize = 512;
+  fileType = file.type.length > 0 ? file.type : 'text/plain';
+  var chunkSize = 512 * 32;
+  var bufferFullThreshold = 5 * chunkSize;
   var sliceFile = function(offset) {
     var reader = new window.FileReader();
     reader.onload = (function() {
       return function(e) {
         var packet = new Int8Array(e.target.result, 0, e.target.result.byteLength);
+        if (sendChannel.bufferedAmount > bufferFullThreshold) {
+          setTimeout(sliceFile, 150, offset);
+          return;
+        }
         sendChannel.send(packet);
         if (file.size > offset + e.target.result.byteLength) {
           window.setTimeout(sliceFile, 0, offset + chunkSize);
@@ -164,7 +170,11 @@ function receiveChannelCallback(event) {
   receiveChannel = event.channel;
   receiveChannel.binaryType = 'arraybuffer';
   receiveChannel.onmessage = onReceiveMessageCallback;
-  receiveChannel.onopen = onReceiveChannelStateChange;
+  if (receiveChannel.readyState === 'open') {
+    onReceiveChannelStateChange();
+  } else {
+    receiveChannel.onopen = onReceiveChannelStateChange;
+  }
   receiveChannel.onclose = onReceiveChannelStateChange;
 
   receivedSize = 0;
@@ -175,21 +185,22 @@ function receiveChannelCallback(event) {
     URL.revokeObjectURL(downloadAnchor.href);
     downloadAnchor.removeAttribute('href');
   }
+  trySending();
 }
 
 function onReceiveMessageCallback(event) {
   // trace('Received Message ' + event.data.byteLength);
-  receiveBuffer.push(event.data);
-  receivedSize += event.data.byteLength;
+  var packet = new Int8Array(event.data);
+  receiveBuffer.push(packet);
+  receivedSize += packet.byteLength;
 
   receiveProgress.value = receivedSize;
 
   // we are assuming that our signaling protocol told
   // about the expected file size (and name, hash, etc).
   var file = fileInput.files[0];
-  if (receivedSize === file.size) {
-    var received = new window.Blob(receiveBuffer);
-    receiveBuffer = [];
+  if (receivedSize >= file.size) {
+    var received = new window.Blob(receiveBuffer, {type: fileType});
 
     downloadAnchor.href = URL.createObjectURL(received);
     downloadAnchor.download = file.name;
@@ -197,26 +208,24 @@ function onReceiveMessageCallback(event) {
       'Click to download \'' + file.name + '\' (' + file.size + ' bytes)';
     downloadAnchor.style.display = 'block';
 
-    var bitrate = Math.round(receivedSize * 8 /
-        ((new Date()).getTime() - timestampStart));
-    bitrateDiv.innerHTML = '<strong>Average Bitrate:</strong> ' +
-        bitrate + ' kbits/sec (max: ' + bitrateMax + ' kbits/sec)';
-
     if (statsInterval) {
       window.clearInterval(statsInterval);
       statsInterval = null;
     }
 
     closeDataChannels();
+
+    var bitrate = Math.round(receivedSize * 8 /
+        ((new Date()).getTime() - timestampStart));
+    bitrateDiv.innerHTML = '<strong>Average Bitrate:</strong> ' +
+        bitrate + ' kbits/sec (max: ' + bitrateMax + ' kbits/sec)';
   }
 }
 
 function onSendChannelStateChange() {
   var readyState = sendChannel.readyState;
   trace('Send channel state is: ' + readyState);
-  if (readyState === 'open') {
-    sendData();
-  }
+  trySending();
 }
 
 function onReceiveChannelStateChange() {
@@ -226,59 +235,45 @@ function onReceiveChannelStateChange() {
     timestampStart = (new Date()).getTime();
     timestampPrev = timestampStart;
     statsInterval = window.setInterval(displayStats, 500);
-    window.setTimeout(displayStats, 100);
-    window.setTimeout(displayStats, 300);
   }
+}
+
+function trySending() {
+  if (sendChannel && sendChannel.readyState === 'open' &&
+    receiveChannel && receiveChannel.readyState === 'open') {
+    sendData();
+  }  
 }
 
 // display bitrate statistics.
 function displayStats() {
-  var display = function(bitrate) {
-    bitrateDiv.innerHTML = '<strong>Current Bitrate:</strong> ' +
-        bitrate + ' kbits/sec';
-  };
-
   if (remoteConnection &&
-      remoteConnection.iceConnectionState === 'connected') {
-    if (webrtcDetectedBrowser === 'chrome') {
-      // TODO: once https://code.google.com/p/webrtc/issues/detail?id=4321
-      // lands those stats should be preferrred over the connection stats.
-      remoteConnection.getStats(null, function(stats) {
-        for (var key in stats) {
-          var res = stats[key];
-          if (timestampPrev === res.timestamp) {
-            return;
-          }
-          if (res.type === 'googCandidatePair' &&
-              res.googActiveConnection === 'true') {
-            // calculate current bitrate
-            var bytesNow = res.bytesReceived;
-            var bitrate = Math.round((bytesNow - bytesPrev) * 8 /
-                (res.timestamp - timestampPrev));
-            display(bitrate);
-            timestampPrev = res.timestamp;
-            bytesPrev = bytesNow;
-            if (bitrate > bitrateMax) {
-              bitrateMax = bitrate;
-            }
+    remoteConnection.iceConnectionState === 'connected') {
+    // TODO: once https://code.google.com/p/webrtc/issues/detail?id=4321
+    // lands those stats should be preferrred over the connection stats.
+    remoteConnection.getStats(null, function(stats) {
+      if (statsInterval === null) {
+        // file was already completely sent
+        return;
+      }
+      for (var key in stats) {
+        var res = stats[key];
+        if (res.type === 'googCandidatePair' &&
+            res.googActiveConnection === 'true') {
+          // calculate current bitrate
+          var bytesNow = res.bytesReceived;
+          var bitrate = Math.round((bytesNow - bytesPrev) * 8 /
+              (res.timestamp - timestampPrev));
+          // display(bitrate);
+          bitrateDiv.innerHTML = '<strong>Current Bitrate:</strong> ' +
+              bitrate + ' kbits/sec';
+          timestampPrev = res.timestamp;
+          bytesPrev = bytesNow;
+          if (bitrate > bitrateMax) {
+            bitrateMax = bitrate;
           }
         }
-      });
-    } else {
-      // Firefox currently does not have data channel stats. See
-      // https://bugzilla.mozilla.org/show_bug.cgi?id=1136832
-      // Instead, the bitrate is calculated based on the number of
-      // bytes received.
-      var bytesNow = receivedSize;
-      var now = (new Date()).getTime();
-      var bitrate = Math.round((bytesNow - bytesPrev) * 8 /
-          (now - timestampPrev));
-      display(bitrate);
-      timestampPrev = now;
-      bytesPrev = bytesNow;
-      if (bitrate > bitrateMax) {
-        bitrateMax = bitrate;
       }
-    }
+    }, function(e) {console.log('GetStats failure ', e);});
   }
 }
