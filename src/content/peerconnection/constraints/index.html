@@ -48,11 +48,14 @@
       <button id="hangup" disabled>Hang Up</button>
     </div>
 
-
     <section id="constraints">
       <div id="getUserMedia">
         <div class="input">
           <h2>Camera constraints</h2>
+          <div id="constraintsStyle">
+            <input type="radio" name="style" value="old"> Old fashion
+            <input type="radio" name="style" value="new" checked> New fashion
+          </div>
           <div id="minWidth">
             <label>Min width <span>300</span>px:</label>
             <input type="range" min="0" max="1920" value="300">
