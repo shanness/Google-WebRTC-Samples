@@ -52,6 +52,7 @@ var fullHdConstraints = {
 function successCallback(mediaStream) {
   window.stream = mediaStream; // stream available to console
   video = attachMediaStream(video, mediaStream); 
+  setInterval(displayVideoDimensions, 500);
 }
 
 function errorCallback(error) {
@@ -65,8 +66,6 @@ function displayVideoDimensions() {
   dimensions.innerHTML = 'Actual video dimensions: ' + video.videoWidth +
     'x' + video.videoHeight + 'px.';
 }
-
-video.onloadedmetadata = displayVideoDimensions;
 
 function getMedia(constraints) {
   if (stream) {
