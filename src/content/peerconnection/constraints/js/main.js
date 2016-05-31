@@ -25,6 +25,10 @@ var framerateInput = document.querySelector('div#framerate input');
 minWidthInput.onchange = maxWidthInput.onchange =
     minHeightInput.onchange = maxHeightInput.onchange =
     framerateInput.onchange = displayRangeValue;
+var input = document.getElementsByName('style');
+for (var i = 0; i < input.length; ++i) {
+  input[i].onchange = displayGetUserMediaConstraints;
+}
 
 var getUserMediaConstraintsDiv =
     document.querySelector('div#getUserMediaConstraints');
@@ -75,7 +79,7 @@ function gumFailed(e) {
 }
 
 function getMedia() {
-  getMediaButton.disabled = true;
+  // getMediaButton.disabled = true;
   if (localStream) {
     localStream.getTracks().forEach(function(track) {
       track.stop();
@@ -105,8 +109,16 @@ function getUserMediaConstraints() {
   var constraints = {};
   constraints.audio = true;
 
-  if (webrtcDetectedBrowser === 'IE' ||
-      webrtcDetectedBrowser === 'safari') {
+  var input = document.getElementsByName('style');
+  var style = '';
+  for (var i = 0; i < input.length; ++i) {
+    if (input[i].checked) {
+      style = input[i].value;
+      break;
+    }
+  }
+
+  if (style === 'old') {
     // Old fashion constraints
     constraints.video = {mandatory:{}};
     if (minWidthInput.value !== '0') {
