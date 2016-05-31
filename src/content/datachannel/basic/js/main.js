@@ -51,8 +51,11 @@ function createConnection() {
       dataConstraint);
   trace('Created send data channel');
 
-  localConnection.onicecandidate = iceCallback1;
+  if (sendChannel.readyState === 'open') {
+    onSendChannelStateChange();
+  }
   sendChannel.onopen = onSendChannelStateChange;
+  localConnection.onicecandidate = iceCallback1;
   sendChannel.onclose = onSendChannelStateChange;
 
   // Add remoteConnection to global scope to make it visible
@@ -143,8 +146,11 @@ function onAddIceCandidateError(error) {
 function receiveChannelCallback(event) {
   trace('Receive Channel Callback');
   receiveChannel = event.channel;
-  receiveChannel.onmessage = onReceiveMessageCallback;
+  if (receiveChannel.readyState === 'open') {
+    onReceiveChannelStateChange();
+  }
   receiveChannel.onopen = onReceiveChannelStateChange;
+  receiveChannel.onmessage = onReceiveMessageCallback;
   receiveChannel.onclose = onReceiveChannelStateChange;
 }
 
