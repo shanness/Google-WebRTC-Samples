@@ -39,12 +39,14 @@ var onFailure = function(error) {
   errorMsg('getUserMedia error: ' + error.name, error);
 };
 
-if (typeof Promise === 'undefined') {
-  navigator.getUserMedia(constraints, onSuccess, onFailure);
-} else {
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then(onSuccess).catch(onFailure);
-}
+AdapterJS.webRTCReady(function(isUsingPlugin) {
+  if (typeof Promise === 'undefined') {
+    navigator.getUserMedia(constraints, onSuccess, onFailure);
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(onSuccess).catch(onFailure);
+  }
+});
 
 function errorMsg(msg, error) {
   errorElement.innerHTML += '<p>' + msg + '</p>';
