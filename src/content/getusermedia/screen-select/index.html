@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)https://plugin.temasys.com.sg/demo/src/content/getusermedia/screensharing/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta name="description" content="WebRTC code samples">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta itemprop="description" content="Client-side WebRTC code samples">
+  <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
+  <meta itemprop="name" content="WebRTC code samples">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+
+  <!--<base target="_blank">--><base href="." target="_blank">
+
+  <title>Screensharing</title>
+
+  <link rel="icon" sizes="192x192" href="https://plugin.temasys.com.sg/demo/src/images/webrtc-icon-192x192.png">
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../../../css/main.css">
+
+</head>
+
+<body>
+
+  <div id="container">
+
+    <h1><a href="https://github.com/Temasys/Google-WebRTC-Samples" title="WebRTC samples homepage">WebRTC samples</a> <span>Screensharing</span></h1>
+
+    <video id="gumlocal" autoplay=""></video>
+
+    <div id="errorMsg"></div>
+
+    <div class="select">
+      <label for="videoSource">Video source_: </label><select id="videoSource"></select>
+    </div>
+    <input type="submit" name="start" onclick="start_();" />
+
+    <p>Request for a screensharing sctream and display the video stream from <code>getUserMedia()</code> in a video element.</p>
+
+    <p>You might be asked to install an extension to your browser.</p>
+
+    <p>The <code>MediaStream</code> object <code>stream</code> passed to the <code>getUserMedia()</code> callback is in global scope, so you can inspect it from the console.</p>
+
+    <a href="https://github.com/Temasys/Google-WebRTC-Samples/tree/master/src/content/getusermedia/screensharing" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+  </div>
+
+  <script src="https://cdn.temasys.com.sg/adapterjs/0.13.x/adapter.screenshare.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="js/main.js"></script>
+
+  <script src="../../../js/lib/ga.js"></script>
+  <!-- <script async="" src="./Screensharing_files/analytics.js"></script><script src="./Screensharing_files/adapter.screenshare.js"></script><iframe src="./Screensharing_files/detectRTC.html" style="display: none;"></iframe> -->
+  <!-- <script src="./Screensharing_files/common.js"></script> -->
+  <!-- <script src="./Screensharing_files/main.js"></script> -->
+
+  <!-- <script src="./Screensharing_files/ga.js"></script> -->
+
+
+
+</body></html>
