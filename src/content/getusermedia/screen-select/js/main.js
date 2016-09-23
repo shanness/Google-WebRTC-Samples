@@ -13,8 +13,6 @@ var v = document.getElementById('videoSource');
 
 function getScreens(){
   AdapterJS.WebRTCPlugin.callWhenPluginReady(function() {
-       // AdapterJS.WebRTCPlugin.plugin.GetSources(callback);
-     
    AdapterJS.WebRTCPlugin.plugin.getScreensharingSources(function(list){
     for (var i = 0; i !== list.length; i++) {
        var option = document.createElement('option');
@@ -32,31 +30,17 @@ var constraints;
 getScreens();
 function start_(){
 
-  //
     var videoSource = v.options[v.selectedIndex].value? v.options[v.selectedIndex].value: "";
-    //if(!videoSource) {
-      //alert(videoSource);
-    //}
-    //else alert(videoSource);
   constraints= window.constraints = {
     audio: false,
     video: {
-      //screenId: 
       mediaSource: 'screen',
       mandatory: {
-        //minWidth:83274,
         maxWidth:1500,//,
-        //screenId:videoSource 
-        
-        //minHeight:1500,
-        //maxHeight:800
       },
       optional: [
         {screenId:videoSource }
       ]
-      
-      //width: {exact: 620},    //new syntax
-      //height: {exact: 1000}   //new syntax
     }
   };
 
