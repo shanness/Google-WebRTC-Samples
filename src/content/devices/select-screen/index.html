@@ -38,6 +38,21 @@
       width: 12em;
       display: inline-block;
     }
+    .alert-box {
+      color:#555;
+      border-radius:10px;
+      font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+      padding:10px 10px 10px 36px;
+      margin:10px;
+    }
+    .alert-box span {
+      font-weight:bold;
+      text-transform:uppercase;
+    }
+    .warning {
+        background:#fff8c4 url('../images/warning.png') no-repeat 10px 50%;
+        border:1px solid #f2c779;
+    }
   </style>
 
 </head>
@@ -46,6 +61,10 @@
   <div id="container">
 
     <h1><a href="//github.com/Temasys/Google-WebRTC-Samples" title="WebRTC samples homepage">WebRTC samples</a><span>Select shared screen/window</span></h1>
+
+    <div class="alert-box warning">
+      <span>warning: </span>This sample is only supported by the Temasys plugin, on Internet Explorer and Safari.
+    </div>
 
     <p>Get available audio, video sources and audio output devices<b>*</b> from <code>mediaDevices.enumerateDevices()</code> then set the source for <code>getUserMedia()</code> using a <code>deviceId</code> constraint.</p>
 
